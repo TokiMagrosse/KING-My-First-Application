@@ -4,4 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#6c757d</color>
     <color name="grey_1">#212529</color>
+    <color name="green">#4f772d</color>
+    <color name="red">#bb4430</color>
+    <color name="pink_red">#e3a587</color>
+    <color name="purple">#8f6593</color>
+    <color name="red_1">#f25f5c</color>
+    <color name="blue_grey">#383f51</color>
+
 </resources>
