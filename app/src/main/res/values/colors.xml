@@ -4,11 +4,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#6c757d</color>
     <color name="grey_1">#212529</color>
-    <color name="green">#4f772d</color>
+    <color name="green_background">#1F593B</color>
     <color name="red">#bb4430</color>
     <color name="pink_red">#e3a587</color>
     <color name="purple">#8f6593</color>
     <color name="red_1">#f25f5c</color>
     <color name="blue_grey">#383f51</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
 
 </resources>
