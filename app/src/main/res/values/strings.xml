@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">King</string>
-    <string name="king">KING</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_up">Sign up</string>
-    <string name="guest">Play as guest</string>
     <string name="title_activity_signin">signin_activity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="log_in">LOG IN</string>
+    <string name="register">Don\'t have an account? Register now</string>
+    <string name="email">Email adress</string>
+    <string name="password">Password</string>
 </resources>
