@@ -9,4 +9,12 @@
     <string name="enter_username_or_email">Enter username or email</string>
     <string name="enter_password">Enter password</string>
     <string name="king_card_game">King Card Game</string>
+    <string name="king">KING</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="register_button">REGISTER</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="enter_a_strong_password">Enter a strong password</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="your_nickname">Your nickname</string>
 </resources>
