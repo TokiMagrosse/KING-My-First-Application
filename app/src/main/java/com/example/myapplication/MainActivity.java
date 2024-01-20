@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         forgot_password = findViewById(R.id.forgot_password);
         login_button = findViewById(R.id.login_button);
         remember_me = findViewById(R.id.remember_me);
-        email_address = findViewById(R.id.email_address);
+        email_address = findViewById(R.id.email_address_or_username);
         password = findViewById(R.id.password);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
