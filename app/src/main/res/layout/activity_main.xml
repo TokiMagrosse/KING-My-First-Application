@@ -9,10 +9,10 @@
     tools:context=".MainActivity">
     
     <androidx.cardview.widget.CardView
-        android:layout_width="475sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="14.5sp"
+        android:layout_margin="20sp"
         android:background="@drawable/rounded_corner"
         app:cardCornerRadius="10sp"
         app:cardElevation="18sp">
@@ -79,12 +79,11 @@
 
                 <TextView
                     android:id="@+id/forgot_password"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey_1"
-
-                    android:layout_marginStart="185sp"
-                    android:gravity="center"
+                    android:layout_marginStart="407sp"
+                    android:gravity="end"
                     android:text="@string/forgot_password" />
             </LinearLayout>
 
@@ -115,38 +114,37 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="1sp"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/google_button"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginEnd="100sp"
             android:text="@string/google"
             android:drawableLeft="@drawable/google"
-            android:padding="10sp"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
+
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/facebook_button"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
             android:text="@string/facebook"
             android:drawableLeft="@drawable/facebook"
-            android:padding="10sp"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             style="?android:attr/buttonBarButtonStyle" />
 
         <Button
             android:id="@+id/mail_ru_button"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
-            android:text="@string/mail_ru"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
             android:drawableLeft="@drawable/mail_ru"
-            android:padding="10sp"
+            android:layout_marginStart="100sp"
+            android:text="@string/mail_ru"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             style="?android:attr/buttonBarButtonStyle" />
