@@ -1,27 +1,53 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
     Button register_button;
     TextView back_to_login;
+    private FirebaseAuth m_auth;
+    ProgressBar progress_bar;
 
     private EditText username, email_address, register_password, confirm_password;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = m_auth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        m_auth = FirebaseAuth.getInstance();
+        progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -44,10 +71,10 @@ public class RegisterActivity extends AppCompatActivity {
         register_password = findViewById(R.id.register_password);
         confirm_password = findViewById(R.id.confirm_password);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     private void checkCredentials() {
+        progress_bar.setVisibility(View.VISIBLE);
         String checkUsername = username.getText().toString();
         String checkEmailAddress = email_address.getText().toString();
         String checkPassword = register_password.getText().toString();
@@ -77,9 +104,23 @@ public class RegisterActivity extends AppCompatActivity {
         else if (checkConfirmedPassword.isEmpty() || !checkConfirmedPassword.equals(checkPassword)) {
             showError(confirm_password, "Your password doesn't match the previous one");
         }
-        else {
-            Toast.makeText(this, "YOU HAVE SUCCESSFULLY REGISTERED!", Toast.LENGTH_LONG).show();
-        }
+
+        m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progress_bar.setVisibility(ViewStub.GONE);
+
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(RegisterActivity.this, "You have successfully registered",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void showError(EditText input, String errorText) {

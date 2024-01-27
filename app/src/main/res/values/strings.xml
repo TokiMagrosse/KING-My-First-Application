@@ -15,8 +15,10 @@
     <string name="enter_a_strong_password">Enter a strong password</string>
     <string name="enter_your_email">Enter your email address</string>
     <string name="your_nickname">Enter your username</string>
-    <string name="already_have_an_account">I already have an account!</string>
+    <string name="already_have_an_account">I already have an account</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
     <string name="mail_ru">Mail.ru</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="your_email_address">Your email address</string>
 </resources>

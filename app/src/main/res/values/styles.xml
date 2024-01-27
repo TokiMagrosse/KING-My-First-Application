@@ -9,9 +9,12 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
-    <!---Checkbox-->
-    <style name="MyCheckBox" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorControlNormal">#0b472d</item> <!--Border-->
+    <style name="colored_checkbox." parent="Theme.AppCompat.Light">
+        <!-- Selected CheckBox color-->
+        <item name="colorAccent">@color/very_dark_green</item>
+
+        <!-- Default CheckBox color-->
+        <item name="android:textColorSecondary">@color/blue_grey</item>
     </style>
 
 </resources>
