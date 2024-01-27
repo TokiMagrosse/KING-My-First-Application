@@ -25,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button register_button;
     TextView back_to_login;
     private FirebaseAuth m_auth;
-    ProgressBar progress_bar;
+    // ProgressBar progress_bar;
 
     private EditText username, email_address, register_password, confirm_password;
 
@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         m_auth = FirebaseAuth.getInstance();
-        progress_bar = findViewById(R.id.progress_bar);
+        // progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void checkCredentials() {
-        progress_bar.setVisibility(View.VISIBLE);
+        // progress_bar.setVisibility(View.VISIBLE);
         String checkUsername = username.getText().toString();
         String checkEmailAddress = email_address.getText().toString();
         String checkPassword = register_password.getText().toString();
@@ -109,16 +109,16 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progress_bar.setVisibility(ViewStub.GONE);
+                        // progress_bar.setVisibility(ViewStub.GONE);
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(RegisterActivity.this, "You have successfully registered",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
+                        } /*else {
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     }
                 });
     }

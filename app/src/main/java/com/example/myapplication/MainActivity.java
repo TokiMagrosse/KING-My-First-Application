@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    ProgressBar progress_bar;
+    // ProgressBar progress_bar;
     private FirebaseAuth m_auth;
     TextView register_text_reference, forgot_password;
     Button login_button;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progress_bar = findViewById(R.id.progress_bar);
+        // progress_bar = findViewById(R.id.progress_bar);
         m_auth = FirebaseAuth.getInstance();
         register_text_reference = findViewById(R.id.register_text_reference);
         register_text_reference.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkCredentials() {
-        progress_bar.setVisibility(ViewStub.VISIBLE);
+        // progress_bar.setVisibility(ViewStub.VISIBLE);
         String checkEmailAddress = email_address.getText().toString();
         String checkPassword = password.getText().toString();
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progress_bar.setVisibility(ViewStub.GONE);
+                        // progress_bar.setVisibility(ViewStub.GONE);
 
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                             startActivity(intent);
                             finish();
-                        } else {
+                        } /*else {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     }
                 });
     }

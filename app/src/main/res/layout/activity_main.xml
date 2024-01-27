@@ -71,12 +71,12 @@
                 android:inputType="textPassword"
                 android:padding="12sp" />
 
-            <ProgressBar
+            <!--<ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone"/>-->
 
             <Button
                 android:id="@+id/login_button"
