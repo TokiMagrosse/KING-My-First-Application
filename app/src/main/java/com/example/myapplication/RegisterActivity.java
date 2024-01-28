@@ -22,14 +22,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    EditText username, email_address, register_password, confirm_password;
     Button register_button;
     TextView back_to_login;
-    private FirebaseAuth m_auth;
-    // ProgressBar progress_bar;
+    FirebaseAuth m_auth;
+    ProgressBar progress_bar;
 
-    private EditText username, email_address, register_password, confirm_password;
-
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -37,48 +36,44 @@ public class RegisterActivity extends AppCompatActivity {
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-            finish();
+            // finish();
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        m_auth = FirebaseAuth.getInstance();
-        // progress_bar = findViewById(R.id.progress_bar);
-        register_button = findViewById(R.id.register_button);
-        register_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCredentials();
-            }
-        });
-
-        back_to_login = findViewById(R.id.back_to_login_activity);
-        back_to_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
         username = findViewById(R.id.username);
         email_address = findViewById(R.id.email_address);
         register_password = findViewById(R.id.register_password);
         confirm_password = findViewById(R.id.confirm_password);
+        m_auth = FirebaseAuth.getInstance();
+        progress_bar = findViewById(R.id.progress_bar);
+        register_button = findViewById(R.id.register_button);
+        back_to_login = findViewById(R.id.back_to_login_activity);
+        register_button.setOnClickListener(v -> checkCredentials());
+
+        if (m_auth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        back_to_login.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(intent);
+            // finish();
+        });
 
     }
 
     private void checkCredentials() {
-        // progress_bar.setVisibility(View.VISIBLE);
-        String checkUsername = username.getText().toString();
-        String checkEmailAddress = email_address.getText().toString();
-        String checkPassword = register_password.getText().toString();
-        String checkConfirmedPassword = confirm_password.getText().toString();
+        String checkUsername = username.getText().toString().trim();
+        String checkEmailAddress = email_address.getText().toString().trim();
+        String checkPassword = register_password.getText().toString().trim();
+        String checkConfirmedPassword = confirm_password.getText().toString().trim();
 
         if (checkUsername.isEmpty()) {
             showError(username, "Please enter your username");
@@ -105,20 +100,22 @@ public class RegisterActivity extends AppCompatActivity {
             showError(confirm_password, "Your password doesn't match the previous one");
         }
 
-        m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // progress_bar.setVisibility(ViewStub.GONE);
+        progress_bar.setVisibility(View.VISIBLE);
 
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(RegisterActivity.this, "You have successfully registered",
-                                    Toast.LENGTH_SHORT).show();
-                        } /*else {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }*/
+        // Connecting user data with Firebase
+        m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
+                .addOnCompleteListener(this, task -> {
+                    progress_bar.setVisibility(ViewStub.GONE);
+
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Toast.makeText(RegisterActivity.this, "You have successfully registered",
+                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Authentication failed, please try again!",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

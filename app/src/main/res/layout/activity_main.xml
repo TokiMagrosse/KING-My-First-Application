@@ -16,7 +16,7 @@
         android:backgroundTint="@color/white"
         android:orientation="vertical"
         app:cardCornerRadius="10dp"
-        app:cardElevation="100dp"
+        app:cardElevation="23dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -71,12 +71,12 @@
                 android:inputType="textPassword"
                 android:padding="12sp" />
 
-            <!--<ProgressBar
+            <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>-->
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/login_button"
