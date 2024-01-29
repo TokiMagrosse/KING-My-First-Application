@@ -61,10 +61,12 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
-        back_to_login.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-            startActivity(intent);
-            // finish();
+        back_to_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
         });
 
     }
@@ -74,50 +76,64 @@ public class RegisterActivity extends AppCompatActivity {
         String checkEmailAddress = email_address.getText().toString().trim();
         String checkPassword = register_password.getText().toString().trim();
         String checkConfirmedPassword = confirm_password.getText().toString().trim();
+        boolean isValid = true;
 
         if (checkUsername.isEmpty()) {
             showError(username, "Please enter your username");
+            isValid = false;
         }
         else if (checkUsername.length() <= 5) {
             showError(username, "Your username length must be at least 6 characters");
+            isValid = false;
         }
         else if (checkEmailAddress.isEmpty()) {
             showError(email_address, "Please enter your email");
+            isValid = false;
         }
         else if (!checkEmailAddress.contains("@")) {
             showError(email_address, "Please enter a valid email address");
+            isValid = false;
         }
         else if (checkPassword.isEmpty()) {
             showError(register_password, "Please enter your password");
+            isValid = false;
         }
         else if (checkPassword.length() < 8) {
             showError(register_password, "Your password length must be at least 8 characters");
+            isValid = false;
         }
         else if (checkPassword.length() > 64) {
             showError(register_password, "Your password can have at most 64 characters");
+            isValid = false;
         }
         else if (checkConfirmedPassword.isEmpty() || !checkConfirmedPassword.equals(checkPassword)) {
             showError(confirm_password, "Your password doesn't match the previous one");
+            isValid = false;
         }
 
         progress_bar.setVisibility(View.VISIBLE);
 
         // Connecting user data with Firebase
-        m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
-                .addOnCompleteListener(this, task -> {
-                    progress_bar.setVisibility(ViewStub.GONE);
+        if (isValid) {
+            m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
+                    .addOnCompleteListener(this, task -> {
+                        progress_bar.setVisibility(ViewStub.GONE);
 
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(RegisterActivity.this, "You have successfully registered",
-                                Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Authentication failed, please try again!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(RegisterActivity.this, "You have successfully registered",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Authentication failed, please try again!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else {
+            progress_bar.setVisibility(ViewStub.GONE);
+        }
     }
 
     private void showError(EditText input, String errorText) {
