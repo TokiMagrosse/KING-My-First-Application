@@ -101,9 +101,10 @@
 
         <TextView
             android:id="@+id/back_to_login_activity"
-            android:layout_width="match_parent"
+            android:layout_width="210sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/alata"
             android:gravity="center"
             android:text="@string/already_have_an_account"

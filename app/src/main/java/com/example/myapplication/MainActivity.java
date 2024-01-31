@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,18 +28,6 @@ public class MainActivity extends AppCompatActivity {
     Button login_button;
     CheckBox remember_me;
     EditText email_address, password;
-
-    /*@Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = m_auth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             showError(email_address, "Please enter your email");
             isValid = false;
         }
-        else if (!checkEmailAddress.contains("@")) {
+        else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".")) {
             showError(email_address, "Please enter a valid email address");
             isValid = false;
         }
@@ -115,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             // finish();
                         } else {
-                            Toast.makeText(MainActivity.this, "Invalid email or password, please try again!",
+                            Toast.makeText(MainActivity.this, "Invalid email or password",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

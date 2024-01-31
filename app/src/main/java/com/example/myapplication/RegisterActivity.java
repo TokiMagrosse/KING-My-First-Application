@@ -28,18 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth m_auth;
     ProgressBar progress_bar;
 
-    /*@Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = m_auth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            // finish();
-        }
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         progress_bar.setVisibility(View.VISIBLE);
 
-        // Connecting user data with Firebase
         if (isValid) {
             m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
                     .addOnCompleteListener(this, task -> {
@@ -126,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed, please try again!",
+                            Toast.makeText(RegisterActivity.this, "Authentication failed",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

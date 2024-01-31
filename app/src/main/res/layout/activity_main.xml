@@ -118,10 +118,11 @@
 
         <TextView
             android:id="@+id/register_text_reference"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="280sp"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/alata"
             android:text="@string/register"
             android:textColor="@color/grey_1" />
