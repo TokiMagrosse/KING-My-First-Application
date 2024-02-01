@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -14,11 +16,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     TextView back_to_login;
     FirebaseAuth m_auth;
     ProgressBar progress_bar;
+    FirebaseFirestore f_store;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         register_password = findViewById(R.id.register_password);
         confirm_password = findViewById(R.id.confirm_password);
         m_auth = FirebaseAuth.getInstance();
+        f_store = FirebaseFirestore.getInstance();
         progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
         back_to_login = findViewById(R.id.back_to_login_activity);
@@ -49,12 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
             finish();
         }
 
-        back_to_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        back_to_login.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(intent);
         });
 
     }
@@ -64,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         String checkEmailAddress = email_address.getText().toString().trim();
         String checkPassword = register_password.getText().toString().trim();
         String checkConfirmedPassword = confirm_password.getText().toString().trim();
+
         boolean isValid = true;
 
         if (checkUsername.isEmpty()) {
@@ -110,6 +117,15 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(RegisterActivity.this, "You have successfully registered",
                                     Toast.LENGTH_SHORT).show();
+
+                            userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
+                            DocumentReference documentReference = f_store.collection("all my users").document(userID);
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("Username", checkUsername);
+                            user.put("Email address", checkEmailAddress);
+
+                            documentReference.set(user).addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID)).addOnFailureListener(e -> Log.d(TAG, e.toString()));
+
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {

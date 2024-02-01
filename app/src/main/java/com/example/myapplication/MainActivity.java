@@ -43,20 +43,12 @@ public class MainActivity extends AppCompatActivity {
         register_text_reference = findViewById(R.id.register_text_reference);
         m_auth = FirebaseAuth.getInstance();
 
-        register_text_reference.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        register_text_reference.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCredentials();
-            }
-        });
+        login_button.setOnClickListener(v -> checkCredentials());
 
     }
 
@@ -101,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                             // finish();
                         } else {
-                            Toast.makeText(MainActivity.this, "Invalid email or password",
+                            Toast.makeText(MainActivity.this, "Invalid email or password, please try again",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -115,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
         input.setError(errorText);
         input.requestFocus();
     }
-
-    // FINNNNNNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAALLLYYYYYYYYYYYYYYYYYY
 
 }
 
