@@ -21,4 +21,10 @@
     <string name="mail_ru">Mail.ru</string>
     <string name="log_out">LOG OUT</string>
     <string name="your_email_address">Your email address</string>
+    <string name="your_username">Your username</string>
+    <string name="todo">TODO</string>
+    <string name="send_password_reset_link">SEND PASSWORD RESET LINK</string>
+    <string name="reset_your_password">RESET YOUR PASSWORD</string>
+    <string name="i_already_remember_my_password">I already remember my password</string>
+    <string name="play">PLAY</string>
 </resources>

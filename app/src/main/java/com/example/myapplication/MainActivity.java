@@ -3,6 +3,8 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -101,11 +105,20 @@ public class MainActivity extends AppCompatActivity {
         else {
             progress_bar.setVisibility(ViewStub.GONE);
         }
+
+        forgot_password.setOnClickListener(v -> {
+            openForgotPasswordActivity();
+        });
     }
 
     private void showError(EditText input, String errorText) {
         input.setError(errorText);
         input.requestFocus();
+    }
+
+    private void openForgotPasswordActivity() {
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 
 }

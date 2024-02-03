@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
         back_to_login = findViewById(R.id.back_to_login_activity);
+
         register_button.setOnClickListener(v -> checkCredentials());
 
         if (m_auth.getCurrentUser() != null) {

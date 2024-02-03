@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class ProfileActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     Button log_out_button;
-    TextView your_email;
+    TextView your_username, your_email;
     FirebaseUser user;
 
     @Override
@@ -23,8 +26,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        FirebaseFirestore f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         log_out_button = findViewById(R.id.log_out_button);
+        your_username = findViewById(R.id.your_username);
         your_email = findViewById(R.id.your_email);
         user = auth.getCurrentUser();
 
@@ -35,6 +40,27 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             your_email.setText(user.getEmail());
         }
+
+        if (user == null) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            DocumentReference documentReference = f_store.collection("all my users").document(user.getUid());
+            documentReference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String username = documentSnapshot.getString("Username");
+                    your_username.setText(username);
+                } else {
+                    // Handle the case where user data is not found
+                    your_username.setText("Username not available");
+                }
+            }).addOnFailureListener(e -> {
+                // Handle the failure to retrieve user data
+                your_username.setText("Error retrieving username");
+            });
+        }
+
 
         log_out_button.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
