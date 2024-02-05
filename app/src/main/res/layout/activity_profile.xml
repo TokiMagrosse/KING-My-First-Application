@@ -85,7 +85,8 @@
             android:scaleType="centerCrop"
             android:src="@drawable/default_profile_picture"
             tools:layout_editor_absoluteX="265dp"
-            tools:layout_editor_absoluteY="91dp" />
+            tools:layout_editor_absoluteY="91dp"
+            tools:ignore="ContentDescription" />
 
     </androidx.cardview.widget.CardView>
 
