@@ -15,9 +15,10 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = rootProject.extra["agp_version1"] as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        versionNameSuffix = rootProject.extra["agp_version"] as String
     }
 
     buildTypes {
