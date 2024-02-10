@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -115,6 +116,15 @@ public class RegisterActivity extends AppCompatActivity {
                         progress_bar.setVisibility(ViewStub.GONE);
 
                         if (task.isSuccessful()) {
+                            // Send verification link to email
+                            FirebaseUser f_user = m_auth.getCurrentUser();
+                            assert f_user != null;
+                            f_user.sendEmailVerification()
+                                    .addOnSuccessListener(unused -> Toast.makeText(RegisterActivity.this, "Email verification link sent to your email", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e -> Log.d(TAG, "Email not sent" + e.getMessage()));
+
+
+
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(RegisterActivity.this, "You have successfully registered",
                                     Toast.LENGTH_SHORT).show();

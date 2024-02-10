@@ -106,7 +106,7 @@
         <CheckBox
             android:id="@+id/remember_me"
             android:layout_width="120sp"
-            android:layout_height="32sp"
+            android:layout_height="36.5sp"
             android:textColor="@color/grey_1"
             android:fontFamily="@font/alata"
             android:gravity="center_vertical"

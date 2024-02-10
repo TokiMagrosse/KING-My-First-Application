@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +19,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     Button log_out_button;
+    ImageView your_profile_picture;
     TextView your_username, your_email;
     FirebaseUser user;
 
@@ -29,9 +31,15 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseFirestore f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         log_out_button = findViewById(R.id.log_out_button);
+        your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
         your_email = findViewById(R.id.your_email);
         user = auth.getCurrentUser();
+
+        your_profile_picture.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, UserProfileAttributesActivity.class);
+            startActivity(intent);
+        });
 
         if (user == null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

@@ -8,9 +8,52 @@
     android:background="@color/green_background"
     tools:context=".ProfileActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65sp"
+        android:orientation="horizontal"
+        android:background="@color/super_dark_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7.25dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/your_profile_picture"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="@drawable/default_profile_outlines"
+            android:src="@drawable/default_profile_picture"
+            android:contentDescription="@string/todo" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/your_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:gravity="start"
+            android:text="@string/your_username"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="18sp"
+            android:layout_marginStart="13sp"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/profile_button"
-        android:layout_width="200sp"
+        android:layout_width="150sp"
         android:layout_height="50sp"
         android:backgroundTint="@color/super_dark_green"
         android:fontFamily="@font/alata"
@@ -18,10 +61,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072" />
+        app:layout_constraintVertical_bias="0.365" />
 
     <Button
         android:id="@+id/log_out_button"
@@ -33,25 +76,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
-
-    <TextView
-        android:id="@+id/your_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/alata"
-        android:gravity="start"
-        android:text="@string/your_username"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.958" />
 
     <TextView
         android:id="@+id/your_email"
@@ -64,122 +92,9 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.198" />
-
-    <LinearLayout
-        android:layout_width="625sp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.726"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.981">
-
-        <ImageView
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/ace_of_clubs"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-            />
-
-        <ImageView
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/king_of_diamonds"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-             />
-
-        <ImageView
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/card_back_side"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.952"
-             />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/queen_of_diamonds"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-             />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/eight_of_clubs"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             />
-
-        <ImageView
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/jack_of_clubs"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-             />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/ten_of_hearts"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-             />
-
-        <ImageView
-            android:layout_width="69.54sp"
-            android:layout_height="95sp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/cards_background_corners"
-            android:src="@drawable/jack_of_diamonds"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.949"
-             />
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.958" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
