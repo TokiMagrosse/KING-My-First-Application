@@ -37,6 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.26" />
+
     <TextView
         android:id="@+id/your_username"
         android:layout_width="wrap_content"
@@ -90,19 +91,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+            />
 
         <ImageView
             android:layout_width="69.54sp"
             android:layout_height="95sp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/cards_background_corners"
-            android:src="@drawable/king_of_clubs"
+            android:src="@drawable/king_of_diamonds"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:layout_width="69.54sp"
@@ -114,7 +115,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.952"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -127,7 +128,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -138,7 +139,7 @@
             android:src="@drawable/eight_of_clubs"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:layout_width="69.54sp"
@@ -150,7 +151,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:id="@+id/imageView"
@@ -165,7 +166,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+             />
 
         <ImageView
             android:layout_width="69.54sp"
@@ -177,7 +178,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.949"
-            tools:ignore="ContentDescription" />
+             />
 
     </LinearLayout>
 
