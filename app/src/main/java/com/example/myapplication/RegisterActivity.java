@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (m_auth.getCurrentUser() != null) {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
-            finish();
+            // finish();
         }
 
         back_to_login.setOnClickListener(v -> {
@@ -77,6 +77,23 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (checkUsername.isEmpty()) {
             showError(username, "Please enter your username");
+            isValid = false;
+        }
+        else if (checkUsername.contains("-") ||
+                checkUsername.contains("*") || checkUsername.contains("&") ||
+                checkUsername.contains("#") || checkUsername.contains("%") ||
+                checkUsername.contains("@") || checkUsername.contains("$") ||
+                checkUsername.contains("|") || checkUsername.contains("/") ||
+                checkUsername.contains("^") || checkUsername.contains("?") ||
+                checkUsername.contains("(") || checkUsername.contains(")") ||
+                checkUsername.contains("+") || checkUsername.contains("=") ||
+                checkUsername.contains("<") || checkUsername.contains(">") ||
+                checkUsername.contains(",") || checkUsername.contains("'")) {
+            showError(username, "Your username can contain only specific character ( _ )");
+            isValid = false;
+        }
+        else if (checkUsername.contains(" ")) {
+            showError(username, "Your username should not contain spaces");
             isValid = false;
         }
         else if (checkUsername.length() <= 5) {
@@ -103,7 +120,11 @@ public class RegisterActivity extends AppCompatActivity {
             showError(register_password, "Your password can have at most 64 characters");
             isValid = false;
         }
-        else if (checkConfirmedPassword.isEmpty() || !checkConfirmedPassword.equals(checkPassword)) {
+        else if (checkConfirmedPassword.isEmpty()) {
+            showError(confirm_password, "Please confirm your password");
+            isValid = false;
+        }
+        else if (!checkConfirmedPassword.equals(checkPassword)) {
             showError(confirm_password, "Your password doesn't match the previous one");
             isValid = false;
         }
@@ -113,41 +134,48 @@ public class RegisterActivity extends AppCompatActivity {
         if (isValid) {
             m_auth.createUserWithEmailAndPassword(checkEmailAddress, checkPassword)
                     .addOnCompleteListener(this, task -> {
-                        progress_bar.setVisibility(ViewStub.GONE);
+                        progress_bar.setVisibility(View.GONE);
 
                         if (task.isSuccessful()) {
-                            // Send verification link to email
                             FirebaseUser f_user = m_auth.getCurrentUser();
-                            assert f_user != null;
-                            f_user.sendEmailVerification()
-                                    .addOnSuccessListener(unused -> Toast.makeText(RegisterActivity.this, "Email verification link sent to your email", Toast.LENGTH_SHORT).show())
-                                    .addOnFailureListener(e -> Log.d(TAG, "Email not sent" + e.getMessage()));
-
-
-
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(RegisterActivity.this, "You have successfully registered",
-                                    Toast.LENGTH_SHORT).show();
-
-                            userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
-                            DocumentReference documentReference = f_store.collection("all my users").document(userID);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("Username", checkUsername);
-                            user.put("Email address", checkEmailAddress);
-
-                            documentReference.set(user).addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID)).addOnFailureListener(e -> Log.d(TAG, e.toString()));
-
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            if (f_user != null) {
+                                f_user.sendEmailVerification()
+                                        .addOnSuccessListener(unused -> {
+                                            Toast.makeText(RegisterActivity.this, "Email verification link sent to your email", Toast.LENGTH_SHORT).show();
+                                            // Proceed with user registration
+                                            completeRegistration(checkUsername, checkEmailAddress);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Log.d(TAG, "Email not sent" + e.getMessage());
+                                            Toast.makeText(RegisterActivity.this, "Failed to send email verification link", Toast.LENGTH_SHORT).show();
+                                        });
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Failed to get current user", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     });
+        } else {
+            progress_bar.setVisibility(View.GONE);
         }
-        else {
-            progress_bar.setVisibility(ViewStub.GONE);
-        }
+    }
+
+    private void completeRegistration(String username, String emailAddress) {
+        Toast.makeText(RegisterActivity.this, "You have successfully registered", Toast.LENGTH_SHORT).show();
+
+        userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
+        DocumentReference documentReference = f_store.collection("all my users").document(userID);
+        Map<String, Object> user = new HashMap<>();
+        user.put("Username", username);
+        user.put("Email address", emailAddress);
+
+        documentReference.set(user)
+                .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
+                .addOnFailureListener(e -> Log.d(TAG, e.toString()));
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void showError(EditText input, String errorText) {

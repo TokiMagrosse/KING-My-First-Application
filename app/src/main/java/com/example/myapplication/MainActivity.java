@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,12 +91,19 @@ public class MainActivity extends AppCompatActivity {
                         progress_bar.setVisibility(ViewStub.GONE);
 
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this, "You have successfully logged in",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                            startActivity(intent);
-                            // finish();
+                            FirebaseUser user = m_auth.getCurrentUser();
+                            if (user != null && user.isEmailVerified()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Toast.makeText(MainActivity.this, "You have successfully logged in",
+                                        Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                startActivity(intent);
+                                // finish();
+                            } else {
+                                // Email is not verified
+                                Toast.makeText(MainActivity.this, "Please verify your email address",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(MainActivity.this, "Invalid email or password, please try again",
                                     Toast.LENGTH_SHORT).show();
@@ -122,4 +130,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
 

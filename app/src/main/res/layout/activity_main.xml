@@ -33,7 +33,7 @@
             android:text="@string/king"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="37sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_height="48sp"
                 android:layout_marginTop="80sp"
                 android:background="@drawable/rounded_corner"
-                android:drawableStart="@drawable/outline_account_circle_24"
+                android:drawableStart="@drawable/email_icon_2"
                 android:drawablePadding="10sp"
                 android:fontFamily="@font/alata"
                 android:hint="@string/enter_username_or_email"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="10sp"
                 android:fontFamily="@font/alata"
                 android:background="@drawable/rounded_corner"
-                android:drawableStart="@drawable/baseline_security_24"
+                android:drawableStart="@drawable/password_logo_icon_2"
                 android:drawablePadding="10sp"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
@@ -76,7 +76,7 @@
                 android:layout_width="120sp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="8sp"
                 android:layout_marginStart="385sp"
                 android:fontFamily="@font/alata"
                 android:text="@string/forgot_password"
@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:textStyle="bold"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="10sp"
                 android:backgroundTint="@color/super_dark_green"
                 android:text="@string/log_in"
                 android:fontFamily="@font/alata"
@@ -113,14 +113,14 @@
             android:theme="@style/colored_checkbox."
             android:text="@string/remember_me"
             android:layout_marginStart="47sp"
-            android:layout_marginTop="195sp"
+            android:layout_marginTop="198.5sp"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/register_text_reference"
             android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="282sp"
+            android:layout_marginTop="290sp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/alata"
