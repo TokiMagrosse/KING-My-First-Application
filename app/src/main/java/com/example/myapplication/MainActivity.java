@@ -63,23 +63,27 @@ public class MainActivity extends AppCompatActivity {
         boolean isValid = true;
 
         if (checkEmailAddress.isEmpty()) {
-            showError(email_address, "Please enter your email");
+            showError(email_address, "Please enter your email.");
             isValid = false;
         }
         else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".")) {
-            showError(email_address, "Please enter a valid email address");
+            showError(email_address, "Please enter a valid email address.");
             isValid = false;
         }
         else if (checkPassword.isEmpty()) {
-            showError(password, "Please enter your password");
+            showError(password, "Please enter your password.");
             isValid = false;
         }
         else if (checkPassword.length() < 8) {
-            showError(password, "Your password length must be at least 8 characters");
+            showError(password, "Your password length must be at least 8 characters.");
+            isValid = false;
+        }
+        else if (checkPassword.contains(" ")) {
+            showError(password, "Your password should not contain spaces.");
             isValid = false;
         }
         else if (checkPassword.length() > 64) {
-            showError(password, "Your password can have at most 64 characters");
+            showError(password, "Your password can have at most 64 characters.");
             isValid = false;
         }
 
@@ -94,18 +98,18 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = m_auth.getCurrentUser();
                             if (user != null && user.isEmailVerified()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(MainActivity.this, "You have successfully logged in",
+                                Toast.makeText(MainActivity.this, "You have successfully logged in.",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                                 startActivity(intent);
                                 // finish();
                             } else {
                                 // Email is not verified
-                                Toast.makeText(MainActivity.this, "Please verify your email address",
+                                Toast.makeText(MainActivity.this, "Please verify your email address.",
                                         Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Invalid email or password, please try again",
+                            Toast.makeText(MainActivity.this, "Invalid email or password, please try again.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

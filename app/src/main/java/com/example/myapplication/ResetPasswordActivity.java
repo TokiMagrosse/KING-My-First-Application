@@ -46,10 +46,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         boolean isValid = true;
 
         if (email.isEmpty()) {
-            showError(edit_text_email, "Please enter your email");
+            showError(edit_text_email, "Please enter your email.");
             isValid = false;
-        } else if (!email.contains("@") && !email.contains(".")) {
-            showError(edit_text_email, "Please enter a valid email address");
+        } else if (!email.contains("@") && !email.contains(".") || !email.contains("@") || !email.contains(".")) {
+            showError(edit_text_email, "Please enter a valid email address.");
             isValid = false;
         }
 

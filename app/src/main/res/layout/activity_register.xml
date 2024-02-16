@@ -69,7 +69,7 @@
             android:layout_height="48sp"
             android:layout_marginTop="7.5sp"
             android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/baseline_security_24"
+            android:drawableStart="@drawable/security_icon_2"
             android:drawablePadding="10sp"
             android:fontFamily="@font/alata"
             android:hint="@string/confirm_password"

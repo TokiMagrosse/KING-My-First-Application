@@ -93,39 +93,43 @@ public class RegisterActivity extends AppCompatActivity {
             isValid = false;
         }
         else if (checkUsername.contains(" ")) {
-            showError(username, "Your username should not contain spaces");
+            showError(username, "Your username should not contain spaces.");
             isValid = false;
         }
         else if (checkUsername.length() <= 5) {
-            showError(username, "Your username length must be at least 6 characters");
+            showError(username, "Your username length must be at least 6 characters.");
             isValid = false;
         }
         else if (checkEmailAddress.isEmpty()) {
-            showError(email_address, "Please enter your email");
+            showError(email_address, "Please enter your email.");
             isValid = false;
         }
-        else if (!checkEmailAddress.contains("@")) {
-            showError(email_address, "Please enter a valid email address");
+        else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".") || !checkEmailAddress.contains("@") || !checkEmailAddress.contains(".")) {
+            showError(email_address, "Please enter a valid email address.");
             isValid = false;
         }
         else if (checkPassword.isEmpty()) {
-            showError(register_password, "Please enter your password");
+            showError(register_password, "Please enter your password.");
             isValid = false;
         }
         else if (checkPassword.length() < 8) {
-            showError(register_password, "Your password length must be at least 8 characters");
+            showError(register_password, "Your password length must be at least 8 characters.");
+            isValid = false;
+        }
+        else if (checkPassword.contains(" ")) {
+            showError(register_password, "Your password should not contain spaces.");
             isValid = false;
         }
         else if (checkPassword.length() > 64) {
-            showError(register_password, "Your password can have at most 64 characters");
+            showError(register_password, "Your password can have at most 64 characters.");
             isValid = false;
         }
         else if (checkConfirmedPassword.isEmpty()) {
-            showError(confirm_password, "Please confirm your password");
+            showError(confirm_password, "Please confirm your password.");
             isValid = false;
         }
         else if (!checkConfirmedPassword.equals(checkPassword)) {
-            showError(confirm_password, "Your password doesn't match the previous one");
+            showError(confirm_password, "Your password doesn't match the previous one.");
             isValid = false;
         }
 
@@ -141,19 +145,19 @@ public class RegisterActivity extends AppCompatActivity {
                             if (f_user != null) {
                                 f_user.sendEmailVerification()
                                         .addOnSuccessListener(unused -> {
-                                            Toast.makeText(RegisterActivity.this, "Email verification link sent to your email", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Email verification link sent to your email.", Toast.LENGTH_SHORT).show();
                                             // Proceed with user registration
                                             completeRegistration(checkUsername, checkEmailAddress);
                                         })
                                         .addOnFailureListener(e -> {
                                             Log.d(TAG, "Email not sent" + e.getMessage());
-                                            Toast.makeText(RegisterActivity.this, "Failed to send email verification link", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Failed to send email verification link.", Toast.LENGTH_SHORT).show();
                                         });
                             } else {
-                                Toast.makeText(RegisterActivity.this, "Failed to get current user", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Failed to get current user.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
