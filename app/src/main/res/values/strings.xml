@@ -34,4 +34,5 @@
     <string name="total_wins">Total wins:</string>
     <string name="your_coins">Your coins:</string>
     <string name="verify_your_email">Verify your email</string>
+    <string name="total_losts">Total losts:</string>
 </resources>
