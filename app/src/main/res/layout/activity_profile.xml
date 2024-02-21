@@ -8,48 +8,64 @@
     android:background="@color/green_background"
     tools:context=".ProfileActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:layout_width="720sp"
         android:layout_height="65sp"
+        android:backgroundTint="@color/super_dark_green"
         android:orientation="horizontal"
-        android:background="@color/super_dark_green"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="7.25dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="7.25dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/your_profile_picture"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/default_profile_outlines"
-            android:src="@drawable/default_profile_picture"
-            android:contentDescription="@string/todo" />
+            <ImageView
+                android:id="@+id/your_profile_picture"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/default_profile_outlines"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/default_profile_picture" />
 
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/your_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="67sp"
+            android:layout_marginTop="17sp"
             android:fontFamily="@font/alata"
             android:gravity="start"
             android:text="@string/your_username"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:layout_marginTop="18sp"
-            android:layout_marginStart="13sp"/>
+            android:textSize="18sp" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="40sp"
+            android:layout_height="44sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="670sp"
+            android:backgroundTint="@color/green_background"
+            android:drawableEnd="@drawable/menu"
+            android:drawablePadding="15dp"
+            android:padding="5dp"
+            app:cornerRadius="10dp" />
+
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/profile_button"
@@ -61,10 +77,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintVertical_bias="0.36" />
 
     <Button
         android:id="@+id/log_out_button"
@@ -76,10 +92,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.972"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.556" />
 
     <TextView
         android:id="@+id/your_email"
@@ -96,5 +112,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.958" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
