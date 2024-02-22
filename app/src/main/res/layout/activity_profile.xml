@@ -9,6 +9,7 @@
     tools:context=".ProfileActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="720sp"
         android:layout_height="65sp"
         android:backgroundTint="@color/super_dark_green"
@@ -45,12 +46,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="67sp"
-            android:layout_marginTop="17sp"
+            android:layout_marginTop="5sp"
             android:fontFamily="@font/alata"
             android:gravity="start"
             android:text="@string/your_username"
             android:textColor="@color/white"
             android:textSize="18sp" />
+        <TextView
+            android:id="@+id/my_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="67sp"
+            android:layout_marginTop="34sp"
+            android:fontFamily="@font/alata"
+            android:gravity="start"
+            android:text="200"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/menu_button"
@@ -67,35 +79,62 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/profile_button"
-        android:layout_width="150sp"
-        android:layout_height="50sp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="225sp"
+        android:layout_height="250sp"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="@color/super_dark_green"
-        android:fontFamily="@font/alata"
-        android:text="@string/play"
-        android:textStyle="bold"
+        app:cardCornerRadius="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.951">
 
-    <Button
-        android:id="@+id/log_out_button"
-        android:layout_width="140sp"
-        android:layout_height="50sp"
-        android:backgroundTint="@color/super_dark_green"
-        android:fontFamily="@font/alata"
-        android:text="@string/log_out"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.556" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/play_online"
+                android:layout_width="175sp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/grey"
+                android:fontFamily="@font/alata"
+                android:text="@string/play"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/play_offline"
+                android:layout_width="175sp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15sp"
+                android:backgroundTint="@color/grey"
+                android:fontFamily="@font/alata"
+                android:text="@string/play_offline"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/log_out_button"
+                android:layout_width="175sp"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15sp"
+                android:backgroundTint="@color/grey"
+                android:fontFamily="@font/alata"
+                android:text="@string/log_out"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/your_email"
@@ -108,10 +147,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.96" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

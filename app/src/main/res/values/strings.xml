@@ -26,7 +26,7 @@
     <string name="send_password_reset_link">SEND PASSWORD RESET LINK</string>
     <string name="reset_your_password">RESET YOUR PASSWORD</string>
     <string name="remember_my_password">I already remember my password</string>
-    <string name="play">PLAY</string>
+    <string name="play">PLAY ONLINE</string>
     <string name="your_rating">Your rating:</string>
     <string name="your_rank">Your rank:</string>
     <string name="seven_of_clubs">Seven of clubs</string>
@@ -35,4 +35,5 @@
     <string name="your_coins">Your coins:</string>
     <string name="verify_your_email">Verify your email</string>
     <string name="total_losts">Total losts:</string>
+    <string name="play_offline">PLAY OFFLINE</string>
 </resources>
