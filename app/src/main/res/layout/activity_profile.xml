@@ -108,7 +108,8 @@
                 android:fontFamily="@font/alata"
                 android:text="@string/play"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:cornerRadius="15sp" />
 
             <Button
                 android:id="@+id/play_offline"
@@ -120,7 +121,8 @@
                 android:fontFamily="@font/alata"
                 android:text="@string/play_offline"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:cornerRadius="15sp" />
 
             <Button
                 android:id="@+id/log_out_button"
@@ -132,7 +134,8 @@
                 android:fontFamily="@font/alata"
                 android:text="@string/log_out"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:cornerRadius="15sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
