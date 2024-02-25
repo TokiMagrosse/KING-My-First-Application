@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,5 +50,12 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         email_address = findViewById(R.id.email_in_profile);
         password = findViewById(R.id.password_in_profile);
         country = findViewById(R.id.country_in_profile);
+
+        back_to_main.setOnClickListener(view -> {
+            Intent intent = new Intent(UserProfileAttributesActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 }
