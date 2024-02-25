@@ -35,8 +35,8 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile_attributes);
         f_auth = FirebaseAuth.getInstance();
         f_store = FirebaseFirestore.getInstance();
+        user = f_auth.getCurrentUser();
         userID = Objects.requireNonNull(f_auth.getCurrentUser()).getUid();
-
 
         rating = findViewById(R.id.rating);
         rank = findViewById(R.id.rank);
@@ -54,6 +54,13 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         back_to_main.setOnClickListener(view -> {
             Intent intent = new Intent(UserProfileAttributesActivity.this, ProfileActivity.class);
             startActivity(intent);
+        });
+
+        change_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
         });
 
 
