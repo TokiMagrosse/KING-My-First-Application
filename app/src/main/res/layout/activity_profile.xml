@@ -49,7 +49,7 @@
                     android:layout_height="50sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_profile_picture" />
+                    android:src="@drawable/default_profile_picture_bg" />
 
             </com.google.android.material.card.MaterialCardView>
 
