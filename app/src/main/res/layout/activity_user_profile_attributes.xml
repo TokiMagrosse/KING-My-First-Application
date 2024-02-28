@@ -57,7 +57,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/default_profile_outlines"
                         android:contentDescription="@string/todo"
-                        android:src="@drawable/default_profile_picture_bg" />
+                        android:src="@drawable/default_profile_picture" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -337,6 +337,20 @@
                 tools:layout_editor_absoluteY="319dp">
 
                 <Button
+                    android:id="@+id/my_progress_button"
+                    android:layout_width="180sp"
+                    android:layout_height="53sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="40dp"
+                    android:backgroundTint="@color/fucking_green"
+                    android:fontFamily="@font/alata"
+                    android:text="SAVE CHANGES"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:cornerRadius="10sp" />
+
+                <Button
                     android:id="@+id/back_to_main_button"
                     android:layout_width="180sp"
                     android:layout_height="53sp"
@@ -345,21 +359,6 @@
                     android:backgroundTint="@color/fucking_green"
                     android:fontFamily="@font/alata"
                     android:text="@string/back_to_main"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:cornerRadius="10sp" />
-
-                <Button
-                    android:id="@+id/my_progress_button"
-                    android:layout_width="180sp"
-                    android:layout_height="53sp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginBottom="40dp"
-                    android:backgroundTint="@color/fucking_green"
-                    android:fontFamily="@font/alata"
-                    android:text="@string/my_progress"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:cornerRadius="10sp" />

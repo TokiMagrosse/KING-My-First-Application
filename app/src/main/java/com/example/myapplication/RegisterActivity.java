@@ -29,6 +29,8 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    public byte password_length;
+    public String Username, EmailAddress, Password;
     EditText username, email_address, register_password, confirm_password;
     Button register_button;
     TextView back_to_login;
@@ -70,9 +72,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void checkCredentials() {
         String checkUsername = username.getText().toString().trim();
         String checkEmailAddress = email_address.getText().toString().trim();
-        String checkPassword = register_password.getText().toString().trim();
+        String checkPassword = register_password.getText().toString();
         String checkConfirmedPassword = confirm_password.getText().toString().trim();
 
+
+        password_length = (byte) checkPassword.length();
         boolean isValid = true;
 
         if (checkUsername.isEmpty()) {
@@ -132,6 +136,10 @@ public class RegisterActivity extends AppCompatActivity {
             showError(confirm_password, "Your password doesn't match the previous one.");
             isValid = false;
         }
+
+        Username = checkUsername;
+        EmailAddress = checkEmailAddress;
+        Password = checkConfirmedPassword;
 
         progress_bar.setVisibility(View.VISIBLE);
 
