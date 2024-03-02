@@ -36,7 +36,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     ImageView profile_picture;
     String userID;
     Button change_profile, save_changes, back_to_main;
-    TextView username, email_address, password, country;
+    TextView username, email_address, gender, country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +58,16 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         back_to_main = findViewById(R.id.back_to_main_button);
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
-        password = findViewById(R.id.password_in_profile);
+        gender = findViewById(R.id.gender_in_profile);
         country = findViewById(R.id.country_in_profile);
 
         // Assuming you have obtained user data after registration
-        RegisterActivity x = new RegisterActivity();
+        RegisterActivity reg_object = new RegisterActivity();
 
         String userEmail = user.getEmail();
 
-        DocumentReference documentReference = f_store.collection("all my users").document(user.getUid());
-        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+        DocumentReference documentReferenceOne = f_store.collection("all my users").document(user.getUid());
+        documentReferenceOne.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String my_username = documentSnapshot.getString("Username");
                 username.setText(my_username);
@@ -80,11 +80,22 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             username.setText("Error retrieving username");
         });
 
-        String userPassword = x.Password;
+        DocumentReference documentReferenceTwo = f_store.collection("all my users").document(user.getUid());
+        documentReferenceTwo.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String my_location = documentSnapshot.getString("Country");
+                country.setText(my_location);
+            } else {
+                // Handle the case where user data is not found
+                country.setText("Location not available");
+            }
+        }).addOnFailureListener(e -> {
+            // Handle the failure to retrieve user data
+            country.setText("Error retrieving your location");
+        });
 
         // Set TextViews with user data
         email_address.setText(userEmail);
-        password.setText(userPassword);
 
         // Setting the ImageView to be square
         profile_picture.post(() -> {

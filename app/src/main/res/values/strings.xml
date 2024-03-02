@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">King of Hearts</string>
+    <string name="app_name">Poison King</string>
     <string name="log_in">LOG IN</string>
     <string name="register">Don\'t have an account? Register now</string>
     <string name="email">Email address</string>
@@ -34,7 +34,7 @@
     <string name="total_wins">Total wins:</string>
     <string name="your_coins">Your coins:</string>
     <string name="verify_your_email">Verify your email</string>
-    <string name="total_losts">Total losts:</string>
+    <string name="total_loses">Total loses:</string>
     <string name="play_offline">PLAY OFFLINE</string>
     <string name="my_profile">MY PROFILE</string>
     <string name="change_profile">CHANGE PROFILE</string>
@@ -45,4 +45,10 @@
     <string name="c_1">C1</string>
     <string name="_0">0</string>
     <string name="my_progress">MY PROGRESS</string>
+    <string name="enter_your_country">Enter your country</string>
+    <string name="gender">Gender</string>
+    <string name="total_games">Total games:</string>
+    <string name="your_title">Newbie</string>
+    <string name="wins">Wins:</string>
+    <string name="loses">Loses:</string>
 </resources>

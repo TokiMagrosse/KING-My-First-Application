@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar progress_bar;
+    public byte password_length;
     private FirebaseAuth m_auth;
     TextView register_text_reference, forgot_password;
     Button login_button;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkCredentials() {
         String checkEmailAddress = email_address.getText().toString().trim();
-        String checkPassword = password.getText().toString().trim();
+        String checkPassword = password.getText().toString();
         boolean isValid = true;
 
         if (checkEmailAddress.isEmpty()) {
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             isValid = false;
         }
 
+
         progress_bar.setVisibility(ViewStub.VISIBLE);
 
         if (isValid) {
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(MainActivity.this, "You have successfully logged in.",
                                         Toast.LENGTH_SHORT).show();
+                                password_length = (byte) checkPassword.length();
                                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                                 startActivity(intent);
                                 // finish();

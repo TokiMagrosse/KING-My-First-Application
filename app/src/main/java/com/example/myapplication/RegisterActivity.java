@@ -29,11 +29,9 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    public byte password_length;
-    public String Username, EmailAddress, Password;
-    EditText username, email_address, register_password, confirm_password;
-    Button register_button;
-    TextView back_to_login;
+    public String Username, EmailAddress, Country;
+    EditText username, email_address, register_password, confirm_password, location;
+    Button register_button, back_to_login;
     FirebaseAuth m_auth;
     ProgressBar progress_bar;
     FirebaseFirestore f_store;
@@ -52,7 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
         f_store = FirebaseFirestore.getInstance();
         progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
-        back_to_login = findViewById(R.id.back_to_login_activity);
+        back_to_login = findViewById(R.id.back_to_login);
+        location = findViewById(R.id.country_location);
 
         register_button.setOnClickListener(v -> checkCredentials());
 
@@ -74,9 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         String checkEmailAddress = email_address.getText().toString().trim();
         String checkPassword = register_password.getText().toString();
         String checkConfirmedPassword = confirm_password.getText().toString().trim();
+        String checkLocation = location.getText().toString().trim();
 
-
-        password_length = (byte) checkPassword.length();
         boolean isValid = true;
 
         if (checkUsername.isEmpty()) {
@@ -94,6 +92,10 @@ public class RegisterActivity extends AppCompatActivity {
                 checkUsername.contains("<") || checkUsername.contains(">") ||
                 checkUsername.contains(",") || checkUsername.contains("'")) {
             showError(username, "Your username can contain only specific character ( _ )");
+            isValid = false;
+        }
+        else if (checkLocation.isEmpty()) {
+            showError(location, "Please enter your country");
             isValid = false;
         }
         else if (checkUsername.contains(" ")) {
@@ -139,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Username = checkUsername;
         EmailAddress = checkEmailAddress;
-        Password = checkConfirmedPassword;
+        Country = checkLocation;
 
         progress_bar.setVisibility(View.VISIBLE);
 
@@ -155,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .addOnSuccessListener(unused -> {
                                             Toast.makeText(RegisterActivity.this, "Email verification link sent to your email.", Toast.LENGTH_SHORT).show();
                                             // Proceed with user registration
-                                            completeRegistration(checkUsername, checkEmailAddress);
+                                            completeRegistration(checkUsername, checkEmailAddress, checkLocation);
                                         })
                                         .addOnFailureListener(e -> {
                                             Log.d(TAG, "Email not sent" + e.getMessage());
@@ -173,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void completeRegistration(String username, String emailAddress) {
+    private void completeRegistration(String username, String emailAddress, String countryLocation) {
         Toast.makeText(RegisterActivity.this, "You have successfully registered", Toast.LENGTH_SHORT).show();
 
         userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
@@ -181,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
         Map<String, Object> user = new HashMap<>();
         user.put("Username", username);
         user.put("Email address", emailAddress);
+        user.put("Country", countryLocation);
 
         documentReference.set(user)
                 .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
