@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.poisonousking"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.poisonousking"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

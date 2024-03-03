@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.poisonousking;
 
 import org.junit.Test;
 

@@ -9,124 +9,128 @@
     android:background="@color/green_background"
     tools:context=".RegisterActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="550sp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:autofillHints="username"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/baseline_account_circle_26"
-            android:drawablePadding="10sp"
-            android:fontFamily="@font/alata"
-            android:hint="@string/your_nickname"
-            android:inputType="textPersonName"
-            android:padding="12sp" />
-
-        <EditText
-            android:id="@+id/email_address"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:layout_marginTop="7.5sp"
-            android:autofillHints="emailAddress"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/email_icon_2"
-            android:drawablePadding="10sp"
-            android:fontFamily="@font/alata"
-            android:hint="@string/enter_your_email"
-            android:inputType="textEmailAddress"
-            android:padding="12sp" />
-
-        <EditText
-            android:id="@+id/register_password"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:layout_marginTop="7.5sp"
-            android:autofillHints="password"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/password_logo_icon_2"
-            android:drawablePadding="10sp"
-            android:fontFamily="@font/alata"
-            android:hint="@string/enter_a_strong_password"
-            android:inputType="textPassword"
-            android:padding="12sp" />
-
-        <EditText
-            android:id="@+id/confirm_password"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:layout_marginTop="7.5sp"
-            android:autofillHints="password"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/security_icon_2"
-            android:drawablePadding="10sp"
-            android:fontFamily="@font/alata"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            android:padding="12sp" />
-
-        <EditText
-            android:id="@+id/country_location"
-            android:layout_width="match_parent"
-            android:layout_height="48sp"
-            android:layout_marginTop="7.5sp"
-            android:autofillHints="country_location"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/country_icon_2"
-            android:drawablePadding="10sp"
-            android:fontFamily="@font/alata"
-            android:hint="@string/enter_your_country"
-            android:inputType="text"
-            android:padding="12sp" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="350sp"
-            android:layout_height="50sp"
-            android:layout_marginTop="12.5sp"
-            android:backgroundTint="@color/super_dark_green"
-            android:fontFamily="@font/alata"
-            android:layout_gravity="center"
-            android:text="@string/register_button"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:cornerRadius="12sp" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/back_to_login"
-        android:layout_width="40sp"
-        android:layout_height="44sp"
-        android:layout_marginStart="4dp"
-        android:backgroundTint="@color/grey_2"
-        android:drawableEnd="@drawable/arrow_back_icon_2"
-        android:drawablePadding="15sp"
-        android:padding="8sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.49">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="550sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:autofillHints="username"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/baseline_account_circle_26"
+                android:drawablePadding="10sp"
+                android:fontFamily="@font/alata"
+                android:hint="@string/your_nickname"
+                android:inputType="textPersonName"
+                android:padding="12sp" />
+
+            <EditText
+                android:id="@+id/email_address"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:layout_marginTop="4sp"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/email_icon_2"
+                android:drawablePadding="10sp"
+                android:fontFamily="@font/alata"
+                android:hint="@string/enter_your_email"
+                android:inputType="textEmailAddress"
+                android:padding="12sp" />
+
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:layout_marginTop="4sp"
+                android:autofillHints="password"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/password_logo_icon_2"
+                android:drawablePadding="10sp"
+                android:fontFamily="@font/alata"
+                android:hint="@string/enter_a_strong_password"
+                android:inputType="textPassword"
+                android:padding="12sp" />
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:layout_marginTop="4sp"
+                android:autofillHints="password"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/security_icon_2"
+                android:drawablePadding="10sp"
+                android:fontFamily="@font/alata"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:padding="12sp" />
+
+            <EditText
+                android:id="@+id/country_location"
+                android:layout_width="match_parent"
+                android:layout_height="48sp"
+                android:layout_marginTop="4sp"
+                android:autofillHints="country_location"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/country_icon_2"
+                android:drawablePadding="10sp"
+                android:fontFamily="@font/alata"
+                android:hint="@string/enter_your_country"
+                android:inputType="text"
+                android:padding="12sp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8sp"
+                android:backgroundTint="@color/super_dark_green"
+                android:fontFamily="@font/alata"
+                android:text="@string/register_button"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="12sp" />
+
+            <TextView
+                android:id="@+id/back_to_login_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2sp"
+                android:fontFamily="@font/alata"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

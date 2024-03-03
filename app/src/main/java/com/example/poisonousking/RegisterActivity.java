@@ -1,23 +1,19 @@
-package com.example.myapplication;
+package com.example.poisonousking;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,8 +27,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     public String Username, EmailAddress, Country;
     EditText username, email_address, register_password, confirm_password, location;
-    Button register_button, back_to_login;
+    Button register_button;
     FirebaseAuth m_auth;
+    TextView back_to_login_text;
     ProgressBar progress_bar;
     FirebaseFirestore f_store;
     String userID;
@@ -48,9 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
         confirm_password = findViewById(R.id.confirm_password);
         m_auth = FirebaseAuth.getInstance();
         f_store = FirebaseFirestore.getInstance();
+        back_to_login_text = findViewById(R.id.back_to_login_text);
         progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
-        back_to_login = findViewById(R.id.back_to_login);
         location = findViewById(R.id.country_location);
 
         register_button.setOnClickListener(v -> checkCredentials());
@@ -61,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
             // finish();
         }
 
-        back_to_login.setOnClickListener(v -> {
+        back_to_login_text.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
         });

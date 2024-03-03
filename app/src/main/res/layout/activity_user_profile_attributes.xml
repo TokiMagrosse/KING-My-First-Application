@@ -26,7 +26,6 @@
             android:layout_gravity="center"
             app:cardBackgroundColor="@color/fucking_green"
             app:cardCornerRadius="10sp"
-            app:cardElevation="2.3sp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="40dp">
 
@@ -275,7 +274,6 @@
                 android:layout_height="275sp"
                 android:backgroundTint="@color/fucking_green"
                 app:cardCornerRadius="10sp"
-                app:cardElevation="2.3sp"
                 tools:layout_editor_absoluteX="315dp"
                 tools:layout_editor_absoluteY="40dp">
 
@@ -388,7 +386,7 @@
                     android:layout_marginBottom="40dp"
                     android:backgroundTint="@color/fucking_green"
                     android:fontFamily="@font/alata"
-                    android:text="SAVE CHANGES"
+                    android:text="@string/save_changes"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:cornerRadius="10sp" />
