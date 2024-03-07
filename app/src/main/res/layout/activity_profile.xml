@@ -111,31 +111,6 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/play_online"
-                    android:layout_width="175sp"
-                    android:layout_height="50sp"
-                    android:layout_gravity="center_horizontal"
-                    android:backgroundTint="@color/grey_2"
-                    android:fontFamily="@font/alata"
-                    android:text="@string/play"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:cornerRadius="10sp" />
-
-                <Button
-                    android:id="@+id/play_offline"
-                    android:layout_width="175sp"
-                    android:layout_height="50sp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15sp"
-                    android:backgroundTint="@color/grey_2"
-                    android:fontFamily="@font/alata"
-                    android:text="@string/play_offline"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:cornerRadius="10sp" />
-
-                <Button
                     android:id="@+id/log_out_button"
                     android:layout_width="175sp"
                     android:layout_height="50sp"

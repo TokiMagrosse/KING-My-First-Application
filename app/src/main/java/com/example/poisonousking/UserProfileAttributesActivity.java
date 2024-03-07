@@ -110,7 +110,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         });
 
         // Save button functionality to update data in Firestore
-        save_changes.setOnClickListener(v -> {
+        save_changes.setOnClickListener(v -> { // <-
             // Get updated values from TextViews
             String updatedUsername = username.getText().toString();
             String updatedEmail = email_address.getText().toString();
@@ -125,7 +125,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                         Log.e(TAG, "Error updating data", e);
                         Toast.makeText(UserProfileAttributesActivity.this, "Failed to update data", Toast.LENGTH_SHORT).show();
                     });
-        });
+        }); // <-
     }
 
     @Override
