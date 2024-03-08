@@ -129,24 +129,31 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         if (requestCode == 2389 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 Uri image_uri = data.getData();
-                // profile_picture.setImageURI(image_uri);
-
-                uploadImageToFirebase(image_uri);
+                if (image_uri != null) {
+                    uploadImageToFirebase(image_uri);
+                } else {
+                    Toast.makeText(this, "Failed to obtain image URI", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void uploadImageToFirebase(Uri image_uri) {
         // Uploading image to Firebase storage
-        StorageReference file_reference = storage_reference.child("profile.jpg");
-        file_reference.putFile(image_uri).addOnSuccessListener(taskSnapshot -> {
-            Toast.makeText(UserProfileAttributesActivity.this, "Your image uploaded", Toast.LENGTH_SHORT).show();
-            file_reference.getDownloadUrl().addOnSuccessListener(uri -> {
-                Picasso.get().load(uri).into(profile_picture);
-            });
-
-        }).addOnFailureListener(e -> {
-            Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload your message", Toast.LENGTH_SHORT).show();
-        });
+        StorageReference file_reference = storage_reference.child("king-of-hearts-red-min_1200x1200.jpg");
+        file_reference.putFile(image_uri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    Toast.makeText(UserProfileAttributesActivity.this, "Your image uploaded", Toast.LENGTH_SHORT).show();
+                    file_reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        Picasso.get().load(uri).into(profile_picture);
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload your image", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Error uploading image: ", e);
+                });
     }
+
 }
