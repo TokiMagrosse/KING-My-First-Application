@@ -93,8 +93,8 @@ public class RegisterActivity extends AppCompatActivity {
             showError(username, "Your username should not contain spaces.");
             isValid = false;
         }
-        else if (checkUsername.length() <= 5) {
-            showError(username, "Your username length must be at least 6 characters.");
+        else if (checkUsername.length() < 5) {
+            showError(username, "Your username length must be at least 5 characters.");
             isValid = false;
         }
         else if (checkEmailAddress.isEmpty()) {
