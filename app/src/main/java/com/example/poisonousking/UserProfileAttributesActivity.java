@@ -2,6 +2,7 @@ package com.example.poisonousking;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,15 +17,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
 public class UserProfileAttributesActivity extends AppCompatActivity {
 
+    StorageReference storage_reference;
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
@@ -32,7 +40,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     ImageView profile_picture;
     String userID;
     Button change_profile, save_changes, back_to_main;
-    TextView username, email_address, gender, country;
+    TextView username, email_address, gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
 
         f_auth = FirebaseAuth.getInstance();
         f_store = FirebaseFirestore.getInstance();
+        storage_reference = FirebaseStorage.getInstance().getReference();
         user = f_auth.getCurrentUser();
         userID = Objects.requireNonNull(f_auth.getCurrentUser()).getUid();
 
@@ -55,7 +64,6 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
         gender = findViewById(R.id.gender_in_profile);
-        country = findViewById(R.id.country_in_profile);
 
         // Assuming you have obtained user data after registration
         RegisterActivity reg_object = new RegisterActivity();
@@ -69,25 +77,11 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                 username.setText(my_username);
             } else {
                 // Handle the case where user data is not found
-                username.setText("Username not available");
+                username.setText("@#*(%&^$^@");
             }
         }).addOnFailureListener(e -> {
             // Handle the failure to retrieve user data
-            username.setText("Error retrieving username");
-        });
-
-        DocumentReference documentReferenceTwo = f_store.collection("all my users").document(user.getUid());
-        documentReferenceTwo.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                String my_location = documentSnapshot.getString("Country");
-                country.setText(my_location);
-            } else {
-                // Handle the case where user data is not found
-                country.setText("Location not available");
-            }
-        }).addOnFailureListener(e -> {
-            // Handle the failure to retrieve user data
-            country.setText("Error retrieving your location");
+            username.setText("@)$&%*%@^$");
         });
 
         // Set TextViews with user data
@@ -110,7 +104,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         });
 
         // Save button functionality to update data in Firestore
-        save_changes.setOnClickListener(v -> { // <-
+        /*save_changes.setOnClickListener(v -> { // <-
             // Get updated values from TextViews
             String updatedUsername = username.getText().toString();
             String updatedEmail = email_address.getText().toString();
@@ -125,7 +119,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                         Log.e(TAG, "Error updating data", e);
                         Toast.makeText(UserProfileAttributesActivity.this, "Failed to update data", Toast.LENGTH_SHORT).show();
                     });
-        }); // <-
+        }); // <-*/
     }
 
     @Override
@@ -135,8 +129,24 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         if (requestCode == 2389 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 Uri image_uri = data.getData();
-                profile_picture.setImageURI(image_uri);
+                // profile_picture.setImageURI(image_uri);
+
+                uploadImageToFirebase(image_uri);
             }
         }
+    }
+
+    private void uploadImageToFirebase(Uri image_uri) {
+        // Uploading image to Firebase storage
+        StorageReference file_reference = storage_reference.child("profile.jpg");
+        file_reference.putFile(image_uri).addOnSuccessListener(taskSnapshot -> {
+            Toast.makeText(UserProfileAttributesActivity.this, "Your image uploaded", Toast.LENGTH_SHORT).show();
+            file_reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                Picasso.get().load(uri).into(profile_picture);
+            });
+
+        }).addOnFailureListener(e -> {
+            Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload your message", Toast.LENGTH_SHORT).show();
+        });
     }
 }

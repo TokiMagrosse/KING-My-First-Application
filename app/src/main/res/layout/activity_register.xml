@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.49">
+        app:layout_constraintVertical_bias="0.496">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -48,7 +48,7 @@
                 android:id="@+id/email_address"
                 android:layout_width="match_parent"
                 android:layout_height="48sp"
-                android:layout_marginTop="4sp"
+                android:layout_marginTop="7.5sp"
                 android:autofillHints="emailAddress"
                 android:background="@drawable/rounded_corner"
                 android:drawableStart="@drawable/email_icon_2"
@@ -62,7 +62,7 @@
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="48sp"
-                android:layout_marginTop="4sp"
+                android:layout_marginTop="7.5sp"
                 android:autofillHints="password"
                 android:background="@drawable/rounded_corner"
                 android:drawableStart="@drawable/password_logo_icon_2"
@@ -76,7 +76,7 @@
                 android:id="@+id/confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="48sp"
-                android:layout_marginTop="4sp"
+                android:layout_marginTop="7.5sp"
                 android:autofillHints="password"
                 android:background="@drawable/rounded_corner"
                 android:drawableStart="@drawable/security_icon_2"
@@ -84,20 +84,6 @@
                 android:fontFamily="@font/alata"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
-                android:padding="12sp" />
-
-            <EditText
-                android:id="@+id/country_location"
-                android:layout_width="match_parent"
-                android:layout_height="48sp"
-                android:layout_marginTop="4sp"
-                android:autofillHints="country_location"
-                android:background="@drawable/rounded_corner"
-                android:drawableStart="@drawable/country_icon_2"
-                android:drawablePadding="10sp"
-                android:fontFamily="@font/alata"
-                android:hint="@string/enter_your_country"
-                android:inputType="text"
                 android:padding="12sp" />
 
             <ProgressBar
@@ -112,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="8sp"
+                android:layout_marginTop="15sp"
                 android:backgroundTint="@color/super_dark_green"
                 android:fontFamily="@font/alata"
                 android:text="@string/register_button"
@@ -125,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="2sp"
+                android:layout_marginTop="7.5sp"
                 android:fontFamily="@font/alata"
                 android:text="@string/already_have_an_account"
                 android:textColor="@color/white" />
