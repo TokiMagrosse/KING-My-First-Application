@@ -52,4 +52,5 @@
     <string name="wins">Wins:</string>
     <string name="loses">Loses:</string>
     <string name="save_changes">SAVE CHANGES</string>
+    <string name="id">ID</string>
 </resources>

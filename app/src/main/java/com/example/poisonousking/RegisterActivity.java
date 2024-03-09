@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +23,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    public String Username, EmailAddress, Country;
+    public String Username, EmailAddress, ID;
     EditText username, email_address, register_password, confirm_password;
     Button register_button;
     FirebaseAuth m_auth;
@@ -132,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Username = checkUsername;
         EmailAddress = checkEmailAddress;
+        ID = generatingUserID();
 
         progress_bar.setVisibility(View.VISIBLE);
 
@@ -147,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         .addOnSuccessListener(unused -> {
                                             Toast.makeText(RegisterActivity.this, "Email verification link sent to your email.", Toast.LENGTH_SHORT).show();
                                             // Proceed with user registration
-                                            completeRegistration(checkUsername, checkEmailAddress);
+                                            completeRegistration(checkUsername, checkEmailAddress, generatingUserID());
                                         })
                                         .addOnFailureListener(e -> {
                                             Log.d(TAG, "Email not sent" + e.getMessage());
@@ -165,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void completeRegistration(String username, String emailAddress) {
+    private void completeRegistration(String username, String emailAddress, String ID) {
         Toast.makeText(RegisterActivity.this, "You have successfully registered", Toast.LENGTH_SHORT).show();
 
         userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
@@ -173,6 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
         Map<String, Object> user = new HashMap<>();
         user.put("Username", username);
         user.put("Email address", emailAddress);
+        user.put("Personal ID", ID);
 
         documentReference.set(user)
                 .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
@@ -185,5 +189,29 @@ public class RegisterActivity extends AppCompatActivity {
     private void showError(EditText input, String errorText) {
         input.setError(errorText);
         input.requestFocus();
+    }
+
+    private String generatingUserID() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("user_id", null);
+
+        if (userId == null) {
+            // If user ID is not generated yet, generate a new one
+            Random random = new Random();
+            long r = random.nextLong() % 10000000000L;
+            r = Math.abs(r);
+            String f = String.format("%010d", r);
+
+            // Save the generated user ID in SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("user_id", f);
+            editor.apply();
+
+            // Set the generated user ID to the TextView
+            return f;
+        } else {
+            // If user ID is already generated, set it to the TextView
+            return userId;
+        }
     }
 }

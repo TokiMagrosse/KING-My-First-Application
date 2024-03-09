@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,7 +29,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 public class UserProfileAttributesActivity extends AppCompatActivity {
 
@@ -36,11 +39,11 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
-    TextView rating, rank, level, coins;
+    TextView rating, rank, level, wins, loses;
     ImageView profile_picture;
     String userID;
     Button change_profile, save_changes, back_to_main;
-    TextView username, email_address, gender;
+    TextView username, email_address, id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +55,24 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         storage_reference = FirebaseStorage.getInstance().getReference();
         user = f_auth.getCurrentUser();
         userID = Objects.requireNonNull(f_auth.getCurrentUser()).getUid();
-
         rating = findViewById(R.id.rating);
         rank = findViewById(R.id.rank);
         level = findViewById(R.id.level);
-        coins = findViewById(R.id.coins);
+        wins = findViewById(R.id.wins);
+        loses = findViewById(R.id.loses);
         profile_picture = findViewById(R.id.your_profile_picture);
         change_profile = findViewById(R.id.change_profile_button);
         save_changes = findViewById(R.id.my_progress_button);
         back_to_main = findViewById(R.id.back_to_main_button);
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
-        gender = findViewById(R.id.gender_in_profile);
+        id = findViewById(R.id.id_in_profile);
 
         // Assuming you have obtained user data after registration
-        RegisterActivity reg_object = new RegisterActivity();
-
         String userEmail = user.getEmail();
 
-        DocumentReference documentReferenceOne = f_store.collection("all my users").document(user.getUid());
-        documentReferenceOne.get().addOnSuccessListener(documentSnapshot -> {
+        DocumentReference doc_ref_for_username = f_store.collection("all my users").document(user.getUid());
+        doc_ref_for_username.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String my_username = documentSnapshot.getString("Username");
                 username.setText(my_username);
@@ -84,7 +85,14 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             username.setText("@)$&%*%@^$");
         });
 
-        // Set TextViews with user data
+        DocumentReference doc_ref_for_id = f_store.collection("all my users").document(user.getUid());
+        doc_ref_for_id.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String my_id = documentSnapshot.getString("Personal ID");
+                username.setText(my_id);
+            }
+        });
+
         email_address.setText(userEmail);
 
         // Setting the ImageView to be square
