@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.poisonousking.ProfileActivity;
+import com.example.poisonousking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -89,7 +91,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         doc_ref_for_id.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String my_id = documentSnapshot.getString("Personal ID");
-                username.setText(my_id);
+                id.setText(my_id);
             }
         });
 
@@ -110,24 +112,6 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             Intent open_gallery_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(open_gallery_intent, 2389);
         });
-
-        // Save button functionality to update data in Firestore
-        /*save_changes.setOnClickListener(v -> { // <-
-            // Get updated values from TextViews
-            String updatedUsername = username.getText().toString();
-            String updatedEmail = email_address.getText().toString();
-            // Similarly, get other updated values
-
-            // Update data in Firestore
-            f_store.collection("all my users").document(userID)
-                    .update("username", updatedUsername,
-                            "email", updatedEmail)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(UserProfileAttributesActivity.this, "Data updated successfully", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e -> {
-                        Log.e(TAG, "Error updating data", e);
-                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to update data", Toast.LENGTH_SHORT).show();
-                    });
-        }); // <-*/
     }
 
     @Override
@@ -165,3 +149,4 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     }
 
 }
+

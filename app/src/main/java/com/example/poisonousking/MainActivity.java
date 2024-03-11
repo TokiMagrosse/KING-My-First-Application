@@ -1,12 +1,15 @@
 package com.example.poisonousking;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +46,25 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+
+        /*SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("checkbox", "");
+        remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (buttonView.isChecked()) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "true");
+                editor.apply();
+                // Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
+            }
+            else if (!buttonView.isChecked()) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+                // Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
+            }
+        });*/
 
         login_button.setOnClickListener(v -> checkCredentials());
 
@@ -116,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showError(EditText input, String errorText) {
+    private void showError(@NonNull EditText input, String errorText) {
         input.setError(errorText);
         input.requestFocus();
     }
@@ -127,5 +149,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-

@@ -51,11 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
                     your_username.setText(username);
                 } else {
                     // Handle the case where user data is not found
-                    your_username.setText("Username not available");
+                    your_username.setText("**********");
                 }
             }).addOnFailureListener(e -> {
                 // Handle the failure to retrieve user data
-                your_username.setText("Error retrieving username");
+                your_username.setText("**********");
             });
         }
 

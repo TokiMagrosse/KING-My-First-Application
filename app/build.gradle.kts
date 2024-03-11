@@ -45,6 +45,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.10.3")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("androidx.activity:activity:1.8.0")
     testImplementation("junit:junit:4.13.2")
 
     // Import the BoM for the Firebase platform
