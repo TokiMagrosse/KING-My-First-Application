@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,7 +32,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -110,7 +114,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         change_profile.setOnClickListener(v -> {
             // Open the gallery
             Intent open_gallery_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(open_gallery_intent, 2389);
+            startActivityForResult(open_gallery_intent, 5000);
         });
     }
 
@@ -118,7 +122,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 2389 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 5000 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 Uri image_uri = data.getData();
                 if (image_uri != null) {
@@ -132,21 +136,46 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImageToFirebase(Uri image_uri) {
-        // Uploading image to Firebase storage
-        StorageReference file_reference = storage_reference.child("king-of-hearts-red-min_1200x1200.jpg");
-        file_reference.putFile(image_uri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    Toast.makeText(UserProfileAttributesActivity.this, "Your image uploaded", Toast.LENGTH_SHORT).show();
-                    file_reference.getDownloadUrl().addOnSuccessListener(uri -> {
-                        Picasso.get().load(uri).into(profile_picture);
-                    });
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload your image", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Error uploading image: ", e);
+    private void uploadImageToFirebase(Uri imageUri) {
+        // Resize the image
+        Picasso.get()
+                .load(imageUri)
+                .resize(300, 300) // Set desired width and height here
+                .centerCrop()
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        // Upload the resized image to Firebase Storage
+                        ByteArrayOutputStream ba_os = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ba_os);
+                        byte[] imageData = ba_os.toByteArray();
+
+                        // Create a reference to the image file in Firebase Storage
+                        StorageReference fileReference = storage_reference.child("profile_picture.jpg");
+
+                        // Upload the image data
+                        fileReference.putBytes(imageData)
+                                .addOnSuccessListener(taskSnapshot -> {
+                                    Toast.makeText(UserProfileAttributesActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, "Error uploading image: ", e);
+                                });
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to load image", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        // Do nothing
+                    }
                 });
     }
+
 
 }
 
