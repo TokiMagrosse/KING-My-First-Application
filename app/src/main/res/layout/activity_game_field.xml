@@ -35,9 +35,10 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051">
+        app:layout_constraintVertical_bias="0.021">
 
         <ImageView
             android:id="@+id/profile_picture_2"
@@ -53,6 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
+        android:layout_marginEnd="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.988"
@@ -79,56 +81,64 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.989">
+        app:layout_constraintVertical_bias="1.0">
 
         <ImageView
+            android:id="@+id/my_card_1"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
             android:layout_marginStart="90sp"
-            android:src="@drawable/king_of_clubs"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/king_of_clubs" />
 
         <ImageView
+            android:id="@+id/my_card_2"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/ace_of_clubs"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ace_of_clubs" />
 
         <ImageView
+            android:id="@+id/my_card_3"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/queen_of_diamonds"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/queen_of_diamonds" />
 
         <ImageView
+            android:id="@+id/my_card_4"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/seven_of_hearts"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/seven_of_hearts" />
 
         <ImageView
+            android:id="@+id/my_card_5"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/ace_of_hearts"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ace_of_hearts" />
 
         <ImageView
+            android:id="@+id/my_card_6"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/nine_of_spades"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/nine_of_spades" />
 
         <ImageView
+            android:id="@+id/my_card_7"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/ten_of_clubs"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ten_of_clubs" />
 
         <ImageView
+            android:id="@+id/my_card_8"
             android:layout_width="77.5sp"
             android:layout_height="105.78sp"
-            android:src="@drawable/jack_of_spades"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/todo"
+            android:src="@drawable/jack_of_spades" />
     </LinearLayout>
 
     <Button
