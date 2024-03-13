@@ -15,6 +15,10 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".GameFieldActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".StartingSplashActivity"
             android:exported="true"
             android:screenOrientation="landscape">

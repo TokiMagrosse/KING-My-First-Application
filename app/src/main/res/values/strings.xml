@@ -54,4 +54,6 @@
     <string name="save_changes">SAVE CHANGES</string>
     <string name="id">ID</string>
     <string name="_500">500</string>
+    <string name="play_200">PLAY</string>
+    <string name="back">BACK</string>
 </resources>
