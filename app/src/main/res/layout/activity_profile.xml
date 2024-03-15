@@ -183,7 +183,7 @@
 
     </LinearLayout>
 
-    <androidx.fragment.app.FragmentContainerView
+    <!--<androidx.fragment.app.FragmentContainerView
         android:id="@+id/menu_fragment"
         android:name="com.example.poisonousking.MenuFragment"
         android:layout_width="275sp"
@@ -194,6 +194,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.fragment.app.FragmentContainerView>
+    </androidx.fragment.app.FragmentContainerView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
