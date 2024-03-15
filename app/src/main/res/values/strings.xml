@@ -56,4 +56,6 @@
     <string name="_500">500</string>
     <string name="play_200">PLAY</string>
     <string name="back">BACK</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fucking_green"
+    tools:context=".MenuFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MENU"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:fontFamily="@font/alata"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/green_background"
+        android:fontFamily="@font/alata"
+        android:text="SETTINGS"
+        android:textStyle="bold"
+        app:cornerRadius="15sp" />
+
+    <Button
+        android:id="@+id/game_rules_button"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5sp"
+        android:backgroundTint="@color/green_background"
+        android:fontFamily="@font/alata"
+        android:text="GAME RULES"
+        android:textStyle="bold"
+        app:cornerRadius="15sp" />
+
+    <Button
+        android:id="@+id/profile_button"
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5sp"
+        android:backgroundTint="@color/green_background"
+        android:fontFamily="@font/alata"
+        android:text="LOG OUT"
+        android:textStyle="bold"
+        app:cornerRadius="15sp" />
+
+</LinearLayout>

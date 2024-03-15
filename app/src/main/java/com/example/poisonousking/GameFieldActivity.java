@@ -43,14 +43,14 @@ public class GameFieldActivity extends AppCompatActivity {
         });
 
         image_views = new ImageView[8];
-        image_views[0]  =findViewById(R.id.my_card_1);
-        image_views[1]  =findViewById(R.id.my_card_2);
-        image_views[2]  =findViewById(R.id.my_card_3);
-        image_views[3]  =findViewById(R.id.my_card_4);
-        image_views[4]  =findViewById(R.id.my_card_5);
-        image_views[5]  =findViewById(R.id.my_card_6);
-        image_views[6]  =findViewById(R.id.my_card_7);
-        image_views[7]  =findViewById(R.id.my_card_8);
+        image_views[0] = findViewById(R.id.my_card_1);
+        image_views[1] = findViewById(R.id.my_card_2);
+        image_views[2] = findViewById(R.id.my_card_3);
+        image_views[3] = findViewById(R.id.my_card_4);
+        image_views[4] = findViewById(R.id.my_card_5);
+        image_views[5] = findViewById(R.id.my_card_6);
+        image_views[6] = findViewById(R.id.my_card_7);
+        image_views[7] = findViewById(R.id.my_card_8);
 
         distributeRandomCards();
 
