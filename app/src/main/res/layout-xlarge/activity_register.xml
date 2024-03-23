@@ -28,7 +28,7 @@
             android:layout_marginTop="10sp"
             android:autofillHints="username"
             android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/baseline_account_circle_24"
+            android:drawableStart="@drawable/baseline_account_circle"
             android:drawablePadding="12sp"
             android:fontFamily="@font/alata"
             android:hint="@string/your_nickname"

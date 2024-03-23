@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        findViewById(R.id.menu_button).setOnClickListener(v -> {
+        /*findViewById(R.id.menu_button).setOnClickListener(v -> {
             // Create and add the MenuFragment dynamically
             MenuFragment menuFragment = new MenuFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -41,11 +41,11 @@ public class ProfileActivity extends AppCompatActivity {
             transaction.add(R.id.menu_fragment, menuFragment, "MenuFragment");
             transaction.addToBackStack(null);
             transaction.commit();
-        });
+        });*/
 
         FirebaseFirestore f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        // log_out_button = findViewById(R.id.log_out_button);
+        log_out_button = findViewById(R.id.log_out_button);
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
         play_button = findViewById(R.id.play_button);
@@ -83,12 +83,12 @@ public class ProfileActivity extends AppCompatActivity {
             });
         }
 
-        /*log_out_button.setOnClickListener(v -> {
+        log_out_button.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-        });*/
+        });
 
     }
 }

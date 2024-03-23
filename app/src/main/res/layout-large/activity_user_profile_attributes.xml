@@ -311,7 +311,7 @@
                         android:text="@string/your_username"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:drawableStartCompat="@drawable/baseline_account_circle_26"
+                        app:drawableStartCompat="@drawable/baseline_account_circle_small"
                         app:drawableTint="@color/white" />
 
                     <TextView
@@ -324,7 +324,7 @@
                         android:text="@string/email"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:drawableStartCompat="@drawable/email_icon_2"
+                        app:drawableStartCompat="@drawable/email_icon_small"
                         app:drawableTint="@color/white" />
 
                     <TextView
@@ -337,7 +337,7 @@
                         android:text="@string/gender"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:drawableStartCompat="@drawable/user_gender_icon_2"
+                        app:drawableStartCompat="@drawable/user_gender_icon_small"
                         app:drawableTint="@color/white" />
 
                     <Button

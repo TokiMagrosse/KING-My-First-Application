@@ -20,10 +20,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -197,21 +201,44 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (userId == null) {
             // If user ID is not generated yet, generate a new one
-            Random random = new Random();
-            long r = random.nextLong() % 10000000000L;
-            r = Math.abs(r);
-            String f = String.format("%010d", r);
+            String uuid = UUID.randomUUID().toString();
+
+            // Hash the UUID to produce a 10-digit ID
+            String hashedId = hashString(uuid);
 
             // Save the generated user ID in SharedPreferences
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("user_id", f);
+            editor.putString("user_id", hashedId);
             editor.apply();
 
             // Set the generated user ID to the TextView
-            return f;
+            return hashedId;
         } else {
             // If user ID is already generated, set it to the TextView
             return userId;
+        }
+    }
+
+    private String hashString(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes());
+
+            // Convert the byte array to a hexadecimal string
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            // Extract the first 10 characters to ensure the ID is 10 digits long
+            return hexString.toString().substring(0, 10);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
