@@ -1,47 +1,27 @@
 package com.example.poisonousking;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.poisonousking.ProfileActivity;
-import com.example.poisonousking.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 
 public class UserProfileAttributesActivity extends AppCompatActivity {
 
     StorageReference storage_reference;
+    private static final int PICK_IMAGE_REQUEST = 1;
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
@@ -114,29 +94,62 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         change_profile.setOnClickListener(v -> {
             // Open the gallery
             Intent open_gallery_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(open_gallery_intent, 5000);
+            startActivityForResult(open_gallery_intent, PICK_IMAGE_REQUEST);
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    /*@Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 5000 && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                Uri image_uri = data.getData();
-                if (image_uri != null) {
-                    uploadImageToFirebase(image_uri);
-                } else {
-                    Toast.makeText(this, "Failed to obtain image URI", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            // Get the selected image URI
+            Uri selectedImageUri = data.getData();
 
-    private void uploadImageToFirebase(Uri imageUri) {
+            // Generate a unique file name for the cropped image
+            String uniqueFileName = "croppedImage_" + System.currentTimeMillis() + ".jpg";
+            Uri destinationUri = Uri.fromFile(new File(getContext().getCacheDir(), uniqueFileName));
+
+            // Start UCrop activity with the selected image URI and destination URI
+            UCrop.of(selectedImageUri, destinationUri)
+                    .withAspectRatio(1, 1)  // Set the aspect ratio as needed
+                    .start(getContext(), this);
+        } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            // Handle the result after cropping
+            assert data != null;
+            final Uri resultUri = UCrop.getOutput(data);
+
+            // Check for null before setting the image
+            if (resultUri != null) {
+                profile_picture.setImageURI(resultUri);
+
+                // Upload the cropped image to Firebase Cloud Storage
+                StorageReference fileReference = storage_reference.child("profile_images/" + System.currentTimeMillis() + ".jpg");
+                fileReference.putFile(resultUri)
+                        .addOnSuccessListener(taskSnapshot -> {
+                            // Get the download URL of the uploaded image
+                            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                // Store the download URL in the User object in Firebase Realtime Database
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    String uid = user.getUid();
+                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                                    databaseReference.child("users").child(uid).child("profileImageUrl").setValue(uri.toString());
+                                }
+                            });
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle error
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            }
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            // Handle the error that occurred during cropping (if needed)
+            final Throwable cropError = UCrop.getError(data);
+        }
+    }*/
+
+    /*private void uploadImageToFirebase(Uri imageUri) {
         // Resize the image
         Picasso.get()
                 .load(imageUri)
@@ -174,8 +187,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                         // Do nothing
                     }
                 });
-    }
-
+    }*/
 
 }
 

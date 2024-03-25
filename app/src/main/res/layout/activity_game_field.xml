@@ -9,213 +9,6 @@
     tools:context=".GameFieldActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="225sp"
-        android:layout_height="175sp"
-        android:background="@color/grey_1"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7.5sp"
-            android:layout_marginTop="7.5sp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.022"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.046">
-
-                <ImageView
-                    android:id="@+id/profile_picture_1"
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/default_profile_picture" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10sp"
-                android:fontFamily="@font/alata"
-                android:text="Poisonous"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="25sp"
-                android:fontFamily="@font/alata"
-                android:text="595"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7.5sp"
-            android:layout_marginTop="2.5sp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.022"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.046">
-
-                <ImageView
-                    android:id="@+id/profile_picture_2"
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/default_profile_picture" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10sp"
-                android:fontFamily="@font/alata"
-                android:text="Venomous"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="25sp"
-                android:fontFamily="@font/alata"
-                android:text="1533"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7.5sp"
-            android:layout_marginTop="2.5sp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.022"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.046">
-
-                <ImageView
-                    android:id="@+id/profile_picture_3"
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/default_profile_picture" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10sp"
-                android:fontFamily="@font/alata"
-                android:text="Nocuous"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="25sp"
-                android:fontFamily="@font/alata"
-                android:text="889"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7.5sp"
-            android:layout_marginTop="2.5sp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.022"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.046">
-
-                <ImageView
-                    android:id="@+id/profile_picture_4"
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/default_profile_picture" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10sp"
-                android:fontFamily="@font/alata"
-                android:text="Viperous"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="25sp"
-                android:fontFamily="@font/alata"
-                android:text="690"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -304,27 +97,66 @@
         android:id="@+id/my_card_center_1"
         android:layout_width="82sp"
         android:layout_height="111.9sp"
-        android:layout_marginEnd="308dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginBottom="25dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/king_of_hearts"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.919" />
+
+    <ImageView
+        android:id="@+id/my_card_center_4"
+        android:layout_width="82sp"
+        android:layout_height="111.9sp"
+        android:layout_marginEnd="280dp"
         android:layout_marginBottom="60dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/king_of_hearts"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.716" />
+        app:layout_constraintVertical_bias="0.779" />
+
+    <ImageView
+        android:id="@+id/my_card_center_3"
+        android:layout_width="82sp"
+        android:layout_height="111.9sp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginBottom="60dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/king_of_hearts"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393" />
+
+    <ImageView
+        android:id="@+id/my_card_center_2"
+        android:layout_width="82sp"
+        android:layout_height="111.9sp"
+        android:layout_marginEnd="372dp"
+        android:layout_marginBottom="60dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/king_of_hearts"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.779" />
 
     <Button
         android:id="@+id/back_to_profile"
         android:layout_width="120sp"
         android:layout_height="60sp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/fucking_green"
         android:fontFamily="@font/alata"
         android:text="@string/back"
         android:textStyle="bold"
         app:cornerRadius="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.985"
+        app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
