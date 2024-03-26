@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/alata"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textColor="@color/white"
             android:textSize="22.5sp"
             android:textStyle="bold"
@@ -31,13 +31,16 @@
             android:id="@+id/close_button"
             android:layout_width="24sp"
             android:layout_height="30sp"
-            app:cornerRadius="5sp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/grey_2"
-            android:padding="1.8sp"
-            android:drawablePadding="15sp"
             android:drawableEnd="@drawable/close_icon_small"
-            tools:layout_editor_absoluteX="304dp"
-            tools:layout_editor_absoluteY="9dp" />
+            android:drawablePadding="15sp"
+            android:padding="1.8sp"
+            app:cornerRadius="5sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.929"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,7 +67,7 @@
                     android:layout_marginStart="10sp"
                     android:layout_marginBottom="1sp"
                     android:fontFamily="@font/alata"
-                    android:text="Sound"
+                    android:text="@string/sound"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -93,7 +96,7 @@
                     android:layout_marginStart="10sp"
                     android:layout_marginBottom="1sp"
                     android:fontFamily="@font/alata"
-                    android:text="Music"
+                    android:text="@string/music"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -119,7 +122,7 @@
                     android:backgroundTint="@color/grey_2"
                     android:fontFamily="@font/alata"
                     android:padding="5sp"
-                    android:text="Game Rules"
+                    android:text="@string/game_rules"
                     android:textColor="@color/black"
                     android:textColorLink="@color/grey_1"
                     android:textSize="12.5sp"
@@ -133,7 +136,7 @@
                     android:fontFamily="@font/alata"
                     android:padding="5sp"
                     android:layout_marginStart="125sp"
-                    android:text="Log out"
+                    android:text="@string/log_out_2"
                     android:textColor="@color/black"
                     android:textSize="12.5sp"
                     app:cornerRadius="7.5sp" />
@@ -159,7 +162,7 @@
                     android:backgroundTint="@color/grey_2"
                     android:fontFamily="@font/alata"
                     android:padding="5sp"
-                    android:text="Change Color"
+                    android:text="@string/change_color"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:cornerRadius="7.5sp" />
@@ -172,7 +175,7 @@
                     android:fontFamily="@font/alata"
                     android:padding="5sp"
                     android:layout_marginStart="125sp"
-                    android:text="Delete Account"
+                    android:text="@string/delete_account"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     app:cornerRadius="7.5sp" />
@@ -196,7 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alata"
-                    android:text="Privacy Policy"
+                    android:text="@string/privacy_policy"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     />
@@ -207,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alata"
                     android:layout_marginStart="120sp"
-                    android:text="Terms and Conditions"
+                    android:text="@string/terms_and_conditions"
                     android:textColor="@color/white"
                     android:textSize="12.5sp"
                     />
