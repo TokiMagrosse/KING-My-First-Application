@@ -190,7 +190,7 @@
                 android:layout_marginStart="30sp">
 
                 <Button
-                    android:id="@+id/log_out_button"
+                    android:id="@+id/play_button_3"
                     android:layout_width="175sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
