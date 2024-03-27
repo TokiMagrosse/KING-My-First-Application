@@ -8,6 +8,63 @@
     android:background="@color/very_dark_green"
     tools:context=".GameFieldActivity">
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="164dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bot_1"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="@drawable/default_profile_outlines"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/default_profile_picture" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bot_2"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="@drawable/default_profile_outlines"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/default_profile_picture" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="664dp"
+        android:layout_marginTop="164dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bot_3"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:background="@drawable/default_profile_outlines"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/default_profile_picture" />
+
+    </com.google.android.material.card.MaterialCardView>
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
@@ -92,58 +149,6 @@
             app:layout_constraintStart_toEndOf="@+id/my_card_7" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/my_card_center_1"
-        android:layout_width="82sp"
-        android:layout_height="111.9sp"
-        android:layout_marginEnd="324dp"
-        android:layout_marginBottom="25dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/king_of_hearts"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.919" />
-
-    <ImageView
-        android:id="@+id/my_card_center_4"
-        android:layout_width="82sp"
-        android:layout_height="111.9sp"
-        android:layout_marginEnd="280dp"
-        android:layout_marginBottom="60dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/king_of_hearts"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
-
-    <ImageView
-        android:id="@+id/my_card_center_3"
-        android:layout_width="82sp"
-        android:layout_height="111.9sp"
-        android:layout_marginEnd="324dp"
-        android:layout_marginBottom="60dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/king_of_hearts"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.393" />
-
-    <ImageView
-        android:id="@+id/my_card_center_2"
-        android:layout_width="82sp"
-        android:layout_height="111.9sp"
-        android:layout_marginEnd="372dp"
-        android:layout_marginBottom="60dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/king_of_hearts"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
 
     <Button
         android:id="@+id/back_to_profile"

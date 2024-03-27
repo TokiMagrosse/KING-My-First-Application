@@ -14,13 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <activity
+            android:name=".PoisonCoinsActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
+
         <activity
             android:name=".GameFieldActivity"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".StartingSplashActivity"
             android:exported="true"

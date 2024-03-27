@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button game_rules, log_out, change_color, delete_account, close;
     TextView privacy_policy, terms_and_conditions;
     FirebaseAuth auth;
-    Button play_button, menu_button, logout_finally;
+    Button play_button, play_button_2, play_button_3, menu_button, add_poison_coins;
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
@@ -55,8 +55,10 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
-        logout_finally = findViewById(R.id.play_button_3);
         play_button = findViewById(R.id.play_button);
+        add_poison_coins = findViewById(R.id.coins_getting_plus);
+        play_button_2 = findViewById(R.id.play_button_2);
+        play_button_3 = findViewById(R.id.play_button_3);
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
