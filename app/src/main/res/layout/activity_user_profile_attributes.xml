@@ -46,7 +46,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5sp"
                     app:strokeColor="@color/white"
-                    app:strokeWidth="5sp">
+                    app:strokeWidth="2.5sp">
 
                     <ImageView
                         android:id="@+id/your_profile_picture"

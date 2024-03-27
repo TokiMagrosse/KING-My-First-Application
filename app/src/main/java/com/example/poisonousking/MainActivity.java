@@ -42,32 +42,31 @@ public class MainActivity extends AppCompatActivity {
         register_text_reference = findViewById(R.id.register_text_reference);
         m_auth = FirebaseAuth.getInstance();
 
+        // Check if "Remember me" checkbox was previously checked
+        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        boolean rememberMeChecked = preferences.getBoolean("rememberMe", false);
+        if (rememberMeChecked) {
+            // Restore email and password from shared preferences
+            String savedEmail = preferences.getString("email", "");
+            String savedPassword = preferences.getString("password", "");
+            email_address.setText(savedEmail);
+            password.setText(savedPassword);
+            remember_me.setChecked(true);
+        }
+
         register_text_reference.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
-        /*SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("checkbox", "");
         remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isChecked()) {
-                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "true");
-                editor.apply();
-                // Toast.makeText(MainActivity.this, "Checked", Toast.LENGTH_SHORT).show();
-            }
-            else if (!buttonView.isChecked()) {
-                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                // Toast.makeText(MainActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
-            }
-        });*/
+            // Save "Remember me" checkbox state
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("rememberMe", isChecked);
+            editor.apply();
+        });
 
         login_button.setOnClickListener(v -> checkCredentials());
-
     }
 
     private void checkCredentials() {
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             showError(password, "Your password can have at most 64 characters.");
             isValid = false;
         }
-
 
         progress_bar.setVisibility(ViewStub.VISIBLE);
 
@@ -147,5 +145,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ResetPasswordActivity.class);
         startActivity(intent);
     }
-
 }
+

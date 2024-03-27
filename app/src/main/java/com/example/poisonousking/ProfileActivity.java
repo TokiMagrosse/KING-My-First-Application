@@ -1,16 +1,13 @@
 package com.example.poisonousking;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 // import androidx.fragment.app.Fragment;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Gravity;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         play_button.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
         });
 
         your_profile_picture.setOnClickListener(v -> {
@@ -97,8 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
         menu_dialog = new Dialog(ProfileActivity.this);
         menu_dialog.setContentView(R.layout.profile_menu_dialog);
         Objects.requireNonNull(menu_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        Objects.requireNonNull(logout_dialog.getWindow()).setBackgroundDrawable(getDrawable(R.drawable.logout_dialog_bg));
-        logout_dialog.setCancelable(false);
+        menu_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        menu_dialog.setCancelable(false);
 
         sound_switch = menu_dialog.findViewById(R.id.sound_switch);
         music_switch = menu_dialog.findViewById(R.id.music_switch);
@@ -110,6 +107,13 @@ public class ProfileActivity extends AppCompatActivity {
         privacy_policy = menu_dialog.findViewById(R.id.privacy_policy);
         terms_and_conditions = menu_dialog.findViewById(R.id.terms_and_conditions);
 
+        Window window = menu_dialog.getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.CENTER); // Set the gravity to top
+            window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
         menu_button.setOnClickListener(v -> {
             menu_dialog.show();
         });
@@ -118,7 +122,15 @@ public class ProfileActivity extends AppCompatActivity {
             menu_dialog.dismiss();
         });
 
-        logout_dialog = new Dialog(ProfileActivity.this);
+        log_out.setOnClickListener(v -> {
+            auth.signOut();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+            logout_dialog.dismiss();
+        });
+
+        /*logout_dialog = new Dialog(ProfileActivity.this);
         logout_dialog.setContentView(R.layout.log_out_dialog_box);
         Objects.requireNonNull(logout_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         logout_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.logout_dialog_bg));
@@ -132,16 +144,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         logout_button.setOnClickListener(v -> {
-            auth.signOut();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-            logout_dialog.dismiss();
+
         });
 
         logout_finally.setOnClickListener(v -> {
             logout_dialog.show();
-        });
+        });*/
 
     }
 }
