@@ -620,7 +620,7 @@
                                 android:textColor="@color/grey"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="7.2sp"
+                                android:layout_marginEnd="6.7sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="1500"
                                 android:layout_width="wrap_content"

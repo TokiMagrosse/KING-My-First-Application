@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -62,6 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
+        add_poison_coins.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, PoisonCoinsActivity.class);
+            startActivity(intent);
+        });
+
         play_button.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
             startActivity(intent);
@@ -94,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         menu_dialog = new Dialog(ProfileActivity.this);
-        menu_dialog.setContentView(R.layout.profile_menu_dialog);
+        menu_dialog.setContentView(R.layout.dialog_profile_menu);
         Objects.requireNonNull(menu_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         menu_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
         menu_dialog.setCancelable(false);
