@@ -41,17 +41,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        /*findViewById(R.id.menu_button).setOnClickListener(v -> {
-            // Create and add the MenuFragment dynamically
-            MenuFragment menuFragment = new MenuFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-            transaction.add(R.id.menu_fragment, menuFragment, "MenuFragment");
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });*/
-
         FirebaseFirestore f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         your_profile_picture = findViewById(R.id.your_profile_picture);
