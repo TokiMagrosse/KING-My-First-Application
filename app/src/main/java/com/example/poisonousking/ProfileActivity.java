@@ -63,11 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
-        add_poison_coins.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, PoisonCoinsActivity.class);
-            startActivity(intent);
-        });
-
         play_button.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
             startActivity(intent);
