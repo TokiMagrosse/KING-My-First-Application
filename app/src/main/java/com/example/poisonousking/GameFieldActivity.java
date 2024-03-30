@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
         back_to_profile = findViewById(R.id.back_to_profile);
         back_to_profile.setOnClickListener(v -> {
+            Toast.makeText(this, "You left the game", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(GameFieldActivity.this, ProfileActivity.class);
             startActivity(intent);
         });

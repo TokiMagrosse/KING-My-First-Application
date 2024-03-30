@@ -1,5 +1,6 @@
 package com.example.poisonousking;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 // import androidx.fragment.app.Fragment;
 import android.app.Dialog;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +36,9 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
-    Dialog logout_dialog, menu_dialog;
-    Button cancel_button, logout_button;
+    Dialog logout_dialog, dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog;
+    Button quick_game_close, classic_game_close, big_game_close;
+    Button about_quick_game, about_classic_game, about_big_game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +51,27 @@ public class ProfileActivity extends AppCompatActivity {
         your_username = findViewById(R.id.your_username);
         play_button = findViewById(R.id.play_button);
         add_poison_coins = findViewById(R.id.coins_getting_plus);
+        about_quick_game = findViewById(R.id.about_quick_game);
+        about_classic_game = findViewById(R.id.about_classic_game);
+        about_big_game = findViewById(R.id.about_big_game);
         play_button_2 = findViewById(R.id.play_button_2);
         play_button_3 = findViewById(R.id.play_button_3);
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
         play_button.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+        });
+
+        play_button_2.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+        });
+
+        play_button_3.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
@@ -83,38 +102,44 @@ public class ProfileActivity extends AppCompatActivity {
             });
         }
 
-        menu_dialog = new Dialog(ProfileActivity.this);
-        menu_dialog.setContentView(R.layout.dialog_profile_menu);
-        Objects.requireNonNull(menu_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        menu_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
-        menu_dialog.setCancelable(false);
+        // All necessary attributes for Menu Dialog
+        dialog_profile_menu = new Dialog(ProfileActivity.this);
+        dialog_profile_menu.setContentView(R.layout.dialog_profile_menu);
+        Objects.requireNonNull(dialog_profile_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_profile_menu.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        dialog_profile_menu.setCancelable(false);
 
-        sound_switch = menu_dialog.findViewById(R.id.sound_switch);
-        music_switch = menu_dialog.findViewById(R.id.music_switch);
-        game_rules = menu_dialog.findViewById(R.id.game_rules_button);
-        log_out = menu_dialog.findViewById(R.id.logout);
-        change_color = menu_dialog.findViewById(R.id.change_color_button);
-        delete_account = menu_dialog.findViewById(R.id.delete_account_button);
-        close = menu_dialog.findViewById(R.id.close_button);
-        privacy_policy = menu_dialog.findViewById(R.id.privacy_policy);
-        terms_and_conditions = menu_dialog.findViewById(R.id.terms_and_conditions);
+        sound_switch = dialog_profile_menu.findViewById(R.id.sound_switch);
+        music_switch = dialog_profile_menu.findViewById(R.id.music_switch);
+        game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
+        log_out = dialog_profile_menu.findViewById(R.id.logout);
+        change_color = dialog_profile_menu.findViewById(R.id.change_color_button);
+        delete_account = dialog_profile_menu.findViewById(R.id.delete_account_button);
+        close = dialog_profile_menu.findViewById(R.id.close_button);
+        privacy_policy = dialog_profile_menu.findViewById(R.id.privacy_policy);
+        terms_and_conditions = dialog_profile_menu.findViewById(R.id.terms_and_conditions);
 
-        Window window = menu_dialog.getWindow();
-        if (window != null) {
-            window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            window.setGravity(Gravity.CENTER); // Set the gravity to top
-            window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        delete_account.setOnClickListener(v -> {
+            deleteAccountForever();
+        });
+
+        Window menu_window = dialog_profile_menu.getWindow();
+        if (menu_window != null) {
+            menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
         }
 
         menu_button.setOnClickListener(v -> {
-            menu_dialog.show();
+            dialog_profile_menu.show();
         });
 
         close.setOnClickListener(v -> {
-            menu_dialog.dismiss();
+            dialog_profile_menu.dismiss();
         });
 
         log_out.setOnClickListener(v -> {
+            // logout_dialog.show();
             auth.signOut();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -122,26 +147,94 @@ public class ProfileActivity extends AppCompatActivity {
             logout_dialog.dismiss();
         });
 
-        /*logout_dialog = new Dialog(ProfileActivity.this);
-        logout_dialog.setContentView(R.layout.log_out_dialog_box);
-        Objects.requireNonNull(logout_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        logout_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.logout_dialog_bg));
-        logout_dialog.setCancelable(false);
+        // All necessary attributes for Quick Game Dialog
+        quick_game_dialog = new Dialog(ProfileActivity.this);
+        quick_game_dialog.setContentView(R.layout.dialog_about_quick_game);
+        Objects.requireNonNull(quick_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        quick_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        quick_game_dialog.setCancelable(false);
 
-        cancel_button = logout_dialog.findViewById(R.id.cancel_button);
-        logout_button = logout_dialog.findViewById(R.id.yes_button);
+        quick_game_close = quick_game_dialog.findViewById(R.id.quick_game_close_button);
 
-        cancel_button.setOnClickListener(v -> {
-            logout_dialog.dismiss();
+        Window quick_game_window = quick_game_dialog.getWindow();
+        if (quick_game_window != null) {
+            quick_game_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            quick_game_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            quick_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        about_quick_game.setOnClickListener(v -> {
+            quick_game_dialog.show();
         });
 
-        logout_button.setOnClickListener(v -> {
-
+        quick_game_close.setOnClickListener(v -> {
+            quick_game_dialog.dismiss();
         });
 
-        logout_finally.setOnClickListener(v -> {
-            logout_dialog.show();
-        });*/
+        // All necessary attributes for Classic Game Dialog
+        classic_game_dialog = new Dialog(ProfileActivity.this);
+        classic_game_dialog.setContentView(R.layout.dialog_about_classic_game);
+        Objects.requireNonNull(classic_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        classic_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        classic_game_dialog.setCancelable(false);
 
+        classic_game_close = classic_game_dialog.findViewById(R.id.classic_game_close_button);
+
+        Window classic_game_window = classic_game_dialog.getWindow();
+        if (classic_game_window != null) {
+            classic_game_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            classic_game_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            classic_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        about_classic_game.setOnClickListener(v -> {
+            classic_game_dialog.show();
+        });
+
+        classic_game_close.setOnClickListener(v -> {
+            classic_game_dialog.dismiss();
+        });
+
+        // All necessary attributes for Big Game Dialog
+        big_game_dialog = new Dialog(ProfileActivity.this);
+        big_game_dialog.setContentView(R.layout.dialog_about_big_game);
+        Objects.requireNonNull(big_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        big_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        big_game_dialog.setCancelable(false);
+
+        big_game_close = big_game_dialog.findViewById(R.id.big_game_close_button);
+
+        Window big_game_window = big_game_dialog.getWindow();
+        if (big_game_window != null) {
+            big_game_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            big_game_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            big_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        about_big_game.setOnClickListener(v -> {
+            big_game_dialog.show();
+        });
+
+        big_game_close.setOnClickListener(v -> {
+            big_game_dialog.dismiss();
+        });
+    }
+
+    private void deleteAccountForever() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            // Delete the user's account
+            user.delete()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // Account deletion successful
+                            Toast.makeText(ProfileActivity.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                            // Here you can navigate to another activity or perform any other actions
+                        } else {
+                            // Account deletion failed
+                            Toast.makeText(ProfileActivity.this, "Failed to delete account", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 }

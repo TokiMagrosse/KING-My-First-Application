@@ -22,4 +22,9 @@
         <item name="android:windowExitAnimation">@anim/slide_out_top</item>
     </style>
 
+    <style name="DialogAnimation_2">
+        <item name="android:windowEnterAnimation">@anim/slide_out_top</item>
+        <item name="android:windowExitAnimation">@anim/slide_in_top</item>
+    </style>
+
 </resources>
