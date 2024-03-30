@@ -149,7 +149,7 @@
                         android:layout_height="25sp"
                         android:layout_gravity="center"
                         android:fontFamily="@font/alata"
-                        android:text="@string/c_1"
+                        android:text="1"
                         android:textColor="@color/white" />
                 </LinearLayout>
 

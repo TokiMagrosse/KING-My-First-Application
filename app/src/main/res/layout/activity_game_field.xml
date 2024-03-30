@@ -8,14 +8,38 @@
     android:background="@color/very_dark_green"
     tools:context=".GameFieldActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="475sp"
+        android:layout_height="175sp"
+        android:backgroundTint="@color/grey_2"
+        app:cardCornerRadius="15sp"
+        app:cardElevation="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
+        app:layout_constraintHorizontal_bias="0.339"
+        app:layout_constraintStart_toEndOf="@+id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView3"
+        app:layout_constraintVertical_bias="0.407">
+
+        <androidx.cardview.widget.CardView
+            android:layout_gravity="center"
+            android:layout_width="465sp"
+            app:cardCornerRadius="13sp"
+            android:backgroundTint="@color/fucking_green"
+            android:layout_height="165sp"/>
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="145dp"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/bot_1"
@@ -28,13 +52,18 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="340dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toStartOf="@+id/table_button"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/bot_2"
@@ -47,13 +76,16 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="664dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginStart="675dp"
+        android:layout_marginTop="145dp"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/bot_3"
@@ -153,15 +185,15 @@
     <Button
         android:id="@+id/back_to_profile"
         android:layout_width="120sp"
-        android:layout_height="60sp"
-        android:layout_marginTop="16dp"
+        android:layout_height="50sp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/fucking_green"
         android:fontFamily="@font/alata"
         android:text="@string/back"
         android:textStyle="bold"
         app:cornerRadius="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

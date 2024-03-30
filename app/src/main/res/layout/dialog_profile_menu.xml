@@ -29,13 +29,13 @@
 
         <Button
             android:id="@+id/close_button"
-            android:layout_width="31sp"
-            android:layout_height="35sp"
+            android:layout_width="30sp"
+            android:layout_height="34sp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/grey_2"
             android:drawableEnd="@drawable/close_icon_small"
             android:drawablePadding="0dp"
-            android:padding="3dp"
+            android:padding="2.41dp"
             app:cornerRadius="5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.886"

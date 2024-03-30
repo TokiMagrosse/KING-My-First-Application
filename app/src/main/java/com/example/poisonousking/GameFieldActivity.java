@@ -61,7 +61,6 @@ public class GameFieldActivity extends AppCompatActivity {
             Intent intent = new Intent(GameFieldActivity.this, ProfileActivity.class);
             startActivity(intent);
         });
-
     }
 
     private void distributeRandomCards() {

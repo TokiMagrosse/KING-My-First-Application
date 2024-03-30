@@ -67,5 +67,5 @@
     <string name="delete_account">Delete Account</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="quick_game_description">In this game, one of the six possible game modes is randomly selected and played 4 times. The bet is 300 gold and the winner gets 900 gold. If the number of winners is 2, they get 450 gold. The duration of the game is approximately 5 to 7 minutes. With this mode, you can play at any time, anywhere, because there is no rating limit.</string>
+    <string name="quick_game_description">Only 5 to 7 minutes. This mode will help beginners to roughly grasp the essence of the game. Here, one of the six possible games is randomly selected, which is played four times.</string>
 </resources>

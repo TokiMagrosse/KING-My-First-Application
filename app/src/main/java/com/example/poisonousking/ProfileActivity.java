@@ -32,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     Button game_rules, log_out, change_color, delete_account, close;
     TextView privacy_policy, terms_and_conditions;
     FirebaseAuth auth;
-    Button play_button, play_button_2, play_button_3, menu_button, add_poison_coins;
+    Button play_button_1, play_button_2, play_button_3, menu_button, add_poison_coins;
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
@@ -49,17 +49,17 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
-        play_button = findViewById(R.id.play_button);
+        play_button_1 = findViewById(R.id.play_button);
+        play_button_2 = findViewById(R.id.play_button_2);
+        play_button_3 = findViewById(R.id.play_button_3);
         add_poison_coins = findViewById(R.id.coins_getting_plus);
         about_quick_game = findViewById(R.id.about_quick_game);
         about_classic_game = findViewById(R.id.about_classic_game);
         about_big_game = findViewById(R.id.about_big_game);
-        play_button_2 = findViewById(R.id.play_button_2);
-        play_button_3 = findViewById(R.id.play_button_3);
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
-        play_button.setOnClickListener(v -> {
+        play_button_1.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
@@ -139,12 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         log_out.setOnClickListener(v -> {
-            // logout_dialog.show();
-            auth.signOut();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-            logout_dialog.dismiss();
+            onLogOutButtonClick();
         });
 
         // All necessary attributes for Quick Game Dialog
@@ -236,5 +231,14 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void onLogOutButtonClick() {
+        // logout_dialog.show();
+        auth.signOut();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+        dialog_profile_menu.dismiss();
     }
 }
