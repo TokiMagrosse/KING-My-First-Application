@@ -10,10 +10,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="475sp"
-        android:layout_height="175sp"
-        android:backgroundTint="@color/grey_2"
+        android:layout_height="135sp"
+        android:backgroundTint="@color/white"
         app:cardCornerRadius="15sp"
-        app:cardElevation="20sp"
+        app:cardElevation="25sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
         app:layout_constraintHorizontal_bias="0.339"
@@ -22,11 +22,67 @@
         app:layout_constraintVertical_bias="0.407">
 
         <androidx.cardview.widget.CardView
+            android:layout_width="470sp"
+            android:layout_height="130sp"
             android:layout_gravity="center"
-            android:layout_width="465sp"
-            app:cardCornerRadius="13sp"
             android:backgroundTint="@color/fucking_green"
-            android:layout_height="165sp"/>
+            app:cardCornerRadius="13sp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/center_card_1"
+                    android:layout_width="85sp"
+                    android:layout_height="116sp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/cards_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/my_card_1" />
+
+                <ImageView
+                    android:id="@+id/center_card_2"
+                    android:layout_width="85sp"
+                    android:layout_height="115sp"
+                    android:layout_marginStart="20sp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/card_game_placeholder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/my_card_4" />
+
+                <ImageView
+                    android:id="@+id/center_card_3"
+                    android:layout_width="85sp"
+                    android:layout_height="116sp"
+                    android:layout_marginStart="20sp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/card_game_placeholder"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/my_card_8" />
+
+                <ImageView
+                    android:id="@+id/center_card_4"
+                    android:layout_width="85sp"
+                    android:layout_height="116sp"
+                    android:layout_marginStart="20sp"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/cards_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/my_card_6" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -108,10 +164,10 @@
 
         <ImageView
             android:id="@+id/my_card_2"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ace_of_clubs"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -119,64 +175,64 @@
 
         <ImageView
             android:id="@+id/my_card_6"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/nine_of_spades"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_4" />
 
         <ImageView
             android:id="@+id/my_card_5"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ace_of_hearts"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_8" />
 
         <ImageView
             android:id="@+id/my_card_7"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/ten_of_clubs"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_6" />
 
         <ImageView
             android:id="@+id/my_card_3"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/queen_of_diamonds"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_5" />
 
         <ImageView
             android:id="@+id/my_card_4"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/seven_of_hearts"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/my_card_1"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/king_of_clubs"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_3" />
 
         <ImageView
             android:id="@+id/my_card_8"
-            android:layout_width="82sp"
-            android:layout_height="111.9sp"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
             android:contentDescription="@string/todo"
-            android:src="@drawable/jack_of_spades"
+            android:src="@drawable/cards_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_7" />
 
@@ -186,43 +242,43 @@
         android:id="@+id/back_to_profile"
         android:layout_width="120sp"
         android:layout_height="50sp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/fucking_green"
         android:fontFamily="@font/alata"
         android:text="@string/back"
         android:textStyle="bold"
         app:cornerRadius="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/menu_button"
-        android:layout_width="50sp"
-        android:layout_height="55sp"
+        android:layout_width="45sp"
+        android:layout_height="50sp"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="7.5dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/grey"
         android:drawableEnd="@drawable/menu"
         android:drawablePadding="15dp"
-        android:padding="10dp"
+        android:padding="7dp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/table_button"
-        android:layout_width="50sp"
-        android:layout_height="55sp"
+        android:layout_width="45sp"
+        android:layout_height="50sp"
         android:layout_gravity="center_vertical"
         android:layout_marginTop="7.5dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="@color/grey"
         android:drawableEnd="@drawable/table_small"
         android:drawablePadding="15dp"
-        android:padding="10.5dp"
+        android:padding="7.5dp"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toStartOf="@+id/menu_button"
         app:layout_constraintTop_toTopOf="parent" />

@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.poisonousking.R;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,10 +69,17 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> deck = generateDeckOfCards();
         Collections.shuffle(deck);
 
-        // Assign the first 8 cards to the ImageViews
+        // Divide the deck into 4 lists, each representing the cards for one player
+        List<Integer> users_cards = deck.subList(0, 8);
+        List<Integer> first_bot_cards = deck.subList(8, 16);
+        List<Integer> second_bot_cards = deck.subList(16, 24);
+        List<Integer> third_bot_cards = deck.subList(24, 32);
+
+        // Assign the cards to the ImageViews for the first player
         for (int i = 0; i < 8; i++) {
-            image_views[i].setImageResource(deck.get(i));
+            image_views[i].setImageResource(users_cards.get(i));
         }
+
     }
 
     private List<Integer> generateDeckOfCards() {
@@ -81,5 +90,4 @@ public class GameFieldActivity extends AppCompatActivity {
         }
         return deck;
     }
-
 }
