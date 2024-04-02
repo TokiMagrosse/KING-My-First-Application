@@ -8,150 +8,141 @@
     android:background="@color/very_dark_green"
     tools:context=".GameFieldActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="475sp"
-        android:layout_height="135sp"
-        android:backgroundTint="@color/white"
-        app:cardCornerRadius="15sp"
-        app:cardElevation="25sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="@+id/materialCardView2"
-        app:layout_constraintHorizontal_bias="0.339"
-        app:layout_constraintStart_toEndOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView3"
-        app:layout_constraintVertical_bias="0.407">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10sp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/first_bot"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/default_profile_outlines"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/default_profile_picture" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="470sp"
-            android:layout_height="130sp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/fucking_green"
-            app:cardCornerRadius="13sp">
+            android:layout_width="475sp"
+            android:layout_height="135sp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="15sp"
+            app:cardElevation="25sp"
+            tools:layout_editor_absoluteX="120dp"
+            tools:layout_editor_absoluteY="98dp">
 
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="470sp"
+                android:layout_height="130sp"
                 android:layout_gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:backgroundTint="@color/fucking_green"
+                app:cardCornerRadius="13sp">
 
-                <ImageView
-                    android:id="@+id/center_card_1"
-                    android:layout_width="85sp"
-                    android:layout_height="116sp"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/cards_background"
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/my_card_1" />
+                    app:layout_constraintStart_toStartOf="parent">
 
-                <ImageView
-                    android:id="@+id/center_card_2"
-                    android:layout_width="85sp"
-                    android:layout_height="115sp"
-                    android:layout_marginStart="20sp"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/card_game_placeholder"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/my_card_4" />
+                    <ImageView
+                        android:id="@+id/center_card_1"
+                        android:layout_width="85sp"
+                        android:layout_height="116sp"
+                        android:visibility="invisible"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/card_game_placeholder"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/my_card_1" />
 
-                <ImageView
-                    android:id="@+id/center_card_3"
-                    android:layout_width="85sp"
-                    android:layout_height="116sp"
-                    android:layout_marginStart="20sp"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/card_game_placeholder"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/my_card_8" />
+                    <ImageView
+                        android:id="@+id/center_card_2"
+                        android:layout_width="85sp"
+                        android:layout_height="115sp"
+                        android:visibility="invisible"
+                        android:layout_marginStart="20sp"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/card_game_placeholder"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/my_card_4" />
 
-                <ImageView
-                    android:id="@+id/center_card_4"
-                    android:layout_width="85sp"
-                    android:layout_height="116sp"
-                    android:layout_marginStart="20sp"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/cards_background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/my_card_6" />
+                    <ImageView
+                        android:id="@+id/center_card_3"
+                        android:layout_width="85sp"
+                        android:layout_height="116sp"
+                        android:visibility="invisible"
+                        android:layout_marginStart="20sp"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/card_game_placeholder"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/my_card_8" />
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/center_card_4"
+                        android:layout_width="85sp"
+                        android:layout_height="116sp"
+                        android:visibility="invisible"
+                        android:layout_marginStart="20sp"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/card_game_placeholder"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/my_card_6" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="145dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10sp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/bot_1"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/default_profile_outlines"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/default_profile_picture" />
+            <ImageView
+                android:id="@+id/third_bot"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/default_profile_outlines"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/default_profile_picture" />
 
-    </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="340dp"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toStartOf="@+id/table_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <ImageView
-            android:id="@+id/bot_2"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/default_profile_outlines"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/default_profile_picture" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="675dp"
-        android:layout_marginTop="145dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <ImageView
-            android:id="@+id/bot_3"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
-            android:background="@drawable/default_profile_outlines"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/default_profile_picture" />
-
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -163,67 +154,74 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/my_card_2"
+            android:id="@+id/my_card_1"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="1"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/my_card_1" />
 
         <ImageView
-            android:id="@+id/my_card_6"
+            android:id="@+id/my_card_2"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="2"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_4" />
-
-        <ImageView
-            android:id="@+id/my_card_5"
-            android:layout_width="85sp"
-            android:layout_height="116sp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/my_card_8" />
-
-        <ImageView
-            android:id="@+id/my_card_7"
-            android:layout_width="85sp"
-            android:layout_height="116sp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/my_card_6" />
 
         <ImageView
             android:id="@+id/my_card_3"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="3"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/my_card_5" />
+            app:layout_constraintStart_toEndOf="@+id/my_card_8" />
 
         <ImageView
             android:id="@+id/my_card_4"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="4"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/my_card_6" />
+
+        <ImageView
+            android:id="@+id/my_card_5"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
+            android:tag="5"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/card_monotone_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/my_card_5" />
+
+        <ImageView
+            android:id="@+id/my_card_6"
+            android:layout_width="85sp"
+            android:layout_height="116sp"
+            android:tag="6"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/my_card_1"
+            android:id="@+id/my_card_7"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="7"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_3" />
 
@@ -231,56 +229,88 @@
             android:id="@+id/my_card_8"
             android:layout_width="85sp"
             android:layout_height="116sp"
+            android:tag="8"
             android:contentDescription="@string/todo"
-            android:src="@drawable/cards_background"
+            android:src="@drawable/card_monotone_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/my_card_7" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/back_to_profile"
-        android:layout_width="120sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="@color/fucking_green"
-        android:fontFamily="@font/alata"
-        android:text="@string/back"
-        android:textStyle="bold"
-        app:cornerRadius="15sp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="65sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/menu_button"
-        android:layout_width="45sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/grey"
-        android:drawableEnd="@drawable/menu"
-        android:drawablePadding="15dp"
-        android:padding="7dp"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/back_to_profile"
+            android:layout_width="125dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10sp"
+            android:backgroundTint="@color/fucking_green"
+            android:fontFamily="@font/alata"
+            android:text="@string/back"
+            android:textStyle="bold"
+            app:cornerRadius="10sp" />
 
-    <Button
-        android:id="@+id/table_button"
-        android:layout_width="45sp"
-        android:layout_height="50sp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="7.5dp"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="@color/grey"
-        android:drawableEnd="@drawable/table_small"
-        android:drawablePadding="15dp"
-        android:padding="7.5dp"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/menu_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="75sp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/second_bot"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:background="@drawable/default_profile_outlines"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/default_profile_picture" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/table_button"
+            android:layout_width="45sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="15sp"
+            android:backgroundTint="@color/grey"
+            android:drawableEnd="@drawable/table_small"
+            android:drawablePadding="15dp"
+            android:padding="7.5dp"
+            app:cornerRadius="10dp" />
+
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="45sp"
+            android:layout_height="50sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10sp"
+            android:backgroundTint="@color/grey"
+            android:drawableEnd="@drawable/menu"
+            android:drawablePadding="15dp"
+            android:padding="7dp"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

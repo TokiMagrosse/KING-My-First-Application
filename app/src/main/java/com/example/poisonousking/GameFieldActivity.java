@@ -21,6 +21,7 @@ import java.util.List;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    ImageView center_card_1, center_card_2, center_card_3, center_card_4;
     Button back_to_profile;
     private ImageView[] image_views;
     private final int[] card_images = {
@@ -45,6 +46,11 @@ public class GameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
+        center_card_1 = findViewById(R.id.center_card_1);
+        center_card_2 = findViewById(R.id.center_card_2);
+        center_card_3 = findViewById(R.id.center_card_3);
+        center_card_4 = findViewById(R.id.center_card_4);
+
         image_views = new ImageView[8];
         image_views[0] = findViewById(R.id.my_card_1);
         image_views[1] = findViewById(R.id.my_card_2);
@@ -62,6 +68,30 @@ public class GameFieldActivity extends AppCompatActivity {
             Toast.makeText(this, "You left the game", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(GameFieldActivity.this, ProfileActivity.class);
             startActivity(intent);
+        });
+
+        image_views[2].setOnClickListener(v -> {
+            center_card_1.setImageDrawable(image_views[2].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
+            image_views[2].setVisibility(View.GONE);
+        });
+
+        image_views[4].setOnClickListener(v -> {
+            center_card_2.setImageDrawable(image_views[4].getDrawable());
+            center_card_2.setVisibility(View.VISIBLE);
+            image_views[4].setVisibility(View.GONE);
+        });
+
+        image_views[5].setOnClickListener(v -> {
+            center_card_3.setImageDrawable(image_views[5].getDrawable());
+            center_card_3.setVisibility(View.VISIBLE);
+            image_views[5].setVisibility(View.GONE);
+        });
+
+        image_views[7].setOnClickListener(v -> {
+            center_card_4.setImageDrawable(image_views[7].getDrawable());
+            center_card_4.setVisibility(View.VISIBLE);
+            image_views[7].setVisibility(View.GONE);
         });
     }
 
@@ -90,4 +120,6 @@ public class GameFieldActivity extends AppCompatActivity {
         }
         return deck;
     }
+
+
 }
