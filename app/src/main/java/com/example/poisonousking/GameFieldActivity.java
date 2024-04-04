@@ -30,7 +30,7 @@ public class GameFieldActivity extends AppCompatActivity {
             R.drawable.queen_of_clubs, R.drawable.queen_of_diamonds, R.drawable.queen_of_hearts, R.drawable.queen_of_spades,
             R.drawable.jack_of_clubs, R.drawable.jack_of_diamonds, R.drawable.jack_of_hearts, R.drawable.jack_of_spades,
             R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
-            R.drawable.nine_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
+            R.drawable.nine_of_clubs, R.drawable.nine_of_diamonds, R.drawable.nine_of_hearts, R.drawable.nine_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
             R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades
     };
@@ -70,29 +70,48 @@ public class GameFieldActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        image_views[0].setOnClickListener(v -> {
+            center_card_1.setImageDrawable(image_views[0].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
+            image_views[0].setVisibility(View.GONE);
+        });
+        image_views[1].setOnClickListener(v -> {
+            center_card_1.setImageDrawable(image_views[1].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
+            image_views[1].setVisibility(View.GONE);
+        });
         image_views[2].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[2].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[2].setVisibility(View.GONE);
         });
-
+        image_views[3].setOnClickListener(v -> {
+            center_card_1.setImageDrawable(image_views[3].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
+            image_views[3].setVisibility(View.GONE);
+        });
         image_views[4].setOnClickListener(v -> {
-            center_card_2.setImageDrawable(image_views[4].getDrawable());
-            center_card_2.setVisibility(View.VISIBLE);
+            center_card_1.setImageDrawable(image_views[4].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
             image_views[4].setVisibility(View.GONE);
         });
-
         image_views[5].setOnClickListener(v -> {
-            center_card_3.setImageDrawable(image_views[5].getDrawable());
-            center_card_3.setVisibility(View.VISIBLE);
+            center_card_1.setImageDrawable(image_views[5].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
             image_views[5].setVisibility(View.GONE);
         });
-
+        image_views[6].setOnClickListener(v -> {
+            center_card_1.setImageDrawable(image_views[6].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
+            image_views[6].setVisibility(View.GONE);
+        });
         image_views[7].setOnClickListener(v -> {
-            center_card_4.setImageDrawable(image_views[7].getDrawable());
-            center_card_4.setVisibility(View.VISIBLE);
+            center_card_1.setImageDrawable(image_views[7].getDrawable());
+            center_card_1.setVisibility(View.VISIBLE);
             image_views[7].setVisibility(View.GONE);
         });
+
+
     }
 
     private void distributeRandomCards() {
@@ -120,6 +139,5 @@ public class GameFieldActivity extends AppCompatActivity {
         }
         return deck;
     }
-
 
 }

@@ -199,7 +199,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_2"
@@ -215,11 +215,19 @@
                                 android:textColor="@color/grey"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="10sp"
+                                android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="200"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="5sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -253,7 +261,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_2"
@@ -269,11 +277,19 @@
                                 android:textColor="@color/grey"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="10sp"
+                                android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="600"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="5sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -376,7 +392,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_1"
@@ -392,11 +408,19 @@
                                 android:textColor="@color/grey_1"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="10sp"
+                                android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="300"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="5sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -430,7 +454,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_1"
@@ -446,11 +470,19 @@
                                 android:textColor="@color/grey_1"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="10sp"
+                                android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="900"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="5sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -552,7 +584,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_2"
@@ -568,11 +600,19 @@
                                 android:textColor="@color/grey"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="10sp"
+                                android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="500"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="5sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
@@ -606,7 +646,7 @@
 
                             <androidx.cardview.widget.CardView
                                 android:layout_gravity="center"
-                                android:layout_width="82.5sp"
+                                android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
                                 app:cardElevation="7.5sp"
                                 android:backgroundTint="@color/grey_2"
@@ -622,11 +662,19 @@
                                 android:textColor="@color/grey"
                                 android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
-                                android:layout_marginEnd="6sp"
+                                android:layout_marginEnd="1sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="1500"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
+
+                            <ImageView
+                                android:src="@drawable/gold_coin"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="20sp"
+                                android:layout_height="20sp"
+                                android:layout_marginEnd="3sp"
+                                android:contentDescription="@string/todo" />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>

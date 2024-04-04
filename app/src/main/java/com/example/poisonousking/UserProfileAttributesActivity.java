@@ -1,27 +1,36 @@
 package com.example.poisonousking;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class UserProfileAttributesActivity extends AppCompatActivity {
 
-    StorageReference storage_reference;
-    private static final int PICK_IMAGE_REQUEST = 1;
+    StorageReference storageReference;
+    Uri imageUri;
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
@@ -38,7 +47,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
 
         f_auth = FirebaseAuth.getInstance();
         f_store = FirebaseFirestore.getInstance();
-        storage_reference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
         user = f_auth.getCurrentUser();
         userID = Objects.requireNonNull(f_auth.getCurrentUser()).getUid();
         rating = findViewById(R.id.rating);
@@ -81,113 +90,100 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
 
         email_address.setText(userEmail);
 
-        // Setting the ImageView to be square
-        profile_picture.post(() -> {
-            profile_picture.getLayoutParams().height = profile_picture.getWidth();
-        });
-
         back_to_main.setOnClickListener(view -> {
             Intent intent = new Intent(UserProfileAttributesActivity.this, ProfileActivity.class);
             startActivity(intent);
         });
 
         change_profile.setOnClickListener(v -> {
-            // Open the gallery
-            Intent open_gallery_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(open_gallery_intent, PICK_IMAGE_REQUEST);
+            // Create an intent to open the gallery
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        });
+
+        // Check and request permission for accessing external storage
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+
+        save_changes.setOnClickListener(v -> {
+            // Assuming profile_picture has been set to the desired image before saving changes
+            // Upload the selected image to Firebase Storage
+            // uploadImageToFirebaseStorage(profile_picture);
         });
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    // Define a constant for the image pick request
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            // Get the selected image URI
-            Uri selectedImageUri = data.getData();
+            // Get the URI of the selected image
+            Uri imageUri = data.getData();
 
-            // Generate a unique file name for the cropped image
-            String uniqueFileName = "croppedImage_" + System.currentTimeMillis() + ".jpg";
-            Uri destinationUri = Uri.fromFile(new File(getContext().getCacheDir(), uniqueFileName));
-
-            // Start UCrop activity with the selected image URI and destination URI
-            UCrop.of(selectedImageUri, destinationUri)
-                    .withAspectRatio(1, 1)  // Set the aspect ratio as needed
-                    .start(getContext(), this);
-        } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            // Handle the result after cropping
-            assert data != null;
-            final Uri resultUri = UCrop.getOutput(data);
-
-            // Check for null before setting the image
-            if (resultUri != null) {
-                profile_picture.setImageURI(resultUri);
-
-                // Upload the cropped image to Firebase Cloud Storage
-                StorageReference fileReference = storage_reference.child("profile_images/" + System.currentTimeMillis() + ".jpg");
-                fileReference.putFile(resultUri)
-                        .addOnSuccessListener(taskSnapshot -> {
-                            // Get the download URL of the uploaded image
-                            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                // Store the download URL in the User object in Firebase Realtime Database
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                if (user != null) {
-                                    String uid = user.getUid();
-                                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                                    databaseReference.child("users").child(uid).child("profileImageUrl").setValue(uri.toString());
-                                }
-                            });
-                        })
-                        .addOnFailureListener(e -> {
-                            // Handle error
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
-            }
-        } else if (resultCode == UCrop.RESULT_ERROR) {
-            // Handle the error that occurred during cropping (if needed)
-            final Throwable cropError = UCrop.getError(data);
+            // Set the selected image to the profile picture ImageView
+            profile_picture.setImageURI(imageUri);
         }
-    }*/
+    }
 
-    /*private void uploadImageToFirebase(Uri imageUri) {
-        // Resize the image
-        Picasso.get()
-                .load(imageUri)
-                .resize(300, 300) // Set desired width and height here
-                .centerCrop()
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        // Upload the resized image to Firebase Storage
-                        ByteArrayOutputStream ba_os = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ba_os);
-                        byte[] imageData = ba_os.toByteArray();
+    // Upload image to Firebase Storage
+    private void uploadImageToFirebaseStorage(ImageView imageView) {
+        // Get the drawable from the ImageView
+        Drawable drawable = imageView.getDrawable();
+        if (drawable instanceof BitmapDrawable) {
+            // Convert drawable to bitmap
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            // Convert bitmap to Uri
+            Uri imageUri = getImageUri(this, bitmap);
 
-                        // Create a reference to the image file in Firebase Storage
-                        StorageReference fileReference = storage_reference.child("profile_picture.jpg");
+            // Proceed with uploading image to Firebase Storage
+            StorageReference profile_image_ref = storageReference.child("profile_images/" + userID + ".jpg");
 
-                        // Upload the image data
-                        fileReference.putBytes(imageData)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    Toast.makeText(UserProfileAttributesActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
-                                })
-                                .addOnFailureListener(e -> {
-                                    Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                                    Log.e(TAG, "Error uploading image: ", e);
-                                });
-                    }
+            profile_image_ref.putFile(imageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Image uploaded successfully
+                        profile_image_ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                            // Save the download URL to Firebase Database if necessary
+                            // You can add your code here to save the URL to Firebase Database
+                            Toast.makeText(UserProfileAttributesActivity.this, "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(exception -> {
+                            // Handle any errors
+                            Toast.makeText(UserProfileAttributesActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                        });
+                    })
+                    .addOnFailureListener(exception -> {
+                        // Handle unsuccessful uploads
+                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }
 
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to load image", Toast.LENGTH_SHORT).show();
-                    }
+    // Define a constant for the permission request
+    private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2;
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        // Do nothing
-                    }
-                });
-    }*/
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, proceed with the operation that requires the permission
+                // For example, you can re-trigger the image selection process here
+            } else {
+                // Permission denied, handle the case where the user denies the permission
+            }
+        }
+    }
 
+    // Method to convert Bitmap to Uri
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 }
+
 
