@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +22,8 @@ import java.util.List;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    CardView card_door_1, card_door_2, card_door_3, card_door_4;
+    CardView card_door_5, card_door_6, card_door_7, card_door_8;
     ImageView center_card_1, center_card_2, center_card_3, center_card_4;
     Button back_to_profile;
     private ImageView[] image_views;
@@ -45,6 +48,15 @@ public class GameFieldActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        card_door_1 = findViewById(R.id.card_door_1);
+        card_door_2 = findViewById(R.id.card_door_2);
+        card_door_3 = findViewById(R.id.card_door_3);
+        card_door_4 = findViewById(R.id.card_door_4);
+        card_door_5 = findViewById(R.id.card_door_5);
+        card_door_6 = findViewById(R.id.card_door_6);
+        card_door_7 = findViewById(R.id.card_door_7);
+        card_door_8 = findViewById(R.id.card_door_8);
 
         center_card_1 = findViewById(R.id.center_card_1);
         center_card_2 = findViewById(R.id.center_card_2);
@@ -74,41 +86,49 @@ public class GameFieldActivity extends AppCompatActivity {
             center_card_1.setImageDrawable(image_views[0].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[0].setVisibility(View.GONE);
+            card_door_1.setVisibility(View.GONE);
         });
         image_views[1].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[1].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[1].setVisibility(View.GONE);
+            card_door_2.setVisibility(View.GONE);
         });
         image_views[2].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[2].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[2].setVisibility(View.GONE);
+            card_door_3.setVisibility(View.GONE);
         });
         image_views[3].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[3].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[3].setVisibility(View.GONE);
+            card_door_4.setVisibility(View.GONE);
         });
         image_views[4].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[4].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[4].setVisibility(View.GONE);
+            card_door_5.setVisibility(View.GONE);
         });
         image_views[5].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[5].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[5].setVisibility(View.GONE);
+            card_door_6.setVisibility(View.GONE);
         });
         image_views[6].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[6].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[6].setVisibility(View.GONE);
+            card_door_7.setVisibility(View.GONE);
         });
         image_views[7].setOnClickListener(v -> {
             center_card_1.setImageDrawable(image_views[7].getDrawable());
             center_card_1.setVisibility(View.VISIBLE);
             image_views[7].setVisibility(View.GONE);
+            card_door_8.setVisibility(View.GONE);
         });
 
 

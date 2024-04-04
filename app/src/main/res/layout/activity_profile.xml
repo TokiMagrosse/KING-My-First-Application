@@ -201,7 +201,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_2"
                                 android:layout_height="2sp"
                                 />
@@ -213,9 +213,9 @@
 
                             <TextView
                                 android:textColor="@color/grey"
-                                android:layout_marginBottom="0.75sp"
                                 android:fontFamily="@font/alata"
                                 android:layout_marginEnd="2sp"
+                                android:layout_marginBottom="1sp"
                                 android:layout_gravity="center_vertical"
                                 android:text="200"
                                 android:layout_width="wrap_content"
@@ -224,8 +224,8 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
                                 android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
@@ -263,7 +263,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_2"
                                 android:layout_height="2sp"
                                 />
@@ -275,7 +275,7 @@
 
                             <TextView
                                 android:textColor="@color/grey"
-                                android:layout_marginBottom="0.75sp"
+                                android:layout_marginBottom="1sp"
                                 android:fontFamily="@font/alata"
                                 android:layout_marginEnd="2sp"
                                 android:layout_gravity="center_vertical"
@@ -286,8 +286,8 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
                                 android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
@@ -394,7 +394,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_1"
                                 android:layout_height="2sp"
                                 />
@@ -417,8 +417,8 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
                                 android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
@@ -456,7 +456,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_1"
                                 android:layout_height="2sp"
                                 />
@@ -479,8 +479,8 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
                                 android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
@@ -586,7 +586,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_2"
                                 android:layout_height="2sp"
                                 />
@@ -609,8 +609,8 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
                                 android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
@@ -630,7 +630,7 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:layout_marginStart="7.5sp"
+                                android:layout_marginStart="7.9sp"
                                 android:text="WIN"
                                 android:textColor="@color/grey"
                                 android:fontFamily="@font/alata"
@@ -648,7 +648,7 @@
                                 android:layout_gravity="center"
                                 android:layout_width="60sp"
                                 app:cardCornerRadius="30sp"
-                                app:cardElevation="7.5sp"
+                                app:cardElevation="5sp"
                                 android:backgroundTint="@color/grey_2"
                                 android:layout_height="2sp"
                                 />
@@ -671,9 +671,9 @@
                             <ImageView
                                 android:src="@drawable/gold_coin"
                                 android:layout_gravity="center_vertical"
-                                android:layout_width="20sp"
-                                android:layout_height="20sp"
-                                android:layout_marginEnd="3sp"
+                                android:layout_width="18.5sp"
+                                android:layout_height="18.5sp"
+                                android:layout_marginEnd="5sp"
                                 android:contentDescription="@string/todo" />
                         </LinearLayout>
 
