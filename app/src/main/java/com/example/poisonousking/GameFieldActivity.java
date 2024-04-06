@@ -88,23 +88,38 @@ public class GameFieldActivity extends AppCompatActivity {
         Collections.shuffle(deck);
         Collections.shuffle(deck);
 
+        // 4 arrays of card IDes sorted by their values
+        List<Integer> CLUBS = sortedClubs();
+        List<Integer> DIAMONDS = sortedDiamonds();
+        List<Integer> HEARTS = sortedHearts();
+        List<Integer> SPADES = sortedSpades();
+
         // Divide the deck into 4 lists, each representing the cards for one player
         List<Integer> user_cards_IDes = deck.subList(0, 8);
         List<Integer> first_bot_cards_IDes = deck.subList(8, 16);
         List<Integer> second_bot_cards_IDes = deck.subList(16, 24);
         List<Integer> third_bot_cards_IDEs = deck.subList(24, 32);
 
-        // Assign the cards to the ImageViews for the first player
-        /*for (int i = 0; i < 8; i++) {
-            user_card_image_views[i].setImageResource(user_cards_IDes.get(i));
+        // Creating this array with card Ides sorted by values
+        /*List<Integer> cards_sorted_by_value = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            cards_sorted_by_value.add(SPADES.get(i));
+            cards_sorted_by_value.add(CLUBS.get(i));
+            cards_sorted_by_value.add(DIAMONDS.get(i));
+            cards_sorted_by_value.add(HEARTS.get(i));
+        }
+
+        int[] in_value_sorted = new int[8];
+        for (int i = 0; i < 8; i++) {
+            in_value_sorted[i] = cards_sorted_by_value.indexOf(user_cards_IDes.get(i));
+        }
+
+        Arrays.sort(in_value_sorted);
+        for (int i = 0; i < 8; i++) {
+           user_card_image_views[i].setImageResource(cards_sorted_by_value.get(in_value_sorted[i]));
         }*/
 
-        List<Integer> CLUBS = sortedClubs();
-        List<Integer> DIAMONDS = sortedDiamonds();
-        List<Integer> HEARTS = sortedHearts();
-        List<Integer> SPADES = sortedSpades();
-
-        // Creating this array with card Ides sorted by suits and it's values
+        // Creating this array with card Ides sorted by suits
         List<Integer> cards_sorted_by_suit = new ArrayList<>();
         for (int i = 0; i < 8; i++)
             cards_sorted_by_suit.add(SPADES.get(i));
@@ -115,27 +130,18 @@ public class GameFieldActivity extends AppCompatActivity {
         for (int i = 0; i < 8; i++)
             cards_sorted_by_suit.add(HEARTS.get(i));
 
-        int[] player_card_indexes_in_sorted_one = new int[8];
+        int[] in_suit_sorted = new int[8];
         for (int i = 0; i < 8; i++) {
-            player_card_indexes_in_sorted_one[i] = cards_sorted_by_suit.indexOf(user_cards_IDes.get(i));
+            in_suit_sorted[i] = cards_sorted_by_suit.indexOf(user_cards_IDes.get(i));
         }
 
-        Arrays.sort(player_card_indexes_in_sorted_one);
+        Arrays.sort(in_suit_sorted);
         for (int i = 0; i < 8; i++) {
-            user_card_image_views[i].setImageResource(cards_sorted_by_suit.get(player_card_indexes_in_sorted_one[i]));
-        }
-
-        // Creating this array with card Ides sorted by suits and it's values
-        List<Integer> cards_sorted_by_value = new ArrayList<>();
-        for (int i = 0; i < 24; i++) {
-            cards_sorted_by_value.add(SPADES.get(i));
-            cards_sorted_by_value.add(CLUBS.get(i));
-            cards_sorted_by_value.add(DIAMONDS.get(i));
-            cards_sorted_by_value.add(HEARTS.get(i));
+            user_card_image_views[i].setImageResource(cards_sorted_by_suit.get(in_suit_sorted[i]));
         }
 
         // Game ahs already started and it's my turn (my I mean user's turn)
-        int user_current_card_ID;
+        /*int user_current_card_ID;
         for (byte i = 0; i < 32; i++) {
             user_current_card_ID = cards_sorted_by_value.get(i);
             for (byte j = 0; j < 8; j++) {
@@ -150,7 +156,7 @@ public class GameFieldActivity extends AppCompatActivity {
                     });
                 }
             }
-        }
+        }*/
 
 
     }
