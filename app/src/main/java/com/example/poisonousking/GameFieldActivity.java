@@ -1,30 +1,38 @@
 package com.example.poisonousking;
 
-import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class GameFieldActivity extends AppCompatActivity {
 
-    CardView card_door_1, card_door_2, card_door_3, card_door_4;
-    CardView card_door_5, card_door_6, card_door_7, card_door_8;
-    ImageView center_card_1, center_card_2, center_card_3, center_card_4;
-    Button back_to_profile;
-    private ImageView[] image_views;
+    private static final int[] user_card_doors_IDes = {
+            R.id.card_door_1, R.id.card_door_2, R.id.card_door_3, R.id.card_door_4,
+            R.id.card_door_5, R.id.card_door_6, R.id.card_door_7, R.id.card_door_8
+    };
+    private final CardView[] user_card_door_views = new CardView[8];
+    ImageView[] four_center_cell_views = new ImageView[4];
+    private final ImageView[] user_card_image_views = new ImageView[8];
+    Button table_button, menu_button;
     private final int[] card_images = {
             R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
@@ -47,116 +55,107 @@ public class GameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Card doors that will block players card(s) changing his color
-        // green - means you can throw it, red - means you can't throw it
-        card_door_1 = findViewById(R.id.card_door_1);
-        card_door_2 = findViewById(R.id.card_door_2);
-        card_door_3 = findViewById(R.id.card_door_3);
-        card_door_4 = findViewById(R.id.card_door_4);
-        card_door_5 = findViewById(R.id.card_door_5);
-        card_door_6 = findViewById(R.id.card_door_6);
-        card_door_7 = findViewById(R.id.card_door_7);
-        card_door_8 = findViewById(R.id.card_door_8);
+        table_button = findViewById(R.id.table_button);
+        menu_button = findViewById(R.id.menu_button);
 
-        // Four cells for the cards in the center
-        center_card_1 = findViewById(R.id.center_card_1);
-        center_card_2 = findViewById(R.id.center_card_2);
-        center_card_3 = findViewById(R.id.center_card_3);
-        center_card_4 = findViewById(R.id.center_card_4);
+        // Initializing arrays after setContentView
+        user_card_door_views[0] = findViewById(R.id.card_door_1);
+        user_card_door_views[1] = findViewById(R.id.card_door_2);
+        user_card_door_views[2] = findViewById(R.id.card_door_3);
+        user_card_door_views[3] = findViewById(R.id.card_door_4);
+        user_card_door_views[4] = findViewById(R.id.card_door_5);
+        user_card_door_views[5] = findViewById(R.id.card_door_6);
+        user_card_door_views[6] = findViewById(R.id.card_door_7);
+        user_card_door_views[7] = findViewById(R.id.card_door_8);
 
-        image_views = new ImageView[8];
-        image_views[0] = findViewById(R.id.my_card_1);
-        image_views[1] = findViewById(R.id.my_card_2);
-        image_views[2] = findViewById(R.id.my_card_3);
-        image_views[3] = findViewById(R.id.my_card_4);
-        image_views[4] = findViewById(R.id.my_card_5);
-        image_views[5] = findViewById(R.id.my_card_6);
-        image_views[6] = findViewById(R.id.my_card_7);
-        image_views[7] = findViewById(R.id.my_card_8);
+        four_center_cell_views[0] = findViewById(R.id.center_card_1);
+        four_center_cell_views[1] = findViewById(R.id.center_card_2);
+        four_center_cell_views[2] = findViewById(R.id.center_card_3);
+        four_center_cell_views[3] = findViewById(R.id.center_card_4);
 
-        // distributeRandomCards();
+        user_card_image_views[0] = findViewById(R.id.my_card_1);
+        user_card_image_views[1] = findViewById(R.id.my_card_2);
+        user_card_image_views[2] = findViewById(R.id.my_card_3);
+        user_card_image_views[3] = findViewById(R.id.my_card_4);
+        user_card_image_views[4] = findViewById(R.id.my_card_5);
+        user_card_image_views[5] = findViewById(R.id.my_card_6);
+        user_card_image_views[6] = findViewById(R.id.my_card_7);
+        user_card_image_views[7] = findViewById(R.id.my_card_8);
+
+        // Function to shuffle the 32-card deck (3 times) and distribute to 4 players by random
         List<Integer> deck = generateDeckOfCards();
+        Collections.shuffle(deck);
+        Collections.shuffle(deck);
         Collections.shuffle(deck);
 
         // Divide the deck into 4 lists, each representing the cards for one player
-        List<Integer> users_cards = deck.subList(0, 8);
-        List<Integer> first_bot_cards = deck.subList(8, 16);
-        List<Integer> second_bot_cards = deck.subList(16, 24);
-        List<Integer> third_bot_cards = deck.subList(24, 32);
+        List<Integer> user_cards_IDes = deck.subList(0, 8);
+        List<Integer> first_bot_cards_IDes = deck.subList(8, 16);
+        List<Integer> second_bot_cards_IDes = deck.subList(16, 24);
+        List<Integer> third_bot_cards_IDEs = deck.subList(24, 32);
 
         // Assign the cards to the ImageViews for the first player
+        /*for (int i = 0; i < 8; i++) {
+            user_card_image_views[i].setImageResource(user_cards_IDes.get(i));
+        }*/
+
+        List<Integer> CLUBS = sortedClubs();
+        List<Integer> DIAMONDS = sortedDiamonds();
+        List<Integer> HEARTS = sortedHearts();
+        List<Integer> SPADES = sortedSpades();
+
+        // Creating this array with card Ides sorted by suits and it's values
+        List<Integer> cards_sorted_by_suit = new ArrayList<>();
+        for (int i = 0; i < 8; i++)
+            cards_sorted_by_suit.add(SPADES.get(i));
+        for (int i = 0; i < 8; i++)
+            cards_sorted_by_suit.add(CLUBS.get(i));
+        for (int i = 0; i < 8; i++)
+            cards_sorted_by_suit.add(DIAMONDS.get(i));
+        for (int i = 0; i < 8; i++)
+            cards_sorted_by_suit.add(HEARTS.get(i));
+
+        int[] player_card_indexes_in_sorted_one = new int[8];
         for (int i = 0; i < 8; i++) {
-            image_views[i].setImageResource(users_cards.get(i));
+            player_card_indexes_in_sorted_one[i] = cards_sorted_by_suit.indexOf(user_cards_IDes.get(i));
         }
 
-        // Lists of each suit sorted by increasing of card values
-        List<Integer> CLUBS = allIDesOfClubsSorted();
-        List<Integer> DIAMONDS = allIDesOfDiamondsSorted();
-        List<Integer> HEARTS = allIDesOfHeartsSorted();
-        List<Integer> SPADES = allIDesOfSpadesSorted();
+        Arrays.sort(player_card_indexes_in_sorted_one);
+        for (int i = 0; i < 8; i++) {
+            user_card_image_views[i].setImageResource(cards_sorted_by_suit.get(player_card_indexes_in_sorted_one[i]));
+        }
 
+        // Creating this array with card Ides sorted by suits and it's values
+        List<Integer> cards_sorted_by_value = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            cards_sorted_by_value.add(SPADES.get(i));
+            cards_sorted_by_value.add(CLUBS.get(i));
+            cards_sorted_by_value.add(DIAMONDS.get(i));
+            cards_sorted_by_value.add(HEARTS.get(i));
+        }
 
+        // Game ahs already started and it's my turn (my I mean user's turn)
+        int user_current_card_ID;
+        for (byte i = 0; i < 32; i++) {
+            user_current_card_ID = cards_sorted_by_value.get(i);
+            for (byte j = 0; j < 8; j++) {
+                if (user_cards_IDes.get(j) == user_current_card_ID) {
+                    user_card_door_views[j].setCardBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
+                    byte finalJ = j;
+                    user_card_image_views[j].setOnClickListener(v -> {
+                        four_center_cell_views[0].setImageDrawable(user_card_image_views[finalJ].getDrawable());
+                        four_center_cell_views[0].setVisibility(View.VISIBLE);
+                        user_card_image_views[finalJ].setVisibility(View.GONE);
+                        user_card_door_views[finalJ].setVisibility(View.GONE);
+                    });
+                }
+            }
+        }
 
-        // Button that brings user into the main page of the game
-        back_to_profile = findViewById(R.id.back_to_profile);
-        back_to_profile.setOnClickListener(v -> {
-            Toast.makeText(this, "You left the game", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(GameFieldActivity.this, ProfileActivity.class);
-            startActivity(intent);
-        });
-
-        // Logic of throwing the card from bottom to center
-        image_views[0].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[0].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[0].setVisibility(View.GONE);
-            card_door_1.setVisibility(View.GONE);
-        });
-        image_views[1].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[1].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[1].setVisibility(View.GONE);
-            card_door_2.setVisibility(View.GONE);
-        });
-        image_views[2].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[2].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[2].setVisibility(View.GONE);
-            card_door_3.setVisibility(View.GONE);
-        });
-        image_views[3].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[3].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[3].setVisibility(View.GONE);
-            card_door_4.setVisibility(View.GONE);
-        });
-        image_views[4].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[4].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[4].setVisibility(View.GONE);
-            card_door_5.setVisibility(View.GONE);
-        });
-        image_views[5].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[5].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[5].setVisibility(View.GONE);
-            card_door_6.setVisibility(View.GONE);
-        });
-        image_views[6].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[6].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[6].setVisibility(View.GONE);
-            card_door_7.setVisibility(View.GONE);
-        });
-        image_views[7].setOnClickListener(v -> {
-            center_card_1.setImageDrawable(image_views[7].getDrawable());
-            center_card_1.setVisibility(View.VISIBLE);
-            image_views[7].setVisibility(View.GONE);
-            card_door_8.setVisibility(View.GONE);
-        });
 
     }
 
+    @NonNull
     private List<Integer> generateDeckOfCards() {
         List<Integer> deck = new ArrayList<>();
         // Add each card image resource ID to the deck
@@ -166,36 +165,40 @@ public class GameFieldActivity extends AppCompatActivity {
         return deck;
     }
 
-    private List<Integer> allIDesOfClubsSorted() {
-        List<Integer> clubs = new ArrayList<>();
+    @NonNull
+    private List<Integer> sortedClubs() {
+        List<Integer> CLUBS = new ArrayList<>();
         for (int i = 0; i < card_images.length; i += 4) {
-            clubs.add(card_images[i]);
+            CLUBS.add(card_images[i]);
         }
-        return clubs;
+        return CLUBS;
     }
 
-    private List<Integer> allIDesOfDiamondsSorted() {
-        List<Integer> diamonds = new ArrayList<>();
+    @NonNull
+    private List<Integer> sortedDiamonds() {
+        List<Integer> DIAMONDS = new ArrayList<>();
         for (int i = 1; i < card_images.length; i += 4) {
-            diamonds.add(card_images[i]);
+            DIAMONDS.add(card_images[i]);
         }
-        return diamonds;
+        return DIAMONDS;
     }
 
-    private List<Integer> allIDesOfHeartsSorted() {
-        List<Integer> hearts = new ArrayList<>();
+    @NonNull
+    private List<Integer> sortedHearts() {
+        List<Integer> HEARTS = new ArrayList<>();
         for (int i = 2; i < card_images.length; i += 4) {
-            hearts.add(card_images[i]);
+            HEARTS.add(card_images[i]);
         }
-        return hearts;
+        return HEARTS;
     }
 
-    private List<Integer> allIDesOfSpadesSorted() {
-        List<Integer> spades = new ArrayList<>();
+    @NonNull
+    private List<Integer> sortedSpades() {
+        List<Integer> SPADES = new ArrayList<>();
         for (int i = 3; i < card_images.length; i += 4) {
-            spades.add(card_images[i]);
+            SPADES.add(card_images[i]);
         }
-        return spades;
+        return SPADES;
     }
 
 }

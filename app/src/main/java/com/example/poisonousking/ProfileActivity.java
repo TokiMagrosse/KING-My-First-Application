@@ -1,13 +1,10 @@
 package com.example.poisonousking;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-// import androidx.fragment.app.Fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -15,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
-    Dialog logout_dialog, dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog;
+    Dialog dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog;
     Button quick_game_close, classic_game_close, big_game_close;
     Button about_quick_game, about_classic_game, about_big_game;
 
@@ -234,7 +229,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void onLogOutButtonClick() {
-        // logout_dialog.show();
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
