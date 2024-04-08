@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="275sp"
@@ -55,6 +54,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/default_profile_outlines"
                         android:contentDescription="@string/todo"
+                        tools:srcCompat="@tools:sample/avatars"
                         android:src="@drawable/default_profile_picture" />
 
                 </com.google.android.material.card.MaterialCardView>

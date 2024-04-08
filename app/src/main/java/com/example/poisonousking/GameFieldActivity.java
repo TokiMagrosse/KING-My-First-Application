@@ -28,6 +28,7 @@ import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    TextView image_id_demo;
     TextView user_score, first_bot_score, second_bot_score, third_bot_score;
     private static final int[] user_card_doors_IDes = {
             R.id.card_door_1, R.id.card_door_2, R.id.card_door_3, R.id.card_door_4,
@@ -59,6 +60,7 @@ public class GameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
+        image_id_demo = findViewById(R.id.image_id_demo);
         user_score = findViewById(R.id.user_score);
         first_bot_score = findViewById(R.id.first_bot_score);
         second_bot_score = findViewById(R.id.second_bot_score);
@@ -101,6 +103,8 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> DIAMONDS = sortedDiamonds();
         List<Integer> HEARTS = sortedHearts();
         List<Integer> SPADES = sortedSpades();
+
+        // image_id_demo.setText(deck.get(3));
 
         // Divide the deck into 4 lists, each representing the cards for one player
         List<Integer> user_cards_IDes = deck.subList(0, 8);
@@ -182,53 +186,9 @@ public class GameFieldActivity extends AppCompatActivity {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
-        // Get the suit of the user's current card
-        String user_current_suit = getSuit(user_current_card_ID);
 
-        // Check if the first bot has a card with the same suit
-        boolean hasSameSuitCard = false;
-        for (int cardID : first_bot_cards_IDes) {
-            if (Objects.equals(getSuit(cardID), user_current_suit)) {
-                hasSameSuitCard = true;
-                break;
-            }
-        }
-
-        // If the first bot has a card with the same suit, select one randomly
-        if (hasSameSuitCard) {
-            List<Integer> sameSuitCards = new ArrayList<>();
-            for (int cardID : first_bot_cards_IDes) {
-                if (Objects.equals(getSuit(cardID), user_current_suit)) {
-                    sameSuitCards.add(cardID);
-                }
-            }
-            // Select a random card from the sameSuitCards list
-            int randomIndex = new Random().nextInt(sameSuitCards.size());
-            four_center_cell_views[1].setImageDrawable(ContextCompat.getDrawable(this, sameSuitCards.get(randomIndex)));
-        } else {
-            // If the first bot doesn't have a card with the same suit, select any card randomly
-            int randomIndex = new Random().nextInt(first_bot_cards_IDes.size());
-            four_center_cell_views[1].setImageDrawable(ContextCompat.getDrawable(this, first_bot_cards_IDes.get(randomIndex)));
-        }
-
-        four_center_cell_views[1].setVisibility(View.VISIBLE);*/
-
-    }
-
-    @Nullable
-    private String getSuit(int cardID) {
-        if (Arrays.asList(sortedClubs().toArray()).contains(cardID)) {
-            return "CLUBS";
-        } else if (Arrays.asList(sortedDiamonds().toArray()).contains(cardID)) {
-            return "DIAMONDS";
-        } else if (Arrays.asList(sortedHearts().toArray()).contains(cardID)) {
-            return "HEARTS";
-        } else if (Arrays.asList(sortedSpades().toArray()).contains(cardID)) {
-            return "SPADES";
-        }
-        return null;
     }
 
     @NonNull
