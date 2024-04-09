@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
-        play_button_1 = findViewById(R.id.play_button);
+        play_button_1 = findViewById(R.id.play_button_1);
         play_button_2 = findViewById(R.id.play_button_2);
         play_button_3 = findViewById(R.id.play_button_3);
         add_poison_coins = findViewById(R.id.coins_getting_plus);
@@ -61,15 +61,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         play_button_2.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry! We're still working on this", Toast.LENGTH_SHORT).show();
         });
 
         play_button_3.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry! We're still working on this", Toast.LENGTH_SHORT).show();
         });
 
         your_profile_picture.setOnClickListener(v -> {

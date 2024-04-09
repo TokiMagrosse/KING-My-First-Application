@@ -35,7 +35,7 @@
             android:backgroundTint="@color/grey_1"
             android:drawableEnd="@drawable/close_icon_small"
             android:drawablePadding="0dp"
-            android:padding="2dp"
+            android:padding="2.3dp"
             app:cornerRadius="5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.886"

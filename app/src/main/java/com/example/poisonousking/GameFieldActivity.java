@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,7 +29,7 @@ import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
-    TextView image_id_demo;
+    TextView imageID;
     TextView user_score, first_bot_score, second_bot_score, third_bot_score;
     private static final int[] user_card_doors_IDes = {
             R.id.card_door_1, R.id.card_door_2, R.id.card_door_3, R.id.card_door_4,
@@ -60,7 +61,7 @@ public class GameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
-        image_id_demo = findViewById(R.id.image_id_demo);
+        imageID = findViewById(R.id.image_ID);
         user_score = findViewById(R.id.user_score);
         first_bot_score = findViewById(R.id.first_bot_score);
         second_bot_score = findViewById(R.id.second_bot_score);
@@ -98,13 +99,13 @@ public class GameFieldActivity extends AppCompatActivity {
         Collections.shuffle(deck);
         Collections.shuffle(deck);
 
+        // imageID.setText(deck.get(7));
+
         // 4 arrays of card IDes sorted by their values
         List<Integer> CLUBS = sortedClubs();
         List<Integer> DIAMONDS = sortedDiamonds();
         List<Integer> HEARTS = sortedHearts();
         List<Integer> SPADES = sortedSpades();
-
-        // image_id_demo.setText(deck.get(3));
 
         // Divide the deck into 4 lists, each representing the cards for one player
         List<Integer> user_cards_IDes = deck.subList(0, 8);
@@ -143,12 +144,13 @@ public class GameFieldActivity extends AppCompatActivity {
         }*/
 
         /* The game has already started and it's user's turn first */
+        boolean turn_flag = true;
         boolean[] cardClickable = new boolean[8];
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
         // Game has already started and it's my turn (my I mean user's turn)
-        int user_current_card_ID;
-        for (byte i = 0; i < 32; i++) {
+        int user_current_card_ID; // Initialize with a default value
+        for (int i = 0; i < deck.size(); i++) { // Iterate over the deck size
             user_current_card_ID = cards_sorted_by_value.get(i);
             for (byte j = 0; j < 8; j++) {
                 if (user_cards_IDes.get(j) == user_current_card_ID && cardClickable[j]) {
@@ -176,18 +178,22 @@ public class GameFieldActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    turn_flag = false;
                     break;
                 }
             }
         }
 
-        // Means that bot will "think" 2 seconds
-        /*try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }*/
-
+        // Delay the execution of code for 4000 milliseconds (4 seconds)
+        if (turn_flag) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    four_center_cell_views[1].setImageResource(first_bot_cards_IDes.get(4));
+                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                }
+            }, 3500); // 4000 milliseconds (4 seconds)
+        }
 
     }
 
