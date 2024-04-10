@@ -198,10 +198,11 @@ public class GameFieldActivity extends AppCompatActivity {
         }*/
 
         /* The game has already started and it's user's turn first */
+        boolean cardIsInTheCenter = false;
         boolean[] cardClickable = new boolean[8];
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
-        int user_current_card_ID;
+        int user_current_card_ID = 0;
         for (int i = 0; i < deck.size(); i++) {
             for (byte j = 0; j < 8; j++) {
                 if (Objects.equals(user_sorted_by_suit.get(j), cards_sorted_by_value.get(i)) && cardClickable[j]) {
@@ -229,21 +230,21 @@ public class GameFieldActivity extends AppCompatActivity {
                                 user_card_image_views[k].setOnClickListener(null);
 
                     });
+                    cardIsInTheCenter = true;
                     break;
                 }
             }
         }
 
-        // Delay the execution of code for 4000 milliseconds (4 seconds)
-        /*if (turn_flag == 1) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    four_center_cell_views[1].setImageResource(first_bot_cards_IDes.get(4));
-                    four_center_cell_views[1].setVisibility(View.VISIBLE);
-                }
-            }, 4000); // 4000 milliseconds (4 seconds)
-        }*/
+        imageID.setText(user_current_card_ID);
+
+        if (cardIsInTheCenter) {
+            // Delay the execution of code for 4000 milliseconds (4 seconds)
+            new Handler().postDelayed(() -> {
+                four_center_cell_views[1].setImageResource(first_bot_cards_IDes.get(5));
+                four_center_cell_views[1].setVisibility(View.VISIBLE);
+            }, 5000); // 5000 milliseconds (5 seconds)
+        }
 
     }
     @NonNull
