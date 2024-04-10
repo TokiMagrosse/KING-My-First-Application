@@ -203,9 +203,9 @@ public class GameFieldActivity extends AppCompatActivity {
 
         int user_current_card_ID;
         for (int i = 0; i < deck.size(); i++) {
-            user_current_card_ID = cards_sorted_by_value.get(i);
             for (byte j = 0; j < 8; j++) {
-                if (user_cards_IDes.get(j) == user_current_card_ID && cardClickable[j]) {
+                if (Objects.equals(user_sorted_by_suit.get(j), cards_sorted_by_value.get(i)) && cardClickable[j]) {
+                    user_current_card_ID = user_sorted_by_suit.get(j);
                     user_card_door_views[j].setBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
                     byte finalJ = j;
                     user_card_image_views[j].setOnClickListener(v -> {
