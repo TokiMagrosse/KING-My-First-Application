@@ -29,6 +29,7 @@ import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    protected String[] game_modes = {"NO TRICKS", "NO LAST 2", "NO JACKS", "NO POISONOUS KING", "TAKE TRICKS"};
     TextView imageID;
     TextView user_score, first_bot_score, second_bot_score, third_bot_score;
     private static final int[] user_card_doors_IDes = {
@@ -99,8 +100,6 @@ public class GameFieldActivity extends AppCompatActivity {
         Collections.shuffle(deck);
         Collections.shuffle(deck);
 
-        // imageID.setText(deck.get(7));
-
         // 4 arrays of card IDes sorted by their values
         List<Integer> CLUBS = sortedClubs();
         List<Integer> DIAMONDS = sortedDiamonds();
@@ -123,38 +122,91 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> cards_sorted_by_suit = allCardsSortedBySuit();
         List<Integer> cards_sorted_by_value = allCardsSortedByValue();
 
-        int[] user_suitable_indexes = new int[8];
+        /*--------------------------Distribution of user cards by random------------------------------*/
+        List<Integer> user_sorted_by_suit = currentPlayerCardsSortedBySuit(user_cards_IDes);
+        for (int i = 0; i < 8; i++)
+            user_card_image_views[i].setImageResource(user_sorted_by_suit.get(i));
+
+        // Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
+
+        // Four lists of IDes separately for each suitable sorted part
+        List<Integer> P1_spades = new ArrayList<>();
+        List<Integer> P1_clubs = new ArrayList<>();
+        List<Integer> P1_diamonds = new ArrayList<>();
+        List<Integer> P1_hearts = new ArrayList<>();
+
         for (int i = 0; i < 8; i++) {
-            user_suitable_indexes[i] = cards_sorted_by_suit.indexOf(user_cards_IDes.get(i));
+            if (SPADES.contains(P1_sorted_by_suit.get(i)))
+                P1_spades.add(P1_sorted_by_suit.get(i));
+            if (CLUBS.contains(P1_sorted_by_suit.get(i)))
+                P1_clubs.add(P1_sorted_by_suit.get(i));
+            if (DIAMONDS.contains(P1_sorted_by_suit.get(i)))
+                P1_diamonds.add(P1_sorted_by_suit.get(i));
+            if (HEARTS.contains(P1_sorted_by_suit.get(i)))
+                P1_hearts.add(P1_sorted_by_suit.get(i));
         }
 
-        Arrays.sort(user_suitable_indexes);
+        // Dividing second bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        List<Integer> P2_sorted_by_suit = currentPlayerCardsSortedBySuit(second_bot_cards_IDes);
+
+        // Four lists of IDes separately for each suitable sorted part
+        List<Integer> P2_spades = new ArrayList<>();
+        List<Integer> P2_clubs = new ArrayList<>();
+        List<Integer> P2_diamonds = new ArrayList<>();
+        List<Integer> P2_hearts = new ArrayList<>();
+
         for (int i = 0; i < 8; i++) {
-            user_card_image_views[i].setImageResource(cards_sorted_by_suit.get(user_suitable_indexes[i]));
+            if (SPADES.contains(P2_sorted_by_suit.get(i)))
+                P2_spades.add(P2_sorted_by_suit.get(i));
+            if (CLUBS.contains(P2_sorted_by_suit.get(i)))
+                P2_clubs.add(P2_sorted_by_suit.get(i));
+            if (DIAMONDS.contains(P2_sorted_by_suit.get(i)))
+                P2_diamonds.add(P2_sorted_by_suit.get(i));
+            if (HEARTS.contains(P2_sorted_by_suit.get(i)))
+                P2_hearts.add(P2_sorted_by_suit.get(i));
         }
 
-        int[] user_valuable_indexes = new int[8];
+        // Dividing third bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        List<Integer> P3_sorted_by_suit = currentPlayerCardsSortedBySuit(third_bot_cards_IDEs);
+
+        // Four lists of IDes separately for each suitable sorted part
+        List<Integer> P3_spades = new ArrayList<>();
+        List<Integer> P3_clubs = new ArrayList<>();
+        List<Integer> P3_diamonds = new ArrayList<>();
+        List<Integer> P3_hearts = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            if (SPADES.contains(P3_sorted_by_suit.get(i)))
+                P3_spades.add(P3_sorted_by_suit.get(i));
+            if (CLUBS.contains(P3_sorted_by_suit.get(i)))
+                P3_clubs.add(P3_sorted_by_suit.get(i));
+            if (DIAMONDS.contains(P3_sorted_by_suit.get(i)))
+                P3_diamonds.add(P3_sorted_by_suit.get(i));
+            if (HEARTS.contains(P3_sorted_by_suit.get(i)))
+                P3_hearts.add(P3_sorted_by_suit.get(i));
+        }
+
+        /*int[] user_valuable_indexes = new int[8];
         for (int i = 0; i < 8; i++) {
             user_valuable_indexes[i] = cards_sorted_by_value.indexOf(user_cards_IDes.get(i));
         }
 
         Arrays.sort(user_valuable_indexes);
-        /*for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++) {
             user_card_image_views[i].setImageResource(cards_sorted_by_value.get(user_valuable_indexes[i]));
         }*/
 
         /* The game has already started and it's user's turn first */
-        boolean turn_flag = true;
         boolean[] cardClickable = new boolean[8];
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
-        // Game has already started and it's my turn (my I mean user's turn)
-        int user_current_card_ID; // Initialize with a default value
-        for (int i = 0; i < deck.size(); i++) { // Iterate over the deck size
+        int user_current_card_ID;
+        for (int i = 0; i < deck.size(); i++) {
             user_current_card_ID = cards_sorted_by_value.get(i);
             for (byte j = 0; j < 8; j++) {
                 if (user_cards_IDes.get(j) == user_current_card_ID && cardClickable[j]) {
-                    user_card_door_views[j].setCardBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
+                    user_card_door_views[j].setBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
                     byte finalJ = j;
                     user_card_image_views[j].setOnClickListener(v -> {
                         // Set all cards not clickable
@@ -172,29 +224,41 @@ public class GameFieldActivity extends AppCompatActivity {
                         user_card_door_views[finalJ].setVisibility(View.GONE);
 
                         // Set all other cards to be not clickable
-                        for (int k = 0; k < 8; k++) {
-                            if (k != finalJ) {
+                        for (int k = 0; k < 8; k++)
+                            if (k != finalJ)
                                 user_card_image_views[k].setOnClickListener(null);
-                            }
-                        }
+
                     });
-                    turn_flag = false;
                     break;
                 }
             }
         }
 
         // Delay the execution of code for 4000 milliseconds (4 seconds)
-        if (turn_flag) {
+        /*if (turn_flag == 1) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     four_center_cell_views[1].setImageResource(first_bot_cards_IDes.get(4));
                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                 }
-            }, 3500); // 4000 milliseconds (4 seconds)
-        }
+            }, 4000); // 4000 milliseconds (4 seconds)
+        }*/
 
+    }
+    @NonNull
+    private List<Integer> currentPlayerCardsSortedBySuit(List<Integer> current_player_card_IDes) {
+        int[] player_suitable_indexes = new int[8];
+        for (int i = 0; i < 8; i++)
+            player_suitable_indexes[i] = allCardsSortedBySuit().indexOf(current_player_card_IDes.get(i));
+
+        List<Integer> sorted_card_IDes = new ArrayList<>();
+        Arrays.sort(player_suitable_indexes);
+
+        for (int i = 0; i < 8; i++)
+            sorted_card_IDes.add(allCardsSortedBySuit().get(player_suitable_indexes[i]));
+
+        return sorted_card_IDes;
     }
 
     @NonNull
