@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="5sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,12 +21,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_width="725sp"
+            android:layout_width="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_height="65sp"
             android:backgroundTint="@color/super_dark_green"
             android:orientation="horizontal"
-            app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +70,10 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/alata"
                         android:gravity="start"
-                        android:text="@string/your_username"
+                        android:textStyle="bold"
+                        android:text="KING"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18.5sp" />
 
                     <TextView
                         android:id="@+id/my_rating"
@@ -95,6 +94,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="225sp"
                     android:layout_height="50sp"
+                    android:layout_marginEnd="75sp"
                     android:layout_gravity="center_vertical"
                     android:backgroundTint="@color/green_background"
                     app:cardCornerRadius="50sp">
@@ -161,10 +161,15 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:layout_width="725sp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="215sp"
@@ -351,7 +356,7 @@
             </androidx.cardview.widget.CardView>
 
             <Space
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
@@ -540,7 +545,7 @@
             </androidx.cardview.widget.CardView>
 
             <Space
-                android:layout_width="0dp"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
@@ -727,6 +732,11 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
         </LinearLayout>
 

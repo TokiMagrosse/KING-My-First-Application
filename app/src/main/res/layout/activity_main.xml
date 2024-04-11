@@ -67,6 +67,7 @@
                 android:drawableStart="@drawable/password_logo_icon_small"
                 android:drawablePadding="10sp"
                 android:hint="@string/enter_password"
+                android:drawableEnd="@drawable/visibility_off_icon"
                 android:inputType="textPassword"
                 android:padding="12sp"
                 android:autofillHints="password" />

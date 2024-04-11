@@ -198,7 +198,6 @@ public class GameFieldActivity extends AppCompatActivity {
         }*/
 
         /* The game has already started and it's user's turn first */
-        boolean cardIsInTheCenter = false;
         boolean[] cardClickable = new boolean[8];
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
@@ -229,22 +228,31 @@ public class GameFieldActivity extends AppCompatActivity {
                             if (k != finalJ)
                                 user_card_image_views[k].setOnClickListener(null);
 
+                        // Show the "first_bot" card after the user card is clicked
+                        new Handler().postDelayed(() -> {
+                            four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(2));
+                            four_center_cell_views[1].setVisibility(View.VISIBLE);
+                        }, 2500); // 2500 milliseconds (2.5 seconds)
+
+                        // Show the "first_bot" card after the user card is clicked
+                        new Handler().postDelayed(() -> {
+                            four_center_cell_views[2].setImageResource(P2_sorted_by_suit.get(2));
+                            four_center_cell_views[2].setVisibility(View.VISIBLE);
+                        }, 5000); // 2500 milliseconds (2.5 seconds)
+
+                        // Show the "first_bot" card after the user card is clicked
+                        new Handler().postDelayed(() -> {
+                            four_center_cell_views[3].setImageResource(P3_sorted_by_suit.get(2));
+                            four_center_cell_views[3].setVisibility(View.VISIBLE);
+                        }, 7500); // 2500 milliseconds (2.5 seconds)
                     });
-                    cardIsInTheCenter = true;
                     break;
                 }
             }
+
+
         }
 
-        imageID.setText(user_current_card_ID);
-
-        if (cardIsInTheCenter) {
-            // Delay the execution of code for 4000 milliseconds (4 seconds)
-            new Handler().postDelayed(() -> {
-                four_center_cell_views[1].setImageResource(first_bot_cards_IDes.get(5));
-                four_center_cell_views[1].setVisibility(View.VISIBLE);
-            }, 5000); // 5000 milliseconds (5 seconds)
-        }
 
     }
     @NonNull

@@ -31,6 +31,7 @@
                 android:id="@+id/first_bot_turner"
                 android:layout_width="25sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -60,6 +61,7 @@
                 android:fontFamily="@font/alata"
                 android:text="BOT-P1"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -142,6 +144,7 @@
                 android:id="@+id/third_bot_turner"
                 android:layout_width="25sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -171,6 +174,7 @@
                 android:fontFamily="@font/alata"
                 android:text="BOT-P3"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -195,6 +199,7 @@
                 android:id="@+id/card_door_1"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -221,6 +226,7 @@
                 android:id="@+id/card_door_2"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -245,6 +251,7 @@
                 android:id="@+id/card_door_3"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -268,6 +275,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_door_4"
                 android:layout_width="50sp"
+                app:cardCornerRadius="25sp"
                 android:layout_height="5sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
@@ -293,6 +301,7 @@
                 android:id="@+id/card_door_5"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -317,6 +326,7 @@
                 android:id="@+id/card_door_6"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -341,6 +351,7 @@
                 android:id="@+id/card_door_7"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -365,6 +376,7 @@
                 android:id="@+id/card_door_8"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -638,6 +650,7 @@
                 android:layout_marginStart="5sp"
                 android:fontFamily="@font/alata"
                 android:text="BOT-P2"
+                android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="@color/white" />
 
