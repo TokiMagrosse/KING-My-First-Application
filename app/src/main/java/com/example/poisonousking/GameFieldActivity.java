@@ -201,58 +201,165 @@ public class GameFieldActivity extends AppCompatActivity {
         boolean[] cardClickable = new boolean[8];
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
-        int user_current_card_ID = 0;
-        for (int i = 0; i < deck.size(); i++) {
-            for (byte j = 0; j < 8; j++) {
-                if (Objects.equals(user_sorted_by_suit.get(j), cards_sorted_by_value.get(i)) && cardClickable[j]) {
-                    user_current_card_ID = user_sorted_by_suit.get(j);
-                    user_card_door_views[j].setBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
-                    byte finalJ = j;
-                    user_card_image_views[j].setOnClickListener(v -> {
-                        // Set all cards not clickable
-                        Arrays.fill(cardClickable, false);
+        String[] suits = {"spades", "clubs", "diamonds", "hearts"};
+        int user_current_card_ID;
+        for (byte j = 0; j < 8; j++) {
+            if (cardClickable[j]) {
+                user_current_card_ID = user_sorted_by_suit.get(j);
+                user_card_door_views[j].setCardBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
+                byte finalJ = j;
+                user_card_image_views[j].setOnClickListener(v -> {
+                    // Set all cards not clickable
+                    Arrays.fill(cardClickable, false);
 
-                        // Set the clicked card clickable
-                        cardClickable[finalJ] = true;
+                    // Set the clicked card clickable
+                    cardClickable[finalJ] = true;
 
-                        // Display the clicked card in the center
-                        four_center_cell_views[0].setImageDrawable(user_card_image_views[finalJ].getDrawable());
-                        four_center_cell_views[0].setVisibility(View.VISIBLE);
+                    // Display the clicked card in the center
+                    four_center_cell_views[0].setImageDrawable(user_card_image_views[finalJ].getDrawable());
+                    four_center_cell_views[0].setVisibility(View.VISIBLE);
 
-                        // Hide the clicked card
-                        user_card_image_views[finalJ].setVisibility(View.GONE);
-                        user_card_door_views[finalJ].setVisibility(View.GONE);
+                    // Hide the clicked card
+                    user_card_image_views[finalJ].setVisibility(View.GONE);
+                    user_card_door_views[finalJ].setVisibility(View.GONE);
 
-                        // Set all other cards to be not clickable
-                        for (int k = 0; k < 8; k++)
-                            if (k != finalJ)
-                                user_card_image_views[k].setOnClickListener(null);
+                    // Set all other cards to be not clickable
+                    for (int k = 0; k < 8; k++)
+                        if (k != finalJ)
+                            user_card_image_views[k].setOnClickListener(null);
 
-                        // Show the "first_bot" card after the user card is clicked
-                        new Handler().postDelayed(() -> {
-                            four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(2));
-                            four_center_cell_views[1].setVisibility(View.VISIBLE);
-                        }, 2500); // 2500 milliseconds (2.5 seconds)
+                    // Figuring out the user card suit so bots will know how to play
+                    String current_card_suit;
+                    if (SPADES.contains(user_current_card_ID))
+                        current_card_suit = suits[0];
+                    else if (CLUBS.contains(user_current_card_ID))
+                        current_card_suit = suits[1];
+                    else if (DIAMONDS.contains(user_current_card_ID))
+                        current_card_suit = suits[2];
+                    else
+                        current_card_suit = suits[3];
 
-                        // Show the "first_bot" card after the user card is clicked
-                        new Handler().postDelayed(() -> {
-                            four_center_cell_views[2].setImageResource(P2_sorted_by_suit.get(2));
-                            four_center_cell_views[2].setVisibility(View.VISIBLE);
-                        }, 5000); // 2500 milliseconds (2.5 seconds)
+                    /* Show the "first_bot" card after the user card is clicked */
+                    // Checking do first bot have card(s) of spades suit
+                    if (current_card_suit.equals("spades")) {
+                        if (P1_spades.isEmpty()) {
+                            if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
+                                new Handler().postDelayed(() -> {
+                                    four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                    }, 2000); // 2 seconds
+                            } else {
+                                new Handler().postDelayed(() -> {
+                                    Random random = new Random();
+                                    int rand_index = P1_sorted_by_suit.size();
+                                    four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(random.nextInt(rand_index)));
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            }
+                        } else {
+                            new Handler().postDelayed(() -> {
+                                Random random = new Random();
+                                int rand_index = P1_spades.size();
+                                four_center_cell_views[1].setImageResource(P1_spades.get(random.nextInt(rand_index)));
+                                four_center_cell_views[1].setVisibility(View.VISIBLE);
+                            }, 2000); // 2 seconds
+                        }
+                    }
 
-                        // Show the "first_bot" card after the user card is clicked
-                        new Handler().postDelayed(() -> {
-                            four_center_cell_views[3].setImageResource(P3_sorted_by_suit.get(2));
-                            four_center_cell_views[3].setVisibility(View.VISIBLE);
-                        }, 7500); // 2500 milliseconds (2.5 seconds)
-                    });
-                    break;
-                }
+                    // Checking do first bot have card(s) of clubs suit
+                    if (current_card_suit.equals("clubs")) {
+                        if (P1_clubs.isEmpty()) {
+                            if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
+                                new Handler().postDelayed(() -> {
+                                    four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            } else {
+                                new Handler().postDelayed(() -> {
+                                    Random random = new Random();
+                                    int rand_index = P1_sorted_by_suit.size();
+                                    four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(random.nextInt(rand_index)));
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            }
+                        } else {
+                            new Handler().postDelayed(() -> {
+                                Random random = new Random();
+                                int rand_index = P1_clubs.size();
+                                four_center_cell_views[1].setImageResource(P1_clubs.get(random.nextInt(rand_index)));
+                                four_center_cell_views[1].setVisibility(View.VISIBLE);
+                            }, 2000); // 2 seconds
+                        }
+                    }
+
+                    // Checking do first bot have card(s) of diamonds suit
+                    if (current_card_suit.equals("diamonds")) {
+                        if (P1_spades.isEmpty()) {
+                            if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
+                                new Handler().postDelayed(() -> {
+                                    four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            } else {
+                                new Handler().postDelayed(() -> {
+                                    Random random = new Random();
+                                    int rand_index = P1_sorted_by_suit.size();
+                                    four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(random.nextInt(rand_index)));
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            }
+                        } else {
+                            new Handler().postDelayed(() -> {
+                                Random random = new Random();
+                                int rand_index = P1_spades.size();
+                                four_center_cell_views[1].setImageResource(P1_spades.get(random.nextInt(rand_index)));
+                                four_center_cell_views[1].setVisibility(View.VISIBLE);
+                            }, 2000); // 2 seconds
+                        }
+                    }
+
+                    // Checking do first bot have card(s) of hearts suit
+                    if (current_card_suit.equals("hearts")) {
+                        if (P1_spades.isEmpty()) {
+                            if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
+                                new Handler().postDelayed(() -> {
+                                    four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            } else {
+                                new Handler().postDelayed(() -> {
+                                    Random random = new Random();
+                                    int rand_index = P1_sorted_by_suit.size();
+                                    four_center_cell_views[1].setImageResource(P1_sorted_by_suit.get(random.nextInt(rand_index)));
+                                    four_center_cell_views[1].setVisibility(View.VISIBLE);
+                                }, 2000); // 2 seconds
+                            }
+                        } else {
+                            new Handler().postDelayed(() -> {
+                                Random random = new Random();
+                                int rand_index = P1_spades.size();
+                                four_center_cell_views[1].setImageResource(P1_spades.get(random.nextInt(rand_index)));
+                                four_center_cell_views[1].setVisibility(View.VISIBLE);
+                            }, 2000); // 2 seconds
+                        }
+                    }
+
+
+                    // Show the "second_bot" card after the user card is clicked
+                    new Handler().postDelayed(() -> {
+                        four_center_cell_views[2].setImageResource(P2_sorted_by_suit.get(2));
+                        four_center_cell_views[2].setVisibility(View.VISIBLE);
+                        }, 4000); // 4 seconds
+
+                    // Show the "third_bot" card after the user card is clicked
+                    new Handler().postDelayed(() -> {
+                        four_center_cell_views[3].setImageResource(P3_sorted_by_suit.get(2));
+                        four_center_cell_views[3].setVisibility(View.VISIBLE);
+                        }, 6000); // 6 seconds
+                });
+                break;
             }
-
-
         }
-
 
     }
     @NonNull
