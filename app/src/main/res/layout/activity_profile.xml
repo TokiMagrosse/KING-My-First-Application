@@ -71,7 +71,7 @@
                         android:fontFamily="@font/alata"
                         android:gravity="start"
                         android:textStyle="bold"
-                        android:text="KING"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="18.5sp" />
 
