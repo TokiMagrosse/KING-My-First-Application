@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox remember_me;
     EditText email_address, password;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
 
         // Set touch listener for the visibility toggle
-        /*final boolean[] isVisible = {false}; // Variable to track password visibility
+        final boolean[] isVisible = {false}; // Variable to track password visibility
         password.setOnTouchListener((v, event) -> {
             final int right = 2;
             if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             return false;
-        });*/
+        });
 
         login_button.setOnClickListener(v -> checkCredentials());
     }

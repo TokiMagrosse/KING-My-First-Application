@@ -3,11 +3,16 @@ package com.example.poisonousking;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseFirestore f_store;
     String userID;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +61,79 @@ public class RegisterActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         register_button = findViewById(R.id.register_button);
 
+        // Set both start and end drawables programmatically
+        Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
+        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon);
+        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon);
+        register_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
+
+        // Set touch listener for the visibility toggle in select password field
+        final boolean[] isVisible = {false}; // Variable to track password visibility
+        register_password.setOnTouchListener((v, event) -> {
+            final int right = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int drawableWidth = register_password.getCompoundDrawables()[right].getBounds().width();
+                if (drawableWidth > 0) { // Ensure the compound drawable exists
+                    int drawableRight = register_password.getRight() - register_password.getPaddingRight(); // Adjusted calculation for right position
+                    if (event.getRawX() >= drawableRight - drawableWidth) {
+                        int selection = register_password.getSelectionEnd();
+                        if (isVisible[0]) {
+                            // Setting visibility eye drawable image here
+                            register_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
+                            // For hide password
+                            register_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isVisible[0] = false;
+                        } else {
+                            // Setting visibility eye drawable image here
+                            register_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOnDrawable, null);
+                            // For show password
+                            register_password.setTransformationMethod(null); // Set null to show the password
+                            isVisible[0] = true;
+                        }
+                        register_password.setSelection(selection);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+
+        // Set touch listener for the visibility toggle in confirm password field
+        final boolean[] isVisible_2 = {false}; // Variable to track password visibility
+        confirm_password.setOnTouchListener((v, event) -> {
+            final int right = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int drawableWidth = confirm_password.getCompoundDrawables()[right].getBounds().width();
+                if (drawableWidth > 0) { // Ensure the compound drawable exists
+                    int drawableRight = confirm_password.getRight() - confirm_password.getPaddingRight(); // Adjusted calculation for right position
+                    if (event.getRawX() >= drawableRight - drawableWidth) {
+                        int selection = confirm_password.getSelectionEnd();
+                        if (isVisible_2[0]) {
+                            // Setting visibility eye drawable image here
+                            confirm_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
+                            // For hide password
+                            confirm_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            isVisible_2[0] = false;
+                        } else {
+                            // Setting visibility eye drawable image here
+                            confirm_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOnDrawable, null);
+                            // For show password
+                            confirm_password.setTransformationMethod(null); // Set null to show the password
+                            isVisible_2[0] = true;
+                        }
+                        confirm_password.setSelection(selection);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+
         register_button.setOnClickListener(v -> checkCredentials());
 
         if (m_auth.getCurrentUser() != null) {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
-            // finish();
         }
 
         back_to_login_text.setOnClickListener(v -> {

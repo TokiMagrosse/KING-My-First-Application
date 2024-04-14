@@ -1,8 +1,5 @@
 package com.example.poisonousking;
 
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -29,8 +25,11 @@ import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
-    protected String[] game_modes = {"NO LAST 2", "NO JACKS", "NO QUEENS", "NO KING OF HEARTS", "TAKE TRICKS"};
-    TextView user_score, first_bot_score, second_bot_score, third_bot_score;
+    protected String[] game_modes = {
+            "NO LAST 2", "NO JACKS", "NO QUEENS", "NO KING OF HEARTS",
+            "TAKE TRICKS", "TAKE TRICKS"
+    };
+    TextView[] scores = new TextView[4];
     private static final int[] user_card_doors_IDes = {
             R.id.card_door_1, R.id.card_door_2, R.id.card_door_3, R.id.card_door_4,
             R.id.card_door_5, R.id.card_door_6, R.id.card_door_7, R.id.card_door_8
@@ -61,10 +60,10 @@ public class GameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
-        user_score = findViewById(R.id.user_score);
-        first_bot_score = findViewById(R.id.first_bot_score);
-        second_bot_score = findViewById(R.id.second_bot_score);
-        third_bot_score = findViewById(R.id.third_bot_score);
+        scores[0] = findViewById(R.id.user_score);
+        scores[1] = findViewById(R.id.first_bot_score);
+        scores[2] = findViewById(R.id.second_bot_score);
+        scores[3] = findViewById(R.id.third_bot_score);
         table_button = findViewById(R.id.table_button);
         menu_button = findViewById(R.id.menu_button);
 
@@ -125,7 +124,7 @@ public class GameFieldActivity extends AppCompatActivity {
         for (int i = 0; i < 8; i++)
             user_card_image_views[i].setImageResource(user_sorted_by_suit.get(i));
 
-        // Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        /* Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
 
         // Four lists of IDes separately for each suitable sorted part
@@ -145,7 +144,7 @@ public class GameFieldActivity extends AppCompatActivity {
                 P1_hearts.add(P1_sorted_by_suit.get(i));
         }
 
-        // Dividing second bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        /* Dividing second bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P2_sorted_by_suit = currentPlayerCardsSortedBySuit(second_bot_cards_IDes);
 
         // Four lists of IDes separately for each suitable sorted part
@@ -165,7 +164,7 @@ public class GameFieldActivity extends AppCompatActivity {
                 P2_hearts.add(P2_sorted_by_suit.get(i));
         }
 
-        // Dividing third bot cards to 4 parts: sorted spades, clubs, diamonds, hearts
+        /* Dividing third bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P3_sorted_by_suit = currentPlayerCardsSortedBySuit(third_bot_cards_IDEs);
 
         // Four lists of IDes separately for each suitable sorted part
@@ -537,7 +536,6 @@ public class GameFieldActivity extends AppCompatActivity {
                             }
                         }
                     });
-
 
 
                 }
