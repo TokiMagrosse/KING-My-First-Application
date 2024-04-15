@@ -61,11 +61,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         play_button_2.setOnClickListener(v -> {
-            Toast.makeText(this, "Sorry! We're still working on this", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
         });
 
         play_button_3.setOnClickListener(v -> {
-            Toast.makeText(this, "Sorry! We're still working on this", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
         });
 
         your_profile_picture.setOnClickListener(v -> {

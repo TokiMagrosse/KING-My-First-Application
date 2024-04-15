@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             // Setting visibility eye drawable image here
                             password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOnDrawable, null);
-                            // For show password
+                            // For showing password
                             password.setTransformationMethod(null); // Set null to show the password
                             isVisible[0] = true;
                         }
