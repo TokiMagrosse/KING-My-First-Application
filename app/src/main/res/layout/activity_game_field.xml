@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                app:strokeWidth="2.5sp"
                 app:cardCornerRadius="7.5dp"
                 android:layout_marginTop="2.5sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.5sp"
                 android:layout_gravity="center"
+                app:strokeWidth="2.5sp"
                 app:cardCornerRadius="7.5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -639,6 +641,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                app:strokeWidth="2.5sp"
                 app:cardCornerRadius="7.5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -697,20 +700,5 @@
             app:cornerRadius="10dp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/image_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alata"
-        android:text="IMAGE ID"
-        android:visibility="invisible"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintVertical_bias="0.431" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

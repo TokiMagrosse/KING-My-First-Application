@@ -42,16 +42,6 @@
             android:fontFamily="@font/alata"
             android:textSize="45sp"/>
 
-        <!--<ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="23sp"
-            android:layout_marginTop="20dp"
-            android:progress="0"
-            android:progressDrawable="@drawable/progress_bar_rectangular"
-            android:visibility="visible" />-->
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
