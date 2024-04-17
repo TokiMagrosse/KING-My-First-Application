@@ -110,15 +110,11 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> second_bot_cards_IDes = deck.subList(16, 24);
         List<Integer> third_bot_cards_IDEs = deck.subList(24, 32);
 
-        /*
-         * User cards: 7S, JS, KS, AS, 7C, JC, 7D, 9D
-         * P1 cards: 8S, 9C 10C, JD, KD, AD, 9H, QH
-         * P2 cards: QC, AC, 10D, QD, 7H, 8, JH, AH
-         * P3 cards: 9S, 10S, QS, 8C, KC, 8D, 10H, KH */
-
         // Creating this arrays with card Ides sorted by suits and valued separately
         List<Integer> cards_sorted_by_suit = allCardsSortedBySuit();
         List<Integer> cards_sorted_by_value = allCardsSortedByValue();
+
+        int[] initial_scores = {0, 0, 0, 0};
 
         /*--------------------------Distribution of user cards by random------------------------------*/
         List<Integer> user_sorted_by_suit = currentPlayerCardsSortedBySuit(user_cards_IDes);
@@ -200,7 +196,6 @@ public class GameFieldActivity extends AppCompatActivity {
         Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
         Random random = new Random();
-        int[] initial_scores = {0, 0, 0, 0};
         List<Integer> four_cycle = new ArrayList<>();
 
         int user_current_card_ID;
@@ -213,7 +208,6 @@ public class GameFieldActivity extends AppCompatActivity {
             for (byte j = 0; j < user_sorted_by_suit.size(); j++) {
                 if (Objects.equals(user_sorted_by_suit.get(j), cards_sorted_by_value.get(i)) && cardClickable[j]) {
                     user_current_card_ID = user_sorted_by_suit.get(j);
-                    user_card_door_views[j].setCardBackgroundColor(ContextCompat.getColor(this, R.color.fucking_green));
                     byte finalJ = j;
                     int finalUser_current_card_ID = user_current_card_ID;
                     four_cycle.add(finalUser_current_card_ID);
@@ -593,6 +587,7 @@ public class GameFieldActivity extends AppCompatActivity {
                         // user -> 0, P1 -> 1, P2 -> 2, P3 -> 3
                         int winner_index_index = 0;
                         List<Integer> indexes_in_corresponding_suit = new ArrayList<>();
+
                         if (SPADES.contains(finalUser_current_card_ID)) {
                             for (int k = 0; k < four_cycle.size(); k++) {
                                 if (SPADES.contains(four_cycle.get(k)))
@@ -657,11 +652,20 @@ public class GameFieldActivity extends AppCompatActivity {
                                 }
                         }
 
+                        // Use the winner_index_index safely within the handler
                         int finalWinner_index_index = winner_index_index;
-                        /*new Handler().postDelayed(() -> {
-                            initial_scores[finalWinner_index_index] += 10;
-                            scores[finalWinner_index_index].setText("+10");
-                        }, 8750);*/
+                        new Handler().postDelayed(() -> {
+                            // Safely check if the index is within bounds and update scores
+                            if (finalWinner_index_index < initial_scores.length) {
+                                initial_scores[finalWinner_index_index] += 10;
+                                // Make sure to convert int to String when setting the text
+                                runOnUiThread(() -> { // Ensures you're on the UI thread, but Handler should already be handling this
+                                    if (scores[finalWinner_index_index] != null) {
+                                        scores[finalWinner_index_index].setText(String.valueOf(initial_scores[finalWinner_index_index]));
+                                    }
+                                });
+                            }
+                        }, 8750);
 
                         if (x.get() == 4)
                             new Handler().postDelayed(() -> {
