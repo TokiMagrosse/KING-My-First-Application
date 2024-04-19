@@ -51,7 +51,7 @@
                     android:layout_height="40sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
+                    android:src="@drawable/first_bot_picture" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -652,7 +652,7 @@
                     android:layout_height="40sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
+                    android:src="@drawable/second_bot_picture" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
