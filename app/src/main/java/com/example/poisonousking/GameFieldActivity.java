@@ -11,7 +11,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,15 +25,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    ImageView center_deck;
+    public int[] initial_scores = {0, 0, 0, 0};
     protected String[] game_modes = {
             "NO LAST 2", "NO JACKS", "NO QUEENS", "NO KING OF HEARTS",
             "TAKE TRICKS", "TAKE TRICKS"
     };
     TextView[] scores = new TextView[4];
-    private static final int[] user_card_doors_IDes = {
-            R.id.card_door_1, R.id.card_door_2, R.id.card_door_3, R.id.card_door_4,
-            R.id.card_door_5, R.id.card_door_6, R.id.card_door_7, R.id.card_door_8
-    };
     private final CardView[] user_card_door_views = new CardView[8];
     ImageView[] four_center_cell_views = new ImageView[4];
     private final ImageView[] user_card_image_views = new ImageView[8];
@@ -60,6 +57,8 @@ public class GameFieldActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        center_deck = findViewById(R.id.deck);
 
         scores[0] = findViewById(R.id.user_score);
         scores[1] = findViewById(R.id.first_bot_score);
@@ -96,7 +95,6 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> deck = generateDeckOfCards();
         Collections.shuffle(deck);
         Collections.shuffle(deck);
-        Collections.shuffle(deck);
 
         // 4 arrays of card IDes sorted by their values
         List<Integer> CLUBS = sortedClubs();
@@ -114,12 +112,30 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> cards_sorted_by_suit = allCardsSortedBySuit();
         List<Integer> cards_sorted_by_value = allCardsSortedByValue();
 
-        int[] initial_scores = {0, 0, 0, 0};
-
         /*--------------------------Distribution of user cards by random------------------------------*/
         List<Integer> user_sorted_by_suit = currentPlayerCardsSortedBySuit(user_cards_IDes);
-        for (int i = 0; i < 8; i++)
-            user_card_image_views[i].setImageResource(user_sorted_by_suit.get(i));
+
+        for (int i = 0; i < 8; i++) {
+            int finalI = i;
+            new Handler().postDelayed(() -> {
+                new Handler().postDelayed(() -> {
+                    user_card_image_views[finalI].setVisibility(View.VISIBLE);
+                }, 750);
+            }, 5000);
+        }
+
+        new Handler().postDelayed(() -> {
+            for (int i = 0; i < 8; i++) {
+                int finalI = i;
+                new Handler().postDelayed(() -> {
+                    user_card_image_views[finalI].setImageResource(user_sorted_by_suit.get(finalI));
+                }, 750);
+            }
+        }, 6000);
+
+        new Handler().postDelayed(() -> {
+            center_deck.setVisibility(View.GONE);
+        }, 8000);
 
         /* Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
@@ -180,16 +196,6 @@ public class GameFieldActivity extends AppCompatActivity {
             if (HEARTS.contains(P3_sorted_by_suit.get(i)))
                 P3_hearts.add(P3_sorted_by_suit.get(i));
         }
-
-        /*int[] user_valuable_indexes = new int[8];
-        for (int i = 0; i < 8; i++) {
-            user_valuable_indexes[i] = cards_sorted_by_value.indexOf(user_cards_IDes.get(i));
-        }
-
-        Arrays.sort(user_valuable_indexes);
-        for (int i = 0; i < 8; i++) {
-            user_card_image_views[i].setImageResource(cards_sorted_by_value.get(user_valuable_indexes[i]));
-        }*/
 
         /* The game has already started and it's user's turn first */
         boolean[] cardClickable = new boolean[8];
@@ -665,7 +671,7 @@ public class GameFieldActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }, 8750);
+                        }, 8500);
 
                         if (x.get() == 4)
                             new Handler().postDelayed(() -> {
@@ -678,7 +684,6 @@ public class GameFieldActivity extends AppCompatActivity {
 
                 }
             }
-
     }
     @NonNull
     private List<Integer> currentPlayerCardsSortedBySuit(List<Integer> current_player_card_IDes) {
@@ -768,5 +773,4 @@ public class GameFieldActivity extends AppCompatActivity {
         }
         return SPADES;
     }
-
 }

@@ -8,6 +8,19 @@
     android:background="@color/very_dark_green"
     tools:context=".GameFieldActivity">
 
+    <ImageView
+        android:id="@+id/deck"
+        android:layout_width="85sp"
+        android:layout_height="116sp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/card_monotone_back"
+        android:tag="4"
+        android:layout_marginBottom="70sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
@@ -212,6 +225,7 @@
             android:contentDescription="@string/todo"
             android:src="@drawable/card_monotone_back"
             android:tag="1"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -239,6 +253,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="2"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_4" />
 
@@ -264,6 +279,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="3"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_8" />
 
@@ -289,6 +305,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="4"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_6" />
 
@@ -314,6 +331,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="5"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_5" />
 
@@ -339,6 +357,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="6"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -364,6 +383,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="7"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_3" />
 
@@ -389,6 +409,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="8"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_7" />
 
