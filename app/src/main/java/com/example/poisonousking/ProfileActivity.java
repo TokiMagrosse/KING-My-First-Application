@@ -262,19 +262,6 @@ public class ProfileActivity extends AppCompatActivity {
         // Stop the music when the activity is paused
         if (mediaPlayer != null) {
             mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // Stop the music when the activity is no longer visible
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
         }
     }
 
