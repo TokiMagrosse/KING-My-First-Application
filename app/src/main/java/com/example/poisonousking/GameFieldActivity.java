@@ -25,12 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameFieldActivity extends AppCompatActivity {
 
-    ImageView center_deck;
     public int[] initial_scores = {0, 0, 0, 0};
-    protected String[] game_modes = {
-            "NO LAST 2", "NO JACKS", "NO QUEENS", "NO KING OF HEARTS",
-            "TAKE TRICKS", "TAKE TRICKS"
-    };
     TextView[] scores = new TextView[4];
     private final CardView[] user_card_door_views = new CardView[8];
     ImageView[] four_center_cell_views = new ImageView[4];
@@ -57,8 +52,6 @@ public class GameFieldActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        center_deck = findViewById(R.id.deck);
 
         scores[0] = findViewById(R.id.user_score);
         scores[1] = findViewById(R.id.first_bot_score);
@@ -108,34 +101,17 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> second_bot_cards_IDes = deck.subList(16, 24);
         List<Integer> third_bot_cards_IDEs = deck.subList(24, 32);
 
-        // Creating this arrays with card Ides sorted by suits and valued separately
-        List<Integer> cards_sorted_by_suit = allCardsSortedBySuit();
-        List<Integer> cards_sorted_by_value = allCardsSortedByValue();
-
         /*--------------------------Distribution of user cards by random------------------------------*/
         List<Integer> user_sorted_by_suit = currentPlayerCardsSortedBySuit(user_cards_IDes);
-
-        for (int i = 0; i < 8; i++) {
-            int finalI = i;
-            new Handler().postDelayed(() -> {
-                new Handler().postDelayed(() -> {
-                    user_card_image_views[finalI].setVisibility(View.VISIBLE);
-                }, 750);
-            }, 5000);
-        }
 
         new Handler().postDelayed(() -> {
             for (int i = 0; i < 8; i++) {
                 int finalI = i;
                 new Handler().postDelayed(() -> {
                     user_card_image_views[finalI].setImageResource(user_sorted_by_suit.get(finalI));
-                }, 750);
+                }, 300);
             }
-        }, 6000);
-
-        new Handler().postDelayed(() -> {
-            center_deck.setVisibility(View.GONE);
-        }, 8000);
+        }, 1000);
 
         /* Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
@@ -209,13 +185,14 @@ public class GameFieldActivity extends AppCompatActivity {
         AtomicInteger P2_current_card_ID = new AtomicInteger();
         AtomicInteger P3_current_card_ID = new AtomicInteger();
 
-        for (byte j = 0; j < user_sorted_by_suit.size(); j++) {
+        for (byte j = 0; j < user_sorted_by_suit.size(); j++)
             if (cardClickable[j]) {
                 user_current_card_ID = user_sorted_by_suit.get(j);
                 byte finalJ = j;
                 int finalUser_current_card_ID = user_current_card_ID;
 
                 user_card_image_views[j].setOnClickListener(v -> {
+                    four_cycle.add(user_sorted_by_suit.get(finalJ));
                     // Set all cards not clickable
                     Arrays.fill(cardClickable, false);
 
@@ -240,14 +217,16 @@ public class GameFieldActivity extends AppCompatActivity {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P1_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(P1_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P1_spades.size();
@@ -255,23 +234,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P1_current_card_ID.set(P1_spades.get(random.nextInt(rand_index)));
                                     four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                }, 2500);
+                                }, 2000);
+                                four_cycle.add(P1_current_card_ID.get());
                             }
                         }
+
                     if (CLUBS.contains(finalUser_current_card_ID)) {
                             if (P1_clubs.isEmpty()) {
                                 if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P1_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(P1_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P1_clubs.size();
@@ -279,23 +262,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P1_current_card_ID.set(P1_clubs.get(random.nextInt(rand_index)));
                                     four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                }, 2500);
+                                }, 2000);
+                                four_cycle.add(P1_current_card_ID.get());
                             }
                         }
+
                     if (DIAMONDS.contains(finalUser_current_card_ID)) {
                             if (P1_diamonds.isEmpty()) {
                                 if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P1_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(P1_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P1_diamonds.size();
@@ -303,23 +290,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P1_current_card_ID.set(P1_diamonds.get(random.nextInt(rand_index)));
                                     four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                }, 2500);
+                                }, 2000);
+                                four_cycle.add(P1_current_card_ID.get());
                             }
                         }
+
                     if (HEARTS.contains(finalUser_current_card_ID)) {
                             if (P1_hearts.isEmpty()) {
                                 if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[1].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P1_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                         four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                    }, 2500);
+                                    }, 2000);
+                                    four_cycle.add(P1_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P1_hearts.size();
@@ -327,7 +318,8 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P1_current_card_ID.set(P1_hearts.get(random.nextInt(rand_index)));
                                     four_center_cell_views[1].setImageResource(P1_current_card_ID.get());
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
-                                }, 2500);
+                                }, 2000);
+                                four_cycle.add(P1_current_card_ID.get());
                             }
                         }
 
@@ -338,14 +330,16 @@ public class GameFieldActivity extends AppCompatActivity {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[2].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P2_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P2_current_card_ID.set(P2_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(P2_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P2_spades.size();
@@ -353,23 +347,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P2_current_card_ID.set(P2_spades.get(random.nextInt(rand_index)));
                                     four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                     four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                }, 5000);
+                                }, 4000);
+                                four_cycle.add(P2_current_card_ID.get());
                             }
                         }
+
                     if (CLUBS.contains(finalUser_current_card_ID)) {
                             if (P2_clubs.isEmpty()) {
                                 if (P2_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[2].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P2_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P2_current_card_ID.set(P2_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(P2_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P2_clubs.size();
@@ -377,23 +375,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P2_current_card_ID.set(P2_clubs.get(random.nextInt(rand_index)));
                                     four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                     four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                }, 5000);
+                                }, 4000);
+                                four_cycle.add(P2_current_card_ID.get());
                             }
                         }
+
                     if (DIAMONDS.contains(finalUser_current_card_ID)) {
                             if (P2_diamonds.isEmpty()) {
                                 if (P2_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[2].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P2_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P2_current_card_ID.set(P2_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(P2_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P2_diamonds.size();
@@ -401,23 +403,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P2_current_card_ID.set(P2_diamonds.get(random.nextInt(rand_index)));
                                     four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                     four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                }, 5000);
+                                }, 4000);
+                                four_cycle.add(P2_current_card_ID.get());
                             }
                         }
+
                     if (HEARTS.contains(finalUser_current_card_ID)) {
                             if (P2_hearts.isEmpty()) {
                                 if (P2_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[2].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P2_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P2_current_card_ID.set(P2_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                         four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                    }, 5000);
+                                    }, 4000);
+                                    four_cycle.add(P2_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P2_hearts.size();
@@ -425,7 +431,8 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P2_current_card_ID.set(P2_hearts.get(random.nextInt(rand_index)));
                                     four_center_cell_views[2].setImageResource(P2_current_card_ID.get());
                                     four_center_cell_views[2].setVisibility(View.VISIBLE);
-                                }, 5000);
+                                }, 4000);
+                                four_cycle.add(P2_current_card_ID.get());
                             }
                         }
 
@@ -436,14 +443,16 @@ public class GameFieldActivity extends AppCompatActivity {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[3].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P3_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P3_current_card_ID.set(P3_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(P3_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P3_spades.size();
@@ -451,23 +460,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P3_current_card_ID.set(P3_spades.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                     four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                }, 7500);
+                                }, 6000);
+                                four_cycle.add(P3_current_card_ID.get());
                             }
                         }
+
                     if (CLUBS.contains(finalUser_current_card_ID)) {
                             if (P3_clubs.isEmpty()) {
                                 if (P3_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[3].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P3_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P3_current_card_ID.set(P3_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(P3_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P3_clubs.size();
@@ -475,23 +488,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P3_current_card_ID.set(P3_clubs.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setImageResource(P3_clubs.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                }, 7500);
+                                }, 6000);
+                                four_cycle.add(P3_current_card_ID.get());
                             }
                         }
+
                     if (DIAMONDS.contains(finalUser_current_card_ID)) {
                             if (P3_diamonds.isEmpty()) {
                                 if (P3_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[3].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P3_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P3_current_card_ID.set(P3_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(P3_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P3_diamonds.size();
@@ -499,23 +516,27 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P3_current_card_ID.set(P3_diamonds.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setImageResource(P3_diamonds.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                }, 7500);
+                                }, 6000);
+                                four_cycle.add(P3_current_card_ID.get());
                             }
                         }
+
                     if (HEARTS.contains(finalUser_current_card_ID)) {
                             if (P3_hearts.isEmpty()) {
                                 if (P3_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
                                     new Handler().postDelayed(() -> {
                                         four_center_cell_views[3].setImageResource(R.drawable.king_of_hearts);
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(R.drawable.king_of_hearts);
                                 } else {
                                     int rand_index = P3_sorted_by_suit.size();
                                     new Handler().postDelayed(() -> {
                                         P3_current_card_ID.set(P3_sorted_by_suit.get(random.nextInt(rand_index)));
                                         four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                         four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                    }, 7500);
+                                    }, 6000);
+                                    four_cycle.add(P3_current_card_ID.get());
                                 }
                             } else {
                                 int rand_index = P3_hearts.size();
@@ -523,102 +544,43 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P3_current_card_ID.set(P3_hearts.get(random.nextInt(rand_index)));
                                     four_center_cell_views[3].setImageResource(P3_current_card_ID.get());
                                     four_center_cell_views[3].setVisibility(View.VISIBLE);
-                                }, 7500);
+                                }, 6000);
+                                four_cycle.add(P3_current_card_ID.get());
                             }
                         }
-                });
 
-                /*for (ImageView fourCenterCellView : four_center_cell_views) {
-                     four_cycle.add(fourCenterCellView.getId());
-                }*/
-
-                /* ----------Deciding who is the winner of the (first) round---------- */
-                // user -> 0, P1 -> 1, P2 -> 2, P3 -> 3
-                /*int winner_index_index = 0;
+                    /* ----------Deciding who is the winner of the (first) round---------- */
+                    // user -> 0, P1 -> 1, P2 -> 2, P3 -> 3
+                    int winner_index_index = 0;
                     List<Integer> indexes_in_corresponding_suit = new ArrayList<>();
 
+                    // Determine the current suit based on the finalUser_current_card_ID
+                    List<Integer> current_suit_list = null;
                     if (SPADES.contains(finalUser_current_card_ID)) {
-                        for (int k = 0; k < four_cycle.size(); k++) {
-                            if (SPADES.contains(four_cycle.get(k)))
-                                indexes_in_corresponding_suit.add(SPADES.indexOf(four_cycle.get(k)));
-                            else
-                                indexes_in_corresponding_suit.add(-1);
-                        }
-
-                        int winner = indexes_in_corresponding_suit.get(0);
-                        for (int k = 0; k < indexes_in_corresponding_suit.size(); k++)
-                            if (indexes_in_corresponding_suit.get(k) > winner) {
-                                winner = indexes_in_corresponding_suit.get(k);
-                                winner_index_index = k;
-                            }
+                        current_suit_list = SPADES;
+                    } else if (CLUBS.contains(finalUser_current_card_ID)) {
+                        current_suit_list = CLUBS;
+                    } else if (DIAMONDS.contains(finalUser_current_card_ID)) {
+                        current_suit_list = DIAMONDS;
+                    } else if (HEARTS.contains(finalUser_current_card_ID)) {
+                        current_suit_list = HEARTS;
                     }
 
-                    if (CLUBS.contains(finalUser_current_card_ID)) {
-                        for (int k = 0; k < four_cycle.size(); k++) {
-                            if (CLUBS.contains(four_cycle.get(k)))
-                                indexes_in_corresponding_suit.add(CLUBS.indexOf(four_cycle.get(k)));
-                            else
-                                indexes_in_corresponding_suit.add(-1);
-                        }
-
-                        int winner = indexes_in_corresponding_suit.get(0);
-                        for (int k = 0; k < indexes_in_corresponding_suit.size(); k++)
-                            if (indexes_in_corresponding_suit.get(k) > winner) {
-                                winner = indexes_in_corresponding_suit.get(k);
-                                winner_index_index = k;
-                            }
-                    }
-
-                    if (DIAMONDS.contains(finalUser_current_card_ID)) {
-                        for (int k = 0; k < four_cycle.size(); k++) {
-                            if (DIAMONDS.contains(four_cycle.get(k)))
-                                indexes_in_corresponding_suit.add(DIAMONDS.indexOf(four_cycle.get(k)));
-                            else
-                                indexes_in_corresponding_suit.add(-1);
-                        }
-
-                        int winner = indexes_in_corresponding_suit.get(0);
-                        for (int k = 0; k < indexes_in_corresponding_suit.size(); k++)
-                            if (indexes_in_corresponding_suit.get(k) > winner) {
-                                winner = indexes_in_corresponding_suit.get(k);
-                                winner_index_index = k;
-                            }
-                    }
-
-                    if (HEARTS.contains(finalUser_current_card_ID)) {
-                        for (int k = 0; k < four_cycle.size(); k++) {
-                            if (HEARTS.contains(four_cycle.get(k)))
-                                indexes_in_corresponding_suit.add(HEARTS.indexOf(four_cycle.get(k)));
-                            else
-                                indexes_in_corresponding_suit.add(-1);
-                        }
-
-                        int winner = indexes_in_corresponding_suit.get(0);
-                        for (int k = 0; k < indexes_in_corresponding_suit.size(); k++)
-                            if (indexes_in_corresponding_suit.get(k) > winner) {
-                                winner = indexes_in_corresponding_suit.get(k);
-                                winner_index_index = k;
-                            }
+                    // Check each card in four_cycle against the current suit list
+                    for (Integer card : four_cycle) {
+                        int indexInSuit = current_suit_list != null ? current_suit_list.indexOf(card) : -1;
+                        indexes_in_corresponding_suit.add(indexInSuit);
                     }
 
                     // Use the winner_index_index safely within the handler
-                    int finalWinner_index_index = winner_index_index;
                     new Handler().postDelayed(() -> {
-                        // Safely check if the index is within bounds and update scores
-                        if (finalWinner_index_index < initial_scores.length) {
-                            initial_scores[finalWinner_index_index] += 10;
-                            // Make sure to convert int to String when setting the text
-                            runOnUiThread(() -> { // Ensures you're on the UI thread, but Handler should already be handling this
-                                if (scores[finalWinner_index_index] != null) {
-                                    scores[finalWinner_index_index].setText(initial_scores[finalWinner_index_index]);
-                                }
-                                scores[0].setText(String.valueOf(four_cycle.size()));
-                            });
-                        }
-                    }, 10_000);*/
+                        scores[0].setText(String.valueOf(indexes_in_corresponding_suit.get(0)));
+                        scores[1].setText(String.valueOf(indexes_in_corresponding_suit.get(1)));
+                        scores[2].setText(String.valueOf(indexes_in_corresponding_suit.get(2)));
+                        scores[3].setText(String.valueOf(indexes_in_corresponding_suit.get(3)));
+                    }, 8500);
+                });
             }
-        }
-
     }
     @NonNull
     private List<Integer> currentPlayerCardsSortedBySuit(List<Integer> current_player_card_IDes) {
@@ -648,19 +610,6 @@ public class GameFieldActivity extends AppCompatActivity {
             cards_sorted_by_suit.add(sortedHearts().get(i));
 
         return cards_sorted_by_suit;
-    }
-
-    @NonNull
-    private List<Integer> allCardsSortedByValue() {
-        List<Integer> cards_sorted_by_value = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            cards_sorted_by_value.add(sortedSpades().get(i));
-            cards_sorted_by_value.add(sortedClubs().get(i));
-            cards_sorted_by_value.add(sortedDiamonds().get(i));
-            cards_sorted_by_value.add(sortedHearts().get(i));
-        }
-
-        return cards_sorted_by_value;
     }
 
     @NonNull

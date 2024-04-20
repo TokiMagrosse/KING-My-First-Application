@@ -172,9 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         menu_button.setOnClickListener(v -> dialog_profile_menu.show());
-
         close.setOnClickListener(v -> dialog_profile_menu.dismiss());
-
         log_out.setOnClickListener(v -> onLogOutButtonClick());
 
         // All necessary attributes for Quick Game Dialog
@@ -194,7 +192,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         about_quick_game.setOnClickListener(v -> quick_game_dialog.show());
-
         quick_game_close.setOnClickListener(v -> quick_game_dialog.dismiss());
 
         // All necessary attributes for Classic Game Dialog
@@ -234,7 +231,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         about_big_game.setOnClickListener(v -> big_game_dialog.show());
-
         big_game_close.setOnClickListener(v -> big_game_dialog.dismiss());
     }
 
@@ -259,9 +255,28 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        // Stop the music when the activity is paused
+        // Pause the music when the activity is paused
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Resume the music when the activity is resumed
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Release the media player when the activity is destroyed
         if (mediaPlayer != null) {
-            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 
@@ -269,8 +284,8 @@ public class ProfileActivity extends AppCompatActivity {
         // Stop the music
         if (mediaPlayer != null) {
             mediaPlayer.stop();
+            mediaPlayer.release();
         }
-
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
