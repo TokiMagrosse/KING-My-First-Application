@@ -253,24 +253,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        // Pause the music when the activity is paused
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Resume the music when the activity is resumed
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         // Release the media player when the activity is destroyed
