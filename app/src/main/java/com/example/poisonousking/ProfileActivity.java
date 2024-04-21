@@ -257,7 +257,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onDestroy();
         // Release the media player when the activity is destroyed
         if (mediaPlayer != null) {
-            mediaPlayer.release();
+            mediaPlayer.stop();
             mediaPlayer = null;
         }
     }
@@ -266,7 +266,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Stop the music
         if (mediaPlayer != null) {
             mediaPlayer.stop();
-            mediaPlayer.release();
+            mediaPlayer = null;
         }
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
