@@ -32,7 +32,7 @@ public class GameFieldActivity extends AppCompatActivity {
     ImageView[] four_center_cell_views = new ImageView[4];
     private final ImageView[] user_card_image_views = new ImageView[8];
     Button table_button, menu_button;
-    private final int[] card_images = {
+    private static final int[] card_images = {
             R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
             R.drawable.nine_of_clubs, R.drawable.nine_of_diamonds, R.drawable.nine_of_hearts, R.drawable.nine_of_spades,
@@ -248,7 +248,6 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(R.drawable.king_of_hearts);
-                                P1_sorted_by_suit.remove(R.drawable.king_of_hearts);
                             } else {
                                 int rand_index = P1_sorted_by_suit.size();
                                 P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
@@ -257,7 +256,6 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(P1_current_card_ID.get());
-                                P1_sorted_by_suit.remove(P1_current_card_ID.get());
                             }
                         } else {
                             int rand_index = P1_spades.size();
@@ -267,8 +265,6 @@ public class GameFieldActivity extends AppCompatActivity {
                                 four_center_cell_views[1].setVisibility(View.VISIBLE);
                             }, 2000);
                             four_cycle.add(P1_current_card_ID.get());
-                            P1_sorted_by_suit.remove(P1_current_card_ID.get());
-                            P1_spades.remove(P1_current_card_ID.get());
                         }
                     }
 
@@ -280,7 +276,6 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(R.drawable.king_of_hearts);
-                                P1_sorted_by_suit.remove(R.drawable.king_of_hearts);
                             } else {
                                 int rand_index = P1_sorted_by_suit.size();
                                 P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
@@ -586,16 +581,7 @@ public class GameFieldActivity extends AppCompatActivity {
                     List<Integer> indexes_in_corresponding_suit = new ArrayList<>();
 
                     // Determine the current suit based on the finalUser_current_card_ID
-                    List<Integer> current_suit_list = null;
-                    if (SPADES.contains(finalUser_current_card_ID))
-                        current_suit_list = SPADES;
-                    else if (CLUBS.contains(finalUser_current_card_ID))
-                        current_suit_list = CLUBS;
-                    else if (DIAMONDS.contains(finalUser_current_card_ID))
-                        current_suit_list = DIAMONDS;
-                    else if (HEARTS.contains(finalUser_current_card_ID))
-                        current_suit_list = HEARTS;
-
+                    List<Integer> current_suit_list = definePlayersCurrentCardSuit(finalUser_current_card_ID);
 
                     // Check each card in four_cycle against the current suit list
                     for (Integer card : four_cycle) {
@@ -605,7 +591,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
                     /* ----------Deciding who is the winner of the (first) round---------- */
                     // user -> 0, P1 -> 1, P2 -> 2, P3 -> 3
-                    int winner_index_index = getWinnerIndexIndex(indexes_in_corresponding_suit);
+                    int winner_index_index = getWinnerIndexInIndexes(indexes_in_corresponding_suit);
 
                     if (four_cycle.contains(R.drawable.king_of_hearts))
                         initial_scores[winner_index_index] -= 40;
@@ -621,15 +607,27 @@ public class GameFieldActivity extends AppCompatActivity {
                         for (int k = 0; k < 4; k++)
                             four_center_cell_views[k].setVisibility(View.INVISIBLE);
                     }, 8750);
-
-                    // four_cycle.clear();
                 });
             }
         }
 
     }
 
-    private static int getWinnerIndexIndex(@NonNull List<Integer> indexes) {
+    private static List<Integer> definePlayersCurrentCardSuit(Integer cardID) {
+        List<Integer> current_suit_list = null;
+        if (sortedClubs().contains(cardID))
+            current_suit_list = sortedClubs();
+        else if (sortedSpades().contains(cardID))
+            current_suit_list = sortedSpades();
+        else if (sortedDiamonds().contains(cardID))
+            current_suit_list = sortedDiamonds();
+        else if (sortedHearts().contains(cardID))
+            current_suit_list = sortedHearts();
+
+        return current_suit_list;
+    }
+
+    private static int getWinnerIndexInIndexes(@NonNull List<Integer> indexes) {
         int winner_index_index = 0;
         int winner = indexes.get(0);
         for (int k = 0; k < indexes.size(); k++)
@@ -681,7 +679,7 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private List<Integer> sortedClubs() {
+    private static List<Integer> sortedClubs() {
         List<Integer> CLUBS = new ArrayList<>();
         for (int i = 0; i < card_images.length; i += 4) {
             CLUBS.add(card_images[i]);
@@ -690,7 +688,7 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private List<Integer> sortedDiamonds() {
+    private static List<Integer> sortedDiamonds() {
         List<Integer> DIAMONDS = new ArrayList<>();
         for (int i = 1; i < card_images.length; i += 4) {
             DIAMONDS.add(card_images[i]);
@@ -699,7 +697,7 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private List<Integer> sortedHearts() {
+    private static List<Integer> sortedHearts() {
         List<Integer> HEARTS = new ArrayList<>();
         for (int i = 2; i < card_images.length; i += 4) {
             HEARTS.add(card_images[i]);
@@ -708,7 +706,7 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     @NonNull
-    private List<Integer> sortedSpades() {
+    private static List<Integer> sortedSpades() {
         List<Integer> SPADES = new ArrayList<>();
         for (int i = 3; i < card_images.length; i += 4) {
             SPADES.add(card_images[i]);
