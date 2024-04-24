@@ -79,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350sp"
+                    android:checked="true"
                     android:thumbTint="@color/green_background"
                     android:trackTint="@color/grey"
                     android:padding="5sp" />
@@ -110,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350sp"
+                    android:checked="true"
                     android:thumbTint="@color/green_background"
                     android:trackTint="@color/grey"
                     android:padding="5sp" />

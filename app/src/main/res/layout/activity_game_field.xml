@@ -31,6 +31,7 @@
                 android:id="@+id/first_bot_turner"
                 android:layout_width="25sp"
                 android:layout_height="5sp"
+                android:visibility="invisible"
                 app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
@@ -147,6 +148,7 @@
                 android:layout_width="25sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -647,24 +649,40 @@
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:strokeWidth="2.5sp"
-                app:strokeColor="@color/white"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/second_bot"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/second_bot_picture" />
-            </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:strokeWidth="2.5sp"
+                    app:strokeColor="@color/white"
+                    app:cardCornerRadius="7.5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/second_bot"
+                        android:layout_width="40sp"
+                        android:layout_height="40sp"
+                        android:background="@drawable/default_profile_outlines"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/second_bot_picture" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/second_bot_turner"
+                    android:layout_width="25sp"
+                    android:layout_height="5sp"
+                    android:visibility="invisible"
+                    android:layout_marginTop="2.5sp"
+                    app:cardCornerRadius="25sp"
+                    android:backgroundTint="@color/white"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -673,6 +691,7 @@
                 android:layout_marginStart="5sp"
                 android:fontFamily="@font/alata"
                 android:text="BOT-P2"
+                android:layout_marginBottom="4sp"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="@color/white" />

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -36,9 +37,9 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
-    Dialog dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog;
-    Button quick_game_close, classic_game_close, big_game_close;
-    Button about_quick_game, about_classic_game, about_big_game;
+    Dialog dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog, log_out_dialog, delete_account_dialog;
+    Button quick_game_close, classic_game_close, big_game_close, yes_log_out, cancel_log_out;
+    Button about_quick_game, about_classic_game, about_big_game, delete_forever, cancel_deletion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,16 +120,25 @@ public class ProfileActivity extends AppCompatActivity {
         dialog_profile_menu.setCancelable(false);
 
         sound_switch = dialog_profile_menu.findViewById(R.id.sound_switch);
+        sound_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
+        sound_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
 
-        // Set the color for the sound switch (e.g., set the thumb color and track color)
-        sound_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
-        sound_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
+        // Add a listener to the sound switch
+        sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // If the switch is on, start the music
+                sound_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
+                sound_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
+            } else {
+                // If the switch is off, stop the music
+                sound_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
+                sound_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
+            }
+        });
 
         music_switch = dialog_profile_menu.findViewById(R.id.music_switch);
-
-        // Set the color for the music switch (e.g., set the thumb color and track color)
-        music_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
-        music_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
+        music_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
+        music_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
 
         // Add a listener to the music switch
         music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -156,13 +166,53 @@ public class ProfileActivity extends AppCompatActivity {
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
         log_out = dialog_profile_menu.findViewById(R.id.logout);
+
+        // All necessary attributes for Log out Dialog
+        log_out_dialog = new Dialog(ProfileActivity.this);
+        log_out_dialog.setContentView(R.layout.dialog_log_out_warning);
+        Objects.requireNonNull(log_out_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        log_out_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        log_out_dialog.setCancelable(false);
+
+        Window log_out_window = log_out_dialog.getWindow();
+        if (log_out_window != null) {
+            log_out_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            log_out_window.setGravity(Gravity.CENTER); // Set the gravity to top
+        }
+
+        yes_log_out = log_out_dialog.findViewById(R.id.yes_button);
+        cancel_log_out = log_out_dialog.findViewById(R.id.cancel_button);
+
+        log_out.setOnClickListener(v -> log_out_dialog.show());
+        yes_log_out.setOnClickListener(v -> onLogOutButtonClick());
+        cancel_log_out.setOnClickListener(v -> log_out_dialog.dismiss());
+
         change_color = dialog_profile_menu.findViewById(R.id.change_color_button);
         delete_account = dialog_profile_menu.findViewById(R.id.delete_account_button);
+
+        // All necessary attributes for Delete account Dialog
+        delete_account_dialog = new Dialog(ProfileActivity.this);
+        delete_account_dialog.setContentView(R.layout.dialog_delete_account_warning);
+        Objects.requireNonNull(delete_account_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        delete_account_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        delete_account_dialog.setCancelable(false);
+
+        Window delete_window = delete_account_dialog.getWindow();
+        if (delete_window != null) {
+            delete_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            delete_window.setGravity(Gravity.CENTER); // Set the gravity to top
+        }
+
+        delete_account.setOnClickListener(v -> delete_account_dialog.show());
+        delete_forever = delete_account_dialog.findViewById(R.id.delete_forever);
+        cancel_deletion = delete_account_dialog.findViewById(R.id.cancel_deletion);
+
+        delete_forever.setOnClickListener(v -> deleteAccountForever());
+        cancel_deletion.setOnClickListener(v -> delete_account_dialog.dismiss());
+
         close = dialog_profile_menu.findViewById(R.id.close_button);
         privacy_policy = dialog_profile_menu.findViewById(R.id.privacy_policy);
         terms_and_conditions = dialog_profile_menu.findViewById(R.id.terms_and_conditions);
-
-        delete_account.setOnClickListener(v -> deleteAccountForever());
 
         Window menu_window = dialog_profile_menu.getWindow();
         if (menu_window != null) {
@@ -173,7 +223,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         menu_button.setOnClickListener(v -> dialog_profile_menu.show());
         close.setOnClickListener(v -> dialog_profile_menu.dismiss());
-        log_out.setOnClickListener(v -> onLogOutButtonClick());
 
         // All necessary attributes for Quick Game Dialog
         quick_game_dialog = new Dialog(ProfileActivity.this);
@@ -211,7 +260,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         about_classic_game.setOnClickListener(v -> classic_game_dialog.show());
-
         classic_game_close.setOnClickListener(v -> classic_game_dialog.dismiss());
 
         // All necessary attributes for Big Game Dialog

@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    protected CardView[] turners = new CardView[3];
     public int[] initial_scores = {0, 0, 0, 0};
     TextView[] scores = new TextView[4];
     private final CardView[] user_card_door_views = new CardView[8];
@@ -52,6 +53,10 @@ public class GameFieldActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        turners[0] = findViewById(R.id.first_bot_turner);
+        turners[1] = findViewById(R.id.second_bot_turner);
+        turners[2] = findViewById(R.id.third_bot_turner);
 
         scores[0] = findViewById(R.id.user_score);
         scores[1] = findViewById(R.id.first_bot_score);
@@ -129,7 +134,7 @@ public class GameFieldActivity extends AppCompatActivity {
                     user_card_image_views[finalI].setImageResource(user_sorted_by_suit.get(finalI));
                 }, 200);
             }
-        }, 500);
+        }, 1500);
 
         /* Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
@@ -234,7 +239,7 @@ public class GameFieldActivity extends AppCompatActivity {
                         if (k != finalJ)
                             user_card_image_views[k].setClickable(false);
 
-                    /* ----------Show the "first_bot" card after the user card is clicked---------- */
+                    /* ----------Show the "first_bot" card after the user card has been clicked---------- */
                     if (SPADES.contains(finalUser_current_card_ID)) {
                         if (P1_spades.isEmpty()) {
                             if (P1_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
@@ -243,6 +248,7 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(R.drawable.king_of_hearts);
+                                P1_sorted_by_suit.remove(R.drawable.king_of_hearts);
                             } else {
                                 int rand_index = P1_sorted_by_suit.size();
                                 P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
@@ -251,6 +257,7 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(P1_current_card_ID.get());
+                                P1_sorted_by_suit.remove(P1_current_card_ID.get());
                             }
                         } else {
                             int rand_index = P1_spades.size();
@@ -260,6 +267,8 @@ public class GameFieldActivity extends AppCompatActivity {
                                 four_center_cell_views[1].setVisibility(View.VISIBLE);
                             }, 2000);
                             four_cycle.add(P1_current_card_ID.get());
+                            P1_sorted_by_suit.remove(P1_current_card_ID.get());
+                            P1_spades.remove(P1_current_card_ID.get());
                         }
                     }
 
@@ -271,6 +280,7 @@ public class GameFieldActivity extends AppCompatActivity {
                                     four_center_cell_views[1].setVisibility(View.VISIBLE);
                                 }, 2000);
                                 four_cycle.add(R.drawable.king_of_hearts);
+                                P1_sorted_by_suit.remove(R.drawable.king_of_hearts);
                             } else {
                                 int rand_index = P1_sorted_by_suit.size();
                                 P1_current_card_ID.set(P1_sorted_by_suit.get(random.nextInt(rand_index)));
@@ -347,7 +357,7 @@ public class GameFieldActivity extends AppCompatActivity {
                         }
                     }
 
-                    /* ----------Show the "second_bot" card after the user card is clicked---------- */
+                    /* ----------Show the "second_bot" card after the user card has been clicked---------- */
                     if (SPADES.contains(finalUser_current_card_ID)) {
                         if (P2_spades.isEmpty()) {
                             if (P2_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
@@ -460,7 +470,7 @@ public class GameFieldActivity extends AppCompatActivity {
                         }
                     }
 
-                    /* ----------Show the "third_bot" card after the user card is clicked---------- */
+                    /* ----------Show the "third_bot" card after the user card has been clicked---------- */
                     if (SPADES.contains(finalUser_current_card_ID)) {
                         if (P3_spades.isEmpty()) {
                             if (P3_sorted_by_suit.contains(R.drawable.king_of_hearts)) {
@@ -610,12 +620,9 @@ public class GameFieldActivity extends AppCompatActivity {
                     new Handler().postDelayed(() -> {
                         for (int k = 0; k < 4; k++)
                             four_center_cell_views[k].setVisibility(View.INVISIBLE);
-                    }, 8500);
+                    }, 8750);
 
-                    user_sorted_by_suit.remove(four_cycle.get(0));
-                    P1_sorted_by_suit.remove(four_cycle.get(1));
-                    P2_sorted_by_suit.remove(four_cycle.get(2));
-                    P3_sorted_by_suit.remove(four_cycle.get(3));
+                    // four_cycle.clear();
                 });
             }
         }
