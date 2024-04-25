@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="395sp"
-    android:layout_height="300sp"
+    android:layout_width="425sp"
+    android:layout_height="315sp"
     app:cardElevation="15sp"
     android:layout_gravity="center"
     android:backgroundTint="#9e2a2b"
@@ -30,10 +29,10 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="340sp"
+            android:layout_width="370sp"
             android:layout_height="200sp"
             android:fontFamily="@font/alata"
-            android:text="@string/quick_game_description"
+            android:text="The real interest starts here. It's recommended to play in this mode when you are completely free, as every move can be decisive and drastically change the course of the game. In the classic room, you were only allowed to choose two modes out of 8. Here, you can choose whichever one you want, of course, when it's your turn."
             android:textColor="@color/grey"
             android:textSize="17.5sp"
             app:layout_constraintBottom_toBottomOf="parent"

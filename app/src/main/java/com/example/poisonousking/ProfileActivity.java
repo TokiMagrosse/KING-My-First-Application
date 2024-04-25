@@ -65,13 +65,13 @@ public class ProfileActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.game_smooth_music); // Replace "game_smooth_music" with your file name
 
         // Start playing the music
-        mediaPlayer.start();
+        // mediaPlayer.start();
 
         // Set the music to loop
-        mediaPlayer.setLooping(true);
+        // mediaPlayer.setLooping(true);
 
         // Set the volume of the mediaPlayer to a lower level (background music volume)
-        mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+        // mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
 
         play_button_1.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, GameFieldActivity.class);
@@ -146,21 +146,21 @@ public class ProfileActivity extends AppCompatActivity {
                 // If the switch is on, start the music
                 music_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
                 music_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
-                if (mediaPlayer == null) {
+                /*if (mediaPlayer == null) {
                     mediaPlayer = MediaPlayer.create(this, R.raw.game_smooth_music); // Replace "game_smooth_music" with your file name
                     mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
                     mediaPlayer.setLooping(true);
                 }
-                mediaPlayer.start();
+                mediaPlayer.start();*/
             } else {
                 // If the switch is off, stop the music
                 music_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
                 music_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
-                if (mediaPlayer != null) {
+                /*if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
                     mediaPlayer = null;
-                }
+                }*/
             }
         });
 
@@ -300,7 +300,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+   /* @Override
     protected void onDestroy() {
         super.onDestroy();
         // Release the media player when the activity is destroyed
@@ -308,7 +308,7 @@ public class ProfileActivity extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayer = null;
         }
-    }
+    }*/
 
     private void onLogOutButtonClick() {
         // Stop the music

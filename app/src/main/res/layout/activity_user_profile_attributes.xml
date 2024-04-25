@@ -47,6 +47,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="120sp"
                     android:layout_height="120sp"
+                    app:cardCornerRadius="15sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5sp"
                     app:strokeColor="@color/white"
