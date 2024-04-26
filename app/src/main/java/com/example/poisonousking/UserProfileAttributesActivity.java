@@ -14,16 +14,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
@@ -66,6 +69,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         // Assuming you have obtained user data after registration
         String userEmail = user.getEmail();
 
+        // Fetch and set the user's username from Firestore
         DocumentReference doc_ref_for_username = f_store.collection("all my users").document(user.getUid());
         doc_ref_for_username.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -80,6 +84,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             username.setText("@)$&%*%@^$");
         });
 
+        // Fetch and set the user's ID from Firestore
         DocumentReference doc_ref_for_id = f_store.collection("all my users").document(user.getUid());
         doc_ref_for_id.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -107,11 +112,10 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
         }
 
-        save_changes.setOnClickListener(v -> {
-            // Assuming profile_picture has been set to the desired image before saving changes
-            // Upload the selected image to Firebase Storage
-            // uploadImageToFirebaseStorage(profile_picture);
-        });
+        /*save_changes.setOnClickListener(v -> {
+            // Upload the profile picture
+            uploadImageToFirebaseStorage(profile_picture);
+        });*/
     }
 
     // Define a constant for the image pick request
@@ -130,7 +134,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     }
 
     // Upload image to Firebase Storage
-    private void uploadImageToFirebaseStorage(ImageView imageView) {
+    private void uploadImageToFirebaseStorage(@NonNull ImageView imageView) {
         // Get the drawable from the ImageView
         Drawable drawable = imageView.getDrawable();
         if (drawable instanceof BitmapDrawable) {
@@ -140,25 +144,40 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             Uri imageUri = getImageUri(this, bitmap);
 
             // Proceed with uploading image to Firebase Storage
-            StorageReference profile_image_ref = storageReference.child("profile_images/" + userID + ".jpg");
+            StorageReference profileImageRef = storageReference.child("profile_images/" + userID + ".jpg");
 
-            profile_image_ref.putFile(imageUri)
+            profileImageRef.putFile(imageUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         // Image uploaded successfully
-                        profile_image_ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                            // Save the download URL to Firebase Database if necessary
-                            // You can add your code here to save the URL to Firebase Database
+                        profileImageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            // Save the download URL to Firestore
+                            saveDownloadUrlToFirebaseStorage(uri.toString());
+
                             Toast.makeText(UserProfileAttributesActivity.this, "Profile image updated successfully", Toast.LENGTH_SHORT).show();
                         }).addOnFailureListener(exception -> {
                             // Handle any errors
-                            Toast.makeText(UserProfileAttributesActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserProfileAttributesActivity.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
                         });
                     })
                     .addOnFailureListener(exception -> {
                         // Handle unsuccessful uploads
-                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserProfileAttributesActivity.this, "Failed to upload profile image", Toast.LENGTH_SHORT).show();
                     });
         }
+    }
+
+    private void saveDownloadUrlToFirebaseStorage(String downloadUrl) {
+        // Save the download URL to Firestore
+        DocumentReference userDocRef = f_store.collection("all my users").document(userID);
+        userDocRef.update("profile_picture_url", downloadUrl)
+                .addOnSuccessListener(aVoid -> {
+                    // URL saved successfully
+                    Toast.makeText(UserProfileAttributesActivity.this, "Profile picture URL saved successfully", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any errors
+                    Toast.makeText(UserProfileAttributesActivity.this, "Failed to save profile picture URL", Toast.LENGTH_SHORT).show();
+                });
     }
 
     // Define a constant for the permission request
@@ -178,13 +197,14 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     }
 
     // Method to convert Bitmap to Uri
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    public Uri getImageUri(@NonNull Context inContext, @NonNull Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 }
+
 
 
 

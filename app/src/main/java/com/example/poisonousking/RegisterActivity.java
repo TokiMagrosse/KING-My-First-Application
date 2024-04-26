@@ -2,6 +2,8 @@ package com.example.poisonousking;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -250,20 +252,40 @@ public class RegisterActivity extends AppCompatActivity {
 
         userID = Objects.requireNonNull(m_auth.getCurrentUser()).getUid();
         DocumentReference documentReference = f_store.collection("all my users").document(userID);
+
+        // Create a map to store the user's data, including the new fields
+        Map<String, Object> user = getStringObjectMap(username, emailAddress, ID);
+
+        // Save the user data to Firestore
+        documentReference.set(user)
+                .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
+                .addOnFailureListener(e -> Log.d(TAG, e.toString()));
+
+        // Start MainActivity after successful registration
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    @NonNull
+    private static Map<String, Object> getStringObjectMap(String username, String emailAddress, String ID) {
         Map<String, Object> user = new HashMap<>();
         user.put("Username", username);
         user.put("Email address", emailAddress);
         user.put("Personal ID", ID);
 
-        documentReference.set(user)
-                .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
-                .addOnFailureListener(e -> Log.d(TAG, e.toString()));
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        // New fields to initialize for the user
+        user.put("Coins", 2000);  // Initial coin count
+        user.put("Rating", 200);  // Initial rating
+        user.put("Title", "Newbie");  // Initial title
+        user.put("Level", 1);  // Initial level
+        user.put("Total games count", 0);  // Initial total games count
+        user.put("Won games count", 0);  // Initial won games count
+        user.put("Lost games count", 0);  // Initial lost games count
+        return user;
     }
 
-    private void showError(EditText input, String errorText) {
+
+    private void showError(@NonNull EditText input, String errorText) {
         input.setError(errorText);
         input.requestFocus();
     }
@@ -292,7 +314,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private String hashString(String input) {
+    @Nullable
+    private String hashString(@NonNull String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(input.getBytes());

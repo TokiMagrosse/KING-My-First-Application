@@ -630,7 +630,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
                             // Clear four_cycle for center 4 cards
                             four_cycle.clear();
-                        }, 9000);
+                        }, 8900);
                     });
                 }
             }
