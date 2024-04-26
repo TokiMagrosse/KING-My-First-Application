@@ -32,7 +32,7 @@
             android:layout_width="375sp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alata"
-            android:text="Do you already have some idea about the game King? If so, you can already play in this room where the competition for victory will be very intense. All 6 modes will be played (No Jacks, No Queens, No Last 2, No PKing, Take Tricks (Spades, Clubs, Diamonds, Hearts)). Each will have 2 variations."
+            android:text="Do you already have some idea about the game King? If so, you can already play in this room where the competition for victory will be very intense. All 8 modes will be played (No Jacks, No Queens, No Last 2, No PKing, Take Tricks (Spades, Clubs, Diamonds, Hearts)). Each will have 2 variations."
             android:textColor="@color/grey"
             android:textSize="17.5sp"
             app:layout_constraintBottom_toBottomOf="parent"

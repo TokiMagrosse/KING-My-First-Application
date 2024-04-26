@@ -205,9 +205,9 @@ public class GameFieldActivity extends AppCompatActivity {
         AtomicInteger P3_current_card_ID = new AtomicInteger();
 
         boolean[] cardClickable = new boolean[8];
+        Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
         for (int round = 0; round < 8; round++) {
-            Arrays.fill(cardClickable, true); // Initially, all cards are clickable
 
             // Game has already started. Good Luck! \\
             for (byte j = 0; j < user_sorted_by_suit.size(); j++) {
@@ -641,6 +641,8 @@ public class GameFieldActivity extends AppCompatActivity {
                 // and announcing the winner.
                 break;
             }
+
+            Arrays.fill(cardClickable, true);
         }
 
     }
