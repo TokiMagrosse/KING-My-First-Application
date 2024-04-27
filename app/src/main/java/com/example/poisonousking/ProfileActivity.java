@@ -207,7 +207,10 @@ public class ProfileActivity extends AppCompatActivity {
         delete_forever = delete_account_dialog.findViewById(R.id.delete_forever);
         cancel_deletion = delete_account_dialog.findViewById(R.id.cancel_deletion);
 
-        delete_forever.setOnClickListener(v -> deleteAccountForever());
+        delete_forever.setOnClickListener(v -> {
+            deleteAccountForever();
+            onLogOutButtonClick();
+        });
         cancel_deletion.setOnClickListener(v -> delete_account_dialog.dismiss());
 
         close = dialog_profile_menu.findViewById(R.id.close_button);
@@ -312,10 +315,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void onLogOutButtonClick() {
         // Stop the music
-        if (mediaPlayer != null) {
+        /*if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer = null;
-        }
+        }*/
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

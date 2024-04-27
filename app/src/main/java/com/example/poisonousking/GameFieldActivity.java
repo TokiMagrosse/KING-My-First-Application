@@ -628,12 +628,13 @@ public class GameFieldActivity extends AppCompatActivity {
                             definePlayersCurrentCardSuit(four_cycle.get(3), P3_spades, P3_clubs,
                                     P3_diamonds, P3_hearts).remove(four_cycle.get(3));
 
-                            // Clear four_cycle for center 4 cards
-                            four_cycle.clear();
                         }, 8900);
+                        // Clear four_cycle for center 4 cards
                     });
                 }
             }
+            four_cycle.clear();
+            Arrays.fill(cardClickable, true);
 
             // Check if the game is over after this round (e.g., if all players are out of cards)
             if (round == 7 || user_sorted_by_suit.isEmpty()) {
@@ -642,7 +643,6 @@ public class GameFieldActivity extends AppCompatActivity {
                 break;
             }
 
-            Arrays.fill(cardClickable, true);
         }
 
     }
