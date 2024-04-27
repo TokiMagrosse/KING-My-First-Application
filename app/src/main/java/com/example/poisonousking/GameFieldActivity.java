@@ -1,5 +1,6 @@
 package com.example.poisonousking;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -25,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    protected CardView[] score_boards = new CardView[4];
     protected CardView[] turners = new CardView[3];
     public int[] initial_scores = {0, 0, 0, 0};
     TextView[] scores = new TextView[4];
@@ -57,6 +59,11 @@ public class GameFieldActivity extends AppCompatActivity {
         turners[0] = findViewById(R.id.first_bot_turner);
         turners[1] = findViewById(R.id.second_bot_turner);
         turners[2] = findViewById(R.id.third_bot_turner);
+
+        score_boards[0] = findViewById(R.id.user_score_board);
+        score_boards[1] = findViewById(R.id.P1_score_board);
+        score_boards[2] = findViewById(R.id.P2_score_board);
+        score_boards[3] = findViewById(R.id.P3_score_board);
 
         scores[0] = findViewById(R.id.user_score);
         scores[1] = findViewById(R.id.first_bot_score);
@@ -134,7 +141,7 @@ public class GameFieldActivity extends AppCompatActivity {
                     user_card_image_views[finalI].setImageResource(user_sorted_by_suit.get(finalI));
                 }, 200);
             }
-        }, 1500);
+        }, 2500);
 
         /* Dividing first bot cards to 4 parts: sorted spades, clubs, diamonds, hearts */
         List<Integer> P1_sorted_by_suit = currentPlayerCardsSortedBySuit(first_bot_cards_IDes);
@@ -597,6 +604,9 @@ public class GameFieldActivity extends AppCompatActivity {
                         // Use the winner_index_index safely within the handler
                         new Handler().postDelayed(() -> {
                             scores[winner_index_index].setText(String.valueOf(initial_scores[winner_index_index]));
+                            for (int l = 0; l < score_boards.length; l++)
+                                if (initial_scores[l] < 0)
+                                    score_boards[l].setCardBackgroundColor(Color.parseColor("#8d0801"));
                         }, 7500);
 
                         new Handler().postDelayed(() -> {
@@ -604,10 +614,9 @@ public class GameFieldActivity extends AppCompatActivity {
                                 four_center_cell_views[k].setVisibility(View.INVISIBLE);
                         }, 8750);
 
-                        new Handler().postDelayed(() -> {
                         /* When 4 cards in first round have already thrown, they should be deleted from players "cardIDes" lists
                         ensure that in future there must not be any syntax error so unexpected crashes*/
-
+                        new Handler().postDelayed(() -> {
                             // At first lets do it for user
                             user_sorted_by_suit.remove(four_cycle.get(0));
                             definePlayersCurrentCardSuit(four_cycle.get(0), user_spades, user_clubs,
@@ -629,10 +638,11 @@ public class GameFieldActivity extends AppCompatActivity {
                                     P3_diamonds, P3_hearts).remove(four_cycle.get(3));
 
                         }, 8900);
-                        // Clear four_cycle for center 4 cards
                     });
+                    // break;
                 }
             }
+            // Clear four_cycle for center 4 cards
             four_cycle.clear();
             Arrays.fill(cardClickable, true);
 

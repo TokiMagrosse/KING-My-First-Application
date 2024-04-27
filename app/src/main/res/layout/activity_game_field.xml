@@ -542,6 +542,7 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/user_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
@@ -566,6 +567,7 @@
                         android:layout_weight="1" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/P1_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
@@ -590,6 +592,7 @@
                         android:layout_weight="1" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/P2_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
@@ -614,6 +617,7 @@
                         android:layout_weight="1" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/P3_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
