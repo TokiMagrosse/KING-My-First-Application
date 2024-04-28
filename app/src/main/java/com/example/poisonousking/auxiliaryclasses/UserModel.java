@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.auxiliaryclasses;
 
 public class UserModel {
     private String username;

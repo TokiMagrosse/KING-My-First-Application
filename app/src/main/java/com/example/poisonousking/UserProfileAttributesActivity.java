@@ -1,5 +1,7 @@
 package com.example.poisonousking;
 
+import static java.security.AccessController.getContext;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.poisonousking.auxiliaryclasses.UserModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +37,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
+    UserModel currentUserModel;
     TextView rating, rank, level, wins, loses;
     ImageView profile_picture;
     String userID;
@@ -62,6 +66,8 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
         id = findViewById(R.id.id_in_profile);
+
+        // getUserData();
 
         // Logic of setting profile image
         image_pick_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -118,13 +124,13 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         });
 
         save_changes.setOnClickListener(v -> {
-            if (selected_image_uri != null)
+            /*if (selected_image_uri != null)
                 getCurrentProfilePictureStorageRef().putFile(selected_image_uri)
                         .addOnCompleteListener(task -> {
                             updateToFirebaseStorage();
                         });
             else
-                updateToFirebaseStorage();
+                updateToFirebaseStorage();*/
         });
 
     }
@@ -136,17 +142,38 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     @NonNull
     private static StorageReference getCurrentProfilePictureStorageRef() {
         return FirebaseStorage.getInstance().getReference().child("profile_pictures")
-                .child(Objects.requireNonNull(currentUserId()));
+                .child(currentUserId()).child("profile_picture.jpg");
     }
 
     private void updateToFirebaseStorage() {
-        // My code is not here yet
+        currentUserDetails().set(currentUserModel).addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+                Toast.makeText(this, "Profile image updated successfully", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_SHORT).show();
+        });
     }
+
+    /*void getUserData() {
+
+        getCurrentProfilePictureStorageRef().getDownloadUrl()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Uri uri = task.getResult();
+                        setProfilePicture(getApplicationContext(), uri, profile_picture);
+                    }
+                });
+
+        currentUserDetails().get().addOnCompleteListener(task -> {
+            currentUserModel = task.getResult().toObject(UserModel.class);
+            assert currentUserModel != null;
+        });
+    }*/
 
 
     @NonNull
     public static DocumentReference currentUserDetails() {
-        return FirebaseFirestore.getInstance().collection("all_my_users").document(currentUserId());
+        return FirebaseFirestore.getInstance().collection("all my users").document(currentUserId());
     }
 
     private static String currentUserId() {
