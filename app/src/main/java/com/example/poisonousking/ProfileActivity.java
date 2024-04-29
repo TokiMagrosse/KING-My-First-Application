@@ -318,7 +318,6 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         dialog_profile_menu.dismiss();
-
     }
 
     private void fetchAndDisplayProfileImage() {
@@ -341,4 +340,3 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 }
-
