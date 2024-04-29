@@ -20,9 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.auxiliaryclasses.UserModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,7 +43,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     UserModel currentUserModel;
     TextView rating, rank, level, wins, loses;
     ImageView profile_picture;
-    String userID;
+    static String userID;
     Button change_profile, save_changes, back_to_main;
     TextView username, email_address, id;
 
@@ -92,11 +95,11 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                 username.setText(my_username);
             } else {
                 // Handle the case where user data is not found
-                username.setText("@#*(%&^$^@");
+                username.setText("*****");
             }
         }).addOnFailureListener(e -> {
             // Handle the failure to retrieve user data
-            username.setText("@)$&%*%@^$");
+            username.setText("*****");
         });
 
         // Fetch and set the user's ID from Firestorm
@@ -142,7 +145,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     @NonNull
     private static StorageReference getCurrentProfilePictureStorageRef() {
         return FirebaseStorage.getInstance().getReference().child("profile_pictures")
-                .child(currentUserId()).child("profile_picture.jpg");
+                .child(userID).child("profile_picture.jpg");
     }
 
     private void updateToFirebaseStorage() {
@@ -154,30 +157,17 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         });
     }
 
-    /*void getUserData() {
-
-        getCurrentProfilePictureStorageRef().getDownloadUrl()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Uri uri = task.getResult();
-                        setProfilePicture(getApplicationContext(), uri, profile_picture);
-                    }
-                });
-
+    void getUserData() {
         currentUserDetails().get().addOnCompleteListener(task -> {
             currentUserModel = task.getResult().toObject(UserModel.class);
-            assert currentUserModel != null;
+
         });
-    }*/
+    }
 
 
     @NonNull
     public static DocumentReference currentUserDetails() {
-        return FirebaseFirestore.getInstance().collection("all my users").document(currentUserId());
-    }
-
-    private static String currentUserId() {
-        return FirebaseAuth.getInstance().getUid();
+        return FirebaseFirestore.getInstance().collection("all my users").document(userID);
     }
 }
 

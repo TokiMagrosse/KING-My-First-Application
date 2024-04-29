@@ -292,6 +292,9 @@ public class ProfileActivity extends AppCompatActivity {
             user.delete()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                             // Account deletion successful
                             Toast.makeText(ProfileActivity.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
                             // Here you can navigate to another activity or perform any other actions
@@ -303,27 +306,14 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-   /* @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Release the media player when the activity is destroyed
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer = null;
-        }
-    }*/
-
     private void onLogOutButtonClick() {
-        // Stop the music
-        /*if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer = null;
-        }*/
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
         dialog_profile_menu.dismiss();
+
     }
 
 }
