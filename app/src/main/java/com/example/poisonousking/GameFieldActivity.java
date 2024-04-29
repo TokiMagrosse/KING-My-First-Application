@@ -41,7 +41,10 @@ public class GameFieldActivity extends AppCompatActivity {
             R.drawable.king_of_clubs, R.drawable.king_of_diamonds, R.drawable.king_of_hearts, R.drawable.king_of_spades,
             R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades
     };
-    List<Integer> user_final_cards, BOT1_final_cards, BOT2_final_cards, BOT3_final_cards;
+    List<Integer> user_final_cards, user_spades, user_clubs, user_diamonds, user_hearts;
+    List<Integer> BOT1_final_cards, BOT1_spades, BOT1_clubs, BOT1_diamonds, BOT1_hearts;
+    List<Integer> BOT2_final_cards, BOT2_spades, BOT2_clubs, BOT2_diamonds, BOT2_hearts;
+    List<Integer> BOT3_final_cards, BOT3_spades, BOT3_clubs, BOT3_diamonds, BOT3_hearts;
     private final Random random = new Random();
 
     @Override
@@ -56,7 +59,7 @@ public class GameFieldActivity extends AppCompatActivity {
         });
 
         initializeViews();
-        setupGame();
+        setupPoisonousGameKing();
     }
 
     private void initializeViews() {
@@ -76,7 +79,7 @@ public class GameFieldActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
     }
 
-    private void setupGame() {
+    private void setupPoisonousGameKing() {
         // Prepare the deck and distribute cards
         List<Integer> deck = new ArrayList<>();
         for (int card : card_images) {
@@ -90,10 +93,37 @@ public class GameFieldActivity extends AppCompatActivity {
         List<Integer> bot2_cards_rand = new ArrayList<>(deck.subList(16, 24));
         List<Integer> bot3_cards_rand = new ArrayList<>(deck.subList(24, 32));
 
+        // User cards sorted by suit and division into 4 parts:
+        // User spades, clubs, diamonds, hearts
         user_final_cards = currentPlayerCardsSortedBySuit(user_cards_rand);
+        user_spades = currentPlayerSpades(user_final_cards);
+        user_clubs = currentPlayerClubs(user_final_cards);
+        user_diamonds = currentPlayerDiamonds(user_final_cards);
+        user_hearts = currentPlayerHearts(user_final_cards);
+
+        // First Bot cards sorted by suit and division into 4 parts:
+        // First Bot spades, clubs, diamonds, hearts
         BOT1_final_cards = currentPlayerCardsSortedBySuit(bot1_cards_rand);
+        BOT1_spades = currentPlayerSpades(BOT1_final_cards);
+        BOT1_clubs = currentPlayerClubs(BOT1_final_cards);
+        BOT1_diamonds = currentPlayerDiamonds(BOT1_final_cards);
+        BOT1_hearts = currentPlayerHearts(BOT1_final_cards);
+
+        // Second Bot cards sorted by suit and division into 4 parts:
+        // Second Bot spades, clubs, diamonds, hearts
         BOT2_final_cards = currentPlayerCardsSortedBySuit(bot2_cards_rand);
+        BOT2_spades = currentPlayerSpades(BOT2_final_cards);
+        BOT2_clubs = currentPlayerClubs(BOT2_final_cards);
+        BOT2_diamonds = currentPlayerDiamonds(BOT2_final_cards);
+        BOT2_hearts = currentPlayerHearts(BOT2_final_cards);
+
+        // Third Bot cards sorted by suit and division into 4 parts:
+        // Third Bot spades, clubs, diamonds, hearts
         BOT3_final_cards = currentPlayerCardsSortedBySuit(bot3_cards_rand);
+        BOT3_spades = currentPlayerSpades(BOT3_final_cards);
+        BOT3_clubs = currentPlayerClubs(BOT3_final_cards);
+        BOT3_diamonds = currentPlayerDiamonds(BOT3_final_cards);
+        BOT3_hearts = currentPlayerHearts(BOT3_final_cards);
 
         new Handler().postDelayed(() -> {
             for (int i = 0; i < 8; i++) {
@@ -160,6 +190,46 @@ public class GameFieldActivity extends AppCompatActivity {
             sorted_card_IDes.add(allCardsSortedBySuit().get(player_suitable_indexes[i]));
 
         return sorted_card_IDes;
+    }
+
+    @NonNull
+    private static List<Integer> currentPlayerSpades(@NonNull List<Integer> currentCardIDes) {
+        List<Integer> spadesOfCurrentPlayer = new ArrayList<>();
+        for (byte i = 0; i < currentCardIDes.size(); i++)
+            if (sortedSpades().contains(currentCardIDes.get(i)))
+                spadesOfCurrentPlayer.add(currentCardIDes.get(i));
+
+        return spadesOfCurrentPlayer;
+    }
+
+    @NonNull
+    private static List<Integer> currentPlayerClubs(@NonNull List<Integer> currentCardIDes) {
+        List<Integer> clubsOfCurrentPlayer = new ArrayList<>();
+        for (byte i = 0; i < currentCardIDes.size(); i++)
+            if (sortedClubs().contains(currentCardIDes.get(i)))
+                clubsOfCurrentPlayer.add(currentCardIDes.get(i));
+
+        return clubsOfCurrentPlayer;
+    }
+
+    @NonNull
+    private static List<Integer> currentPlayerDiamonds(@NonNull List<Integer> currentCardIDes) {
+        List<Integer> diamondsOfCurrentPlayer = new ArrayList<>();
+        for (byte i = 0; i < currentCardIDes.size(); i++)
+            if (sortedDiamonds().contains(currentCardIDes.get(i)))
+                diamondsOfCurrentPlayer.add(currentCardIDes.get(i));
+
+        return diamondsOfCurrentPlayer;
+    }
+
+    @NonNull
+    private static List<Integer> currentPlayerHearts(@NonNull List<Integer> currentCardIDes) {
+        List<Integer> heartsOfCurrentPlayer = new ArrayList<>();
+        for (byte i = 0; i < currentCardIDes.size(); i++)
+            if (sortedHearts().contains(currentCardIDes.get(i)))
+                heartsOfCurrentPlayer.add(currentCardIDes.get(i));
+
+        return heartsOfCurrentPlayer;
     }
 
     @NonNull

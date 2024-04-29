@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView your_profile_picture;
     TextView your_username;
     FirebaseUser user;
+    static String userID;
     Dialog dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog, log_out_dialog, delete_account_dialog;
     Button quick_game_close, classic_game_close, big_game_close, yes_log_out, cancel_log_out;
     Button about_quick_game, about_classic_game, about_big_game, delete_forever, cancel_deletion;
@@ -49,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Initialize Firebase
         FirebaseFirestore f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        userID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
         play_button_1 = findViewById(R.id.play_button_1);
@@ -111,6 +114,8 @@ public class ProfileActivity extends AppCompatActivity {
                 your_username.setText("**********");
             });
         }
+
+        fetchAndDisplayProfileImage();
 
         // All necessary attributes for Menu Dialog
         dialog_profile_menu = new Dialog(ProfileActivity.this);
@@ -314,6 +319,25 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
         dialog_profile_menu.dismiss();
 
+    }
+
+    private void fetchAndDisplayProfileImage() {
+        DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("all my users").document(userID);
+
+        userDocRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String imageUrl = documentSnapshot.getString("profileImageUrl");
+                if (imageUrl != null) {
+                    // Load and display the profile image using Glide
+                    Glide.with(this)
+                            .load(imageUrl)
+                            .into(your_profile_picture);
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Handle failure to fetch profile image URL
+            Toast.makeText(this, "Failed to fetch profile image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
 }
