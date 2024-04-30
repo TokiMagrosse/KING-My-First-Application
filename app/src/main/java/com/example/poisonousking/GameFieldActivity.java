@@ -48,6 +48,7 @@ public class GameFieldActivity extends AppCompatActivity {
     List<Integer> BOT3_final_cards, BOT3_spades, BOT3_clubs, BOT3_diamonds, BOT3_hearts;
     private final Random random = new Random();
     static int userClickedCardIndex;
+
     protected static List<Integer> four_cycle = new ArrayList<>();
     public int[] initial_scores = {0, 0, 0, 0};
 
