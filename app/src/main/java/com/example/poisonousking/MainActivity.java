@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         m_auth = FirebaseAuth.getInstance();
 
         // Check if "Remember me" checkbox was previously checked
-        SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        /*SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         boolean rememberMeChecked = preferences.getBoolean("rememberMe", false);
         if (rememberMeChecked) {
             // Restore email and password from shared preferences
@@ -59,19 +58,39 @@ public class MainActivity extends AppCompatActivity {
             email_address.setText(savedEmail);
             password.setText(savedPassword);
             remember_me.setChecked(true);
-        }
+        }*/
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember", "");
+
+        remember_me.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                } else if (!buttonView.isChecked()) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                }
+            }
+        });
 
         register_text_reference.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
-        remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        /*remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Save "Remember me" checkbox state
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("rememberMe", isChecked);
             editor.apply();
-        });
+        });*/
 
         // Set both start and end drawables programmatically
         Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
@@ -175,9 +194,7 @@ public class MainActivity extends AppCompatActivity {
             progress_bar.setVisibility(ViewStub.GONE);
         }
 
-        forgot_password.setOnClickListener(v -> {
-            openForgotPasswordActivity();
-        });
+        forgot_password.setOnClickListener(v -> openForgotPasswordActivity());
     }
 
     private void showError(@NonNull EditText input, String errorText) {
