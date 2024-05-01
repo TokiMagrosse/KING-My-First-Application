@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="450sp"
-    android:layout_height="205sp"
+    android:layout_height="230sp"
     android:layout_gravity="center"
     android:backgroundTint="@color/grey_1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,6 +45,7 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/sound_switch"
+                    android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350sp"
@@ -80,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="350sp"
                     android:padding="5sp"
+                    android:checked="true"
                     android:thumbTint="@color/green_background"
                     android:trackTint="@color/grey" />
 
@@ -104,6 +106,7 @@
             android:layout_width="405sp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.511"
@@ -119,7 +122,7 @@
                 android:backgroundTint="@color/red_3"
                 android:fontFamily="@font/alata"
                 android:padding="5sp"
-                android:text="LEAVE THE GAME"
+                android:text="Leave the game"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
                 app:cornerRadius="7.5sp" />
@@ -136,7 +139,7 @@
                 android:backgroundTint="@color/grey_2"
                 android:fontFamily="@font/alata"
                 android:padding="5sp"
-                android:text="CLOSE"
+                android:text="Close"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:cornerRadius="7.5sp" />
