@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -121,36 +123,36 @@ public class ProfileActivity extends AppCompatActivity {
         dialog_profile_menu = new Dialog(ProfileActivity.this);
         dialog_profile_menu.setContentView(R.layout.dialog_profile_menu);
         Objects.requireNonNull(dialog_profile_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog_profile_menu.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        dialog_profile_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         dialog_profile_menu.setCancelable(false);
 
         sound_switch = dialog_profile_menu.findViewById(R.id.sound_switch);
-        sound_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
-        sound_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
+        sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
 
         // Add a listener to the sound switch
         sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // If the switch is on, start the music
-                sound_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
-                sound_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
             } else {
                 // If the switch is off, stop the music
-                sound_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
-                sound_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
             }
         });
 
         music_switch = dialog_profile_menu.findViewById(R.id.music_switch);
-        music_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
-        music_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
+        music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));;
 
         // Add a listener to the music switch
         music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // If the switch is on, start the music
-                music_switch.setThumbTintList(getResources().getColorStateList(R.color.fucking_green));
-                music_switch.setTrackTintList(getResources().getColorStateList(R.color.green_2));
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
                 /*if (mediaPlayer == null) {
                     mediaPlayer = MediaPlayer.create(this, R.raw.game_smooth_music); // Replace "game_smooth_music" with your file name
                     mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
@@ -159,8 +161,8 @@ public class ProfileActivity extends AppCompatActivity {
                 mediaPlayer.start();*/
             } else {
                 // If the switch is off, stop the music
-                music_switch.setThumbTintList(getResources().getColorStateList(R.color.black));
-                music_switch.setTrackTintList(getResources().getColorStateList(R.color.grey_4));
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
                 /*if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
@@ -199,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
         delete_account_dialog = new Dialog(ProfileActivity.this);
         delete_account_dialog.setContentView(R.layout.dialog_delete_account_warning);
         Objects.requireNonNull(delete_account_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        delete_account_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        delete_account_dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         delete_account_dialog.setCancelable(false);
 
         Window delete_window = delete_account_dialog.getWindow();
@@ -236,7 +238,7 @@ public class ProfileActivity extends AppCompatActivity {
         quick_game_dialog = new Dialog(ProfileActivity.this);
         quick_game_dialog.setContentView(R.layout.dialog_about_quick_game);
         Objects.requireNonNull(quick_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        quick_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        quick_game_dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         quick_game_dialog.setCancelable(false);
 
         quick_game_close = quick_game_dialog.findViewById(R.id.quick_game_close_button);
@@ -255,7 +257,7 @@ public class ProfileActivity extends AppCompatActivity {
         classic_game_dialog = new Dialog(ProfileActivity.this);
         classic_game_dialog.setContentView(R.layout.dialog_about_classic_game);
         Objects.requireNonNull(classic_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        classic_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        classic_game_dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         classic_game_dialog.setCancelable(false);
 
         classic_game_close = classic_game_dialog.findViewById(R.id.classic_game_close_button);
@@ -274,7 +276,7 @@ public class ProfileActivity extends AppCompatActivity {
         big_game_dialog = new Dialog(ProfileActivity.this);
         big_game_dialog.setContentView(R.layout.dialog_about_big_game);
         Objects.requireNonNull(big_game_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        big_game_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        big_game_dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         big_game_dialog.setCancelable(false);
 
         big_game_close = big_game_dialog.findViewById(R.id.big_game_close_button);

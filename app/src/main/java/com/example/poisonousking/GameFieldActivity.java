@@ -1,6 +1,7 @@
 package com.example.poisonousking;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -16,9 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import org.jetbrains.annotations.Contract;
 
@@ -31,6 +35,7 @@ import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
+    MaterialSwitch sound_switch, music_switch;
     ImageView[] myCards = new ImageView[8];
     ImageView[] bot1Cards = new ImageView[8];
     ImageView[] bot2Cards = new ImageView[8];
@@ -42,7 +47,7 @@ public class GameFieldActivity extends AppCompatActivity {
     private final CardView[] user_card_door_views = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardImageViews = new ImageView[8];
-    Button table_button, menu_button;
+    Button table_button, menu_button, leave_the_game, close_menu;
     private static final int[] card_images = {
             R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
@@ -250,11 +255,78 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        table_button = findViewById(R.id.table_button);
+        menu_button = findViewById(R.id.menu_button);
+
         turners[0] = findViewById(R.id.first_bot_turner);
         turners[1] = findViewById(R.id.second_bot_turner);
         turners[2] = findViewById(R.id.third_bot_turner);
 
-        // All necessary attributes for Big Game Dialog
+        // All necessary attributes for Menu Dialog in the game field
+        /*dialog_menu = new Dialog(GameFieldActivity.this);
+        dialog_menu.setContentView(R.layout.dialog_menu_in_the_field);
+        Objects.requireNonNull(dialog_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
+        dialog_menu.setCancelable(false);
+
+        Window menu_window = dialog_menu.getWindow();
+        if (menu_window != null) {
+            menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        menu_button.setOnClickListener(v -> dialog_menu.show());
+
+        sound_switch = dialog_menu.findViewById(R.id.sound_switch);
+        sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+        // Add a listener to the sound switch
+        sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // If the switch is on, start the music
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+            } else {
+                // If the switch is off, stop the music
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
+            }
+        });
+
+        music_switch = dialog_menu.findViewById(R.id.music_switch);
+        music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+        // Add a listener to the music switch
+        music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // If the switch is on, start the music
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+            } else {
+                // If the switch is off, stop the music
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
+
+            }
+        });
+        leave_the_game = dialog_menu.findViewById(R.id.leave_the_game);
+        close_menu = dialog_menu.findViewById(R.id.close_menu);
+
+        leave_the_game.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            dialog_menu.dismiss();
+        });
+
+        close_menu.setOnClickListener(v -> dialog_menu.dismiss());*/
+
+        // All necessary attributes for Score Table Dialog
         dialog_table = new Dialog(GameFieldActivity.this);
         dialog_table.setContentView(R.layout.dialog_score_table);
         Objects.requireNonNull(dialog_table.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -285,9 +357,6 @@ public class GameFieldActivity extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             fourCenterCellViews[i] = findViewById(getResources().getIdentifier("center_card_" + (i + 1), "id", getPackageName()));
         }
-
-        table_button = findViewById(R.id.table_button);
-        menu_button = findViewById(R.id.menu_button);
 
         table_button.setOnClickListener(v -> {
             dialog_table.show();
