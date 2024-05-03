@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -84,13 +83,9 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
         });
 
-        play_button_2.setOnClickListener(v -> {
-            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
-        });
+        play_button_2.setOnClickListener(v -> Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show());
 
-        play_button_3.setOnClickListener(v -> {
-            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
-        });
+        play_button_3.setOnClickListener(v -> Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show());
 
         your_profile_picture.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, UserProfileAttributesActivity.class);
@@ -145,7 +140,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         music_switch = dialog_profile_menu.findViewById(R.id.music_switch);
         music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));;
+        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
 
         // Add a listener to the music switch
         music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -153,21 +148,12 @@ public class ProfileActivity extends AppCompatActivity {
                 // If the switch is on, start the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-                /*if (mediaPlayer == null) {
-                    mediaPlayer = MediaPlayer.create(this, R.raw.game_smooth_music); // Replace "game_smooth_music" with your file name
-                    mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
-                    mediaPlayer.setLooping(true);
-                }
-                mediaPlayer.start();*/
+
             } else {
                 // If the switch is off, stop the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-                /*if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }*/
+
             }
         });
 
@@ -178,7 +164,7 @@ public class ProfileActivity extends AppCompatActivity {
         log_out_dialog = new Dialog(ProfileActivity.this);
         log_out_dialog.setContentView(R.layout.dialog_log_out_warning);
         Objects.requireNonNull(log_out_dialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        log_out_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_bg));
+        log_out_dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         log_out_dialog.setCancelable(false);
 
         Window log_out_window = log_out_dialog.getWindow();
