@@ -33,7 +33,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
     Dialog dialog_menu, dialog_table;
     protected CardView[] scoreBoards = new CardView[4];
-    protected CardView[] turners = new CardView[3];
+    protected Button[] turners = new Button[3];
     TextView[] scores = new TextView[4];
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
@@ -77,6 +77,10 @@ public class GameFieldActivity extends AppCompatActivity {
     private void initializeViews() {
         table_button = findViewById(R.id.table_button);
         menu_button = findViewById(R.id.menu_button);
+
+        turners[0] = findViewById(R.id.first_bot_turner);
+        turners[1] = findViewById(R.id.second_bot_turner);
+        turners[2] = findViewById(R.id.third_bot_turner);
 
         // All necessary attributes for Big Game Dialog
         dialog_table = new Dialog(GameFieldActivity.this);
@@ -145,21 +149,22 @@ public class GameFieldActivity extends AppCompatActivity {
 
         // Show up user's cards
         new Handler().postDelayed(() -> {
+            // disableUserCardClicks();
             for (int i = 0; i < 8; i++) {
                 int finalI = i;
                 new Handler().postDelayed(() -> userCardViews[finalI].setImageResource(userCards.get(finalI)), 200);
             }
-        }, 1250);
+        }, 1500);
 
         // Set up user interactions
         enableUserCardClicks();
     }
 
     private void enableUserCardClicks() {
-        for (int i = 0; i < userCardViews.length; i++) {
+        for (int i = 0; i < userCards.size(); i++) {
             final int cardIndex = i;
             userClickedCardIndex = cardIndex;
-            fourCycle.add(userCards.get(userClickedCardIndex));
+            fourCycle.add(userCards.get(cardIndex));
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
     }
@@ -201,31 +206,47 @@ public class GameFieldActivity extends AppCompatActivity {
             scores[0].setText(String.valueOf(userClickedCardIndex));
         }, 4000);*/
 
-        /*new Handler().postDelayed(() ->  scores[winner].setText(String.valueOf(initial_scores[winner])),
+        /*new Handler().postDelayed(() -> scores[winner].setText(String.valueOf(initial_scores[winner])),
         4000);*/
 
         new Handler().postDelayed(() -> {
-            for (ImageView fourCenterCellView : fourCenterCellViews)
-                fourCenterCellView.setVisibility(View.INVISIBLE);
+            for (ImageView centerCellView : fourCenterCellViews)
+                centerCellView.setVisibility(View.INVISIBLE);
         }, 4750);
 
         /*new Handler().postDelayed(() -> {
-            user_final_cards.remove(four_cycle.get(0));
-            cardSuitList(four_cycle.get(0), user_spades, user_clubs, user_diamonds, user_hearts).remove(four_cycle.get(0));
+            userCards.remove(fourCycle.get(0));
+            cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).remove(fourCycle.get(0));
 
-            BOT1_final_cards.remove(four_cycle.get(1));
-            cardSuitList(four_cycle.get(1), BOT1_spades, BOT1_clubs, BOT1_diamonds, BOT1_hearts).remove(four_cycle.get(1));
+            firstBotCards.remove(fourCycle.get(1));
+            cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
 
-            BOT2_final_cards.remove(four_cycle.get(2));
-            cardSuitList(four_cycle.get(2), BOT2_spades, BOT2_clubs, BOT2_diamonds, BOT2_hearts).remove(four_cycle.get(2));
+            secondBotCards.remove(fourCycle.get(2));
+            cardSuitList(fourCycle.get(2), secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts).remove(fourCycle.get(2));
 
-            BOT3_final_cards.remove(four_cycle.get(3));
-            cardSuitList(four_cycle.get(3), BOT3_spades, BOT3_clubs, BOT3_diamonds, BOT3_hearts).remove(four_cycle.get(3));
+            thirdBotCards.remove(fourCycle.get(3));
+            cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
 
-            four_cycle.clear();
+            fourCycle.clear();
         }, 4500);*/
 
         new Handler().postDelayed(this::enableUserCardClicks, 5500);  // Re-enable user clicks after bots have played
+    }
+
+    private void previousTrickWonUser() {
+
+    }
+
+    private void previousTrickWonFirstBot() {
+
+    }
+
+    private void previousTrickWonSecondBot() {
+
+    }
+
+    private void previousTrickWonThirdBot() {
+
     }
 
     private void botTurn(@NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
@@ -237,17 +258,17 @@ public class GameFieldActivity extends AppCompatActivity {
             if (botSpades.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    fourCycle.add(R.drawable.king_of_hearts);
+                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(random.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    fourCycle.add(botCurrentCardID);
+                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_spades = botSpades.size();
                 botCurrentCardID = botSpades.get(random.nextInt(rand_spades));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                fourCycle.add(botCurrentCardID);
+                // fourCycle.add(botCurrentCardID);
             }
         }
 
@@ -255,17 +276,17 @@ public class GameFieldActivity extends AppCompatActivity {
             if (botClubs.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    fourCycle.add(R.drawable.king_of_hearts);
+                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(random.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    fourCycle.add(botCurrentCardID);
+                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_clubs = botClubs.size();
                 botCurrentCardID = botClubs.get(random.nextInt(rand_clubs));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                fourCycle.add(botCurrentCardID);
+                // fourCycle.add(botCurrentCardID);
             }
         }
 
@@ -273,17 +294,17 @@ public class GameFieldActivity extends AppCompatActivity {
             if (botDiamonds.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    fourCycle.add(R.drawable.king_of_hearts);
+                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(random.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    fourCycle.add(botCurrentCardID);
+                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_diamonds = botDiamonds.size();
                 botCurrentCardID = botDiamonds.get(random.nextInt(rand_diamonds));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                fourCycle.add(botCurrentCardID);
+                // fourCycle.add(botCurrentCardID);
             }
         }
 
@@ -295,7 +316,7 @@ public class GameFieldActivity extends AppCompatActivity {
                 botCurrentCardID = botHearts.get(random.nextInt(rand_hearts));
             }
             moveCardToCenter(botCurrentCardID, botCellIndex);
-            fourCycle.add(botCurrentCardID);
+            // fourCycle.add(botCurrentCardID);
         }
     }
 
@@ -304,6 +325,7 @@ public class GameFieldActivity extends AppCompatActivity {
         ImageView centerView = fourCenterCellViews[playerIndex];
         centerView.setImageResource(card);
         centerView.setVisibility(View.VISIBLE);
+        fourCycle.add(card);
     }
 
     private List<Integer> cardSuitList(int currentCardID, @NonNull List<Integer> CS1, List<Integer> CS2, List<Integer> CS3, List<Integer> CS4) {

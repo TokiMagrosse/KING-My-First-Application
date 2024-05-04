@@ -8,6 +8,20 @@
     android:background="@color/very_dark_green"
     tools:context=".GameFieldActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="67.5sp"
+        android:fontFamily="@font/alata"
+        android:text="NO KING"
+        android:textColor="@color/fucking_green"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="70sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
@@ -27,14 +41,21 @@
             android:layout_marginStart="10sp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <Button
                 android:id="@+id/first_bot_turner"
-                android:layout_width="25sp"
-                android:layout_height="5sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/blue_grey"
+                app:cornerRadius="5sp"
                 android:visibility="invisible"
-                app:cardCornerRadius="25sp"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                android:text="TURN"
+                android:fontFamily="@font/alata"
+                android:textSize="10dp"
+                android:padding="2.5sp"
+                android:textColor="@color/grey"
+                app:strokeColor="@color/grey_1"
+                app:strokeWidth="2sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
@@ -62,7 +83,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P1"
+                android:text="Bot-P1"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/white" />
@@ -143,14 +164,21 @@
             android:layout_marginEnd="10sp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <Button
                 android:id="@+id/third_bot_turner"
-                android:layout_width="25sp"
-                android:layout_height="5sp"
-                app:cardCornerRadius="25sp"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/blue_grey"
+                app:cornerRadius="5sp"
+                android:text="TURN"
                 android:visibility="invisible"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                android:fontFamily="@font/alata"
+                android:textSize="10dp"
+                android:padding="2.5sp"
+                android:textColor="@color/grey"
+                app:strokeColor="@color/grey_1"
+                app:strokeWidth="2sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
@@ -178,7 +206,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P3"
+                android:text="Bot-P3"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/white" />
@@ -647,7 +675,6 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:layout_marginBottom="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -677,15 +704,21 @@
                         android:src="@drawable/second_bot_picture" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <androidx.cardview.widget.CardView
+                <Button
                     android:id="@+id/second_bot_turner"
-                    android:layout_width="25sp"
-                    android:layout_height="5sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="30sp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue_grey"
+                    app:cornerRadius="5sp"
+                    android:text="TURN"
                     android:visibility="invisible"
-                    android:layout_marginTop="2.5sp"
-                    app:cardCornerRadius="25sp"
-                    android:backgroundTint="@color/white"
-                    android:layout_gravity="center_horizontal"/>
+                    android:fontFamily="@font/alata"
+                    android:textSize="10dp"
+                    android:padding="2.5sp"
+                    android:textColor="@color/grey"
+                    app:strokeColor="@color/grey_1"
+                    app:strokeWidth="2sp" />
             </LinearLayout>
 
             <TextView
@@ -694,8 +727,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P2"
-                android:layout_marginBottom="4sp"
+                android:text="Bot-P2"
+                android:layout_marginBottom="12.5sp"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="@color/white" />
