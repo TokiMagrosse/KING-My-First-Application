@@ -32,9 +32,8 @@ import java.util.Random;
 public class GameFieldActivity extends AppCompatActivity {
 
     Dialog dialog_menu, dialog_table;
-    protected CardView[] scoreBoards = new CardView[4];
     protected Button[] turners = new Button[3];
-    TextView[] scores = new TextView[4];
+    TextView[] scoreViews = new TextView[4];
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardViews = new ImageView[8];
@@ -53,9 +52,7 @@ public class GameFieldActivity extends AppCompatActivity {
     List<Integer> firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts;
     List<Integer> secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts;
     List<Integer> thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts;
-    private final Random random = new Random();
-    static int userClickedCardIndex;
-
+    private final Random randomizer = new Random();
     protected static List<Integer> fourCycle = new ArrayList<>();
     public int[] playersScores = {0, 0, 0, 0};
 
@@ -98,8 +95,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
         // Initialize all views and set up the interface
         for (int i = 0; i < 4; i++) {
-            scores[i] = findViewById(getResources().getIdentifier("user_score" + i, "id", getPackageName()));
-            scoreBoards[i] = findViewById(getResources().getIdentifier("user_score_board" + i, "id", getPackageName()));
+            scoreViews[i] = findViewById(getResources().getIdentifier("user_score" + i, "id", getPackageName()));
         }
         for (int i = 0; i < 8; i++) {
             userCardViews[i] = findViewById(getResources().getIdentifier("my_card_" + (i + 1), "id", getPackageName()));
@@ -163,7 +159,6 @@ public class GameFieldActivity extends AppCompatActivity {
     private void enableUserCardClicks() {
         for (int i = 0; i < userCards.size(); i++) {
             final int cardIndex = i;
-            userClickedCardIndex = cardIndex;
             fourCycle.add(userCards.get(cardIndex));
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
@@ -189,16 +184,16 @@ public class GameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> botTurn(secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2000);
         new Handler().postDelayed(() -> botTurn(thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3500);
 
-        int[] indexes_in_first_card_suit = new int[4];
+        int[] indexesInFirstCenterCardSuit = new int[4];
 
         List<Integer> firstCardSuitList = cardSuitList(fourCycle.get(0), sortedSpades(), sortedClubs(), sortedDiamonds(), sortedHearts());
         for (byte j = 0; j < 4; j++) {
             if (firstCardSuitList.contains(fourCycle.get(j)))
-                indexes_in_first_card_suit[j] = firstCardSuitList.indexOf(fourCycle.get(j));
-            else indexes_in_first_card_suit[j] = -1;
+                indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCycle.get(j));
+            else indexesInFirstCenterCardSuit[j] = -1;
         }
 
-        int winner = maxNumberIndexInTheArray(indexes_in_first_card_suit);
+        int winner = maxNumberIndexInTheArray(indexesInFirstCenterCardSuit);
         if (fourCycle.contains(R.drawable.king_of_hearts)) playersScores[winner] -= 40;
         else playersScores[winner] += 10;
 
@@ -254,66 +249,66 @@ public class GameFieldActivity extends AppCompatActivity {
         int list_size = botCards.size(), botCurrentCardID;
 
         // Checking the user card suit so bot can determine what card to throw
-        if (sortedSpades().contains(userCards.get(userClickedCardIndex))) {
+        if (sortedSpades().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
             if (botSpades.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
                     // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
-                    botCurrentCardID = botCards.get(random.nextInt(list_size));
+                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
                     // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_spades = botSpades.size();
-                botCurrentCardID = botSpades.get(random.nextInt(rand_spades));
+                botCurrentCardID = botSpades.get(randomizer.nextInt(rand_spades));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
                 // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedClubs().contains(userCards.get(userClickedCardIndex))) {
+        if (sortedClubs().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
             if (botClubs.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
                     // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
-                    botCurrentCardID = botCards.get(random.nextInt(list_size));
+                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
                     // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_clubs = botClubs.size();
-                botCurrentCardID = botClubs.get(random.nextInt(rand_clubs));
+                botCurrentCardID = botClubs.get(randomizer.nextInt(rand_clubs));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
                 // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedDiamonds().contains(userCards.get(userClickedCardIndex))) {
+        if (sortedDiamonds().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
             if (botDiamonds.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
                     // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
-                    botCurrentCardID = botCards.get(random.nextInt(list_size));
+                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
                     // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_diamonds = botDiamonds.size();
-                botCurrentCardID = botDiamonds.get(random.nextInt(rand_diamonds));
+                botCurrentCardID = botDiamonds.get(randomizer.nextInt(rand_diamonds));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
                 // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedHearts().contains(userCards.get(userClickedCardIndex))) {
+        if (sortedHearts().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
             if (botHearts.isEmpty()) {
-                botCurrentCardID = botCards.get(random.nextInt(list_size));
+                botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
             } else {
                 int rand_hearts = botHearts.size();
-                botCurrentCardID = botHearts.get(random.nextInt(rand_hearts));
+                botCurrentCardID = botHearts.get(randomizer.nextInt(rand_hearts));
             }
             moveCardToCenter(botCurrentCardID, botCellIndex);
             // fourCycle.add(botCurrentCardID);
