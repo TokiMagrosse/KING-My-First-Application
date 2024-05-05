@@ -142,7 +142,7 @@ public class GameFieldActivity extends AppCompatActivity {
             dialog_menu.dismiss();
         });
 
-        menu_button.setOnClickListener(v -> dialog_menu.show());
+        table_button.setOnClickListener(v -> dialog_menu.show());
         close_menu.setOnClickListener(v -> dialog_menu.dismiss());*/
 
         turners[0] = findViewById(R.id.first_bot_turner);
