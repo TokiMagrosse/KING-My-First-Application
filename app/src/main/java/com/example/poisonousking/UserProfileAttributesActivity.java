@@ -79,7 +79,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         String userEmail = user.getEmail();
         email_address.setText(userEmail);
 
-        // Fetch and set the user's username from Firestore
+        // Fetch and set the user's username from Fire_store
         DocumentReference doc_ref_for_username = f_store.collection("all my users").document(user.getUid());
         doc_ref_for_username.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -94,7 +94,7 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
             username.setText("*****");
         });
 
-        // Fetch and set the user's ID from Firestore
+        // Fetch and set the user's ID from Fire_store
         DocumentReference doc_ref_for_id = f_store.collection("all my users").document(user.getUid());
         doc_ref_for_id.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
@@ -110,16 +110,14 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
         });
 
         // Handle profile picture change
-        change_profile.setOnClickListener(v -> {
-            ImagePicker.with(this)
-                    .cropSquare()
-                    .compress(518)
-                    .maxResultSize(518, 518)
-                    .createIntent(intent -> {
-                        image_pick_launcher.launch(intent);
-                        return null;
-                    });
-        });
+        change_profile.setOnClickListener(v -> ImagePicker.with(this)
+                .cropSquare()
+                .compress(518)
+                .maxResultSize(518, 518)
+                .createIntent(intent -> {
+                    image_pick_launcher.launch(intent);
+                    return null;
+                }));
 
         // Handle saving changes
         save_changes.setOnClickListener(v -> {
@@ -154,8 +152,8 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
                 .addOnSuccessListener(taskSnapshot -> {
                     // Get the download URL after the image is successfully uploaded
                     profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        // Update the download URL in Firestore
-                        updateProfileImageUrlInFirestore(uri.toString());
+                        // Update the download URL in Fire_store
+                        updateProfileImageUrlInFirebaseStorage(uri.toString());
                     });
                 })
                 .addOnFailureListener(e -> {
@@ -166,8 +164,8 @@ public class UserProfileAttributesActivity extends AppCompatActivity {
     }
 
 
-    // Method to update the profile image URL in Firestore
-    private void updateProfileImageUrlInFirestore(String imageUrl) {
+    // Method to update the profile image URL in Fire_store
+    private void updateProfileImageUrlInFirebaseStorage(String imageUrl) {
         DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("all my users").document(userID);
 
         userDocRef.update("profileImageUrl", imageUrl)

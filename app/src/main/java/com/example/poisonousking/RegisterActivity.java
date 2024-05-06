@@ -30,10 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -256,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Create a map to store the user's data, including the new fields
         Map<String, Object> user = getStringObjectMap(username, emailAddress, ID);
 
-        // Save the user data to Firestore
+        // Save the user data to Fire_store
         documentReference.set(user)
                 .addOnSuccessListener(unused -> Log.d(TAG, "User profile has been created for " + userID))
                 .addOnFailureListener(e -> Log.d(TAG, e.toString()));

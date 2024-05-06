@@ -63,20 +63,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
 
-        remember_me.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isChecked()) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                } else if (!buttonView.isChecked()) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                }
+        remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (buttonView.isChecked()) {
+                SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("remember", "true");
+                editor.apply();
+            } else if (!buttonView.isChecked()) {
+                SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
             }
         });
 

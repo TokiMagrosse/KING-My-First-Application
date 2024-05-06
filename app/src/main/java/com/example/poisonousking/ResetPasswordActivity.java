@@ -1,5 +1,6 @@
 package com.example.poisonousking;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,9 +33,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        reset_password_button.setOnClickListener(v -> {
-            resetPassword();
-        });
+        reset_password_button.setOnClickListener(v -> resetPassword());
     }
 
     private void resetPassword() {
@@ -65,7 +64,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         }
     }
 
-    private void showError(EditText input, String errorText) {
+    private void showError(@NonNull EditText input, String errorText) {
         input.setError(errorText);
         input.requestFocus();
     }

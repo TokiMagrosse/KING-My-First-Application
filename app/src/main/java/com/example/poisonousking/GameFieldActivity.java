@@ -1,3 +1,4 @@
+
 package com.example.poisonousking;
 
 import android.app.Dialog;
@@ -149,17 +150,37 @@ public class GameFieldActivity extends AppCompatActivity {
         turners[1] = findViewById(R.id.second_bot_turner);
         turners[2] = findViewById(R.id.third_bot_turner);
 
-        // Initialize all views and set up the interface
-        for (int i = 0; i < 4; i++) {
-            scoreViews[i] = findViewById(getResources().getIdentifier("user_score" + i, "id", getPackageName()));
-        }
-        for (int i = 0; i < 8; i++) {
-            userCardViews[i] = findViewById(getResources().getIdentifier("my_card_" + (i + 1), "id", getPackageName()));
-            userCardDoorViews[i] = findViewById(getResources().getIdentifier("card_door_" + (i + 1), "id", getPackageName()));
-        }
-        for (int i = 0; i < 4; i++) {
-            fourCenterCellViews[i] = findViewById(getResources().getIdentifier("center_card_" + (i + 1), "id", getPackageName()));
-        }
+        // Initialize score views
+        scoreViews[0] = findViewById(R.id.score_view_1);
+        scoreViews[1] = findViewById(R.id.score_view_2);
+        scoreViews[2] = findViewById(R.id.score_view_3);
+        scoreViews[3] = findViewById(R.id.score_view_4);
+
+        // Initialize user card views
+        userCardViews[0] = findViewById(R.id.my_card_1);
+        userCardViews[1] = findViewById(R.id.my_card_2);
+        userCardViews[2] = findViewById(R.id.my_card_3);
+        userCardViews[3] = findViewById(R.id.my_card_4);
+        userCardViews[4] = findViewById(R.id.my_card_5);
+        userCardViews[5] = findViewById(R.id.my_card_6);
+        userCardViews[6] = findViewById(R.id.my_card_7);
+        userCardViews[7] = findViewById(R.id.my_card_8);
+
+        // Initialize center card views
+        fourCenterCellViews[0] = findViewById(R.id.center_card_1);
+        fourCenterCellViews[1] = findViewById(R.id.center_card_2);
+        fourCenterCellViews[2] = findViewById(R.id.center_card_3);
+        fourCenterCellViews[3] = findViewById(R.id.center_card_4);
+
+        // Initialize user card "door" views
+        userCardDoorViews[0] = findViewById(R.id.card_door_1);
+        userCardDoorViews[1] = findViewById(R.id.card_door_2);
+        userCardDoorViews[2] = findViewById(R.id.card_door_3);
+        userCardDoorViews[3] = findViewById(R.id.card_door_4);
+        userCardDoorViews[4] = findViewById(R.id.card_door_5);
+        userCardDoorViews[5] = findViewById(R.id.card_door_6);
+        userCardDoorViews[6] = findViewById(R.id.card_door_7);
+        userCardDoorViews[7] = findViewById(R.id.card_door_8);
 
     }
 
@@ -201,12 +222,14 @@ public class GameFieldActivity extends AppCompatActivity {
 
         // Show up user's cards
         new Handler().postDelayed(() -> {
-            // disableUserCardClicks();
             for (int i = 0; i < 8; i++) {
                 int finalI = i;
-                new Handler().postDelayed(() -> userCardViews[finalI].setImageResource(userCards.get(finalI)), 200);
+                new Handler().postDelayed(() -> {
+                    userCardViews[finalI].setImageResource(userCards.get(finalI));
+                    userCardViews[finalI].setVisibility(View.VISIBLE);
+                }, 200);
             }
-        }, 1500);
+        }, 2500);
 
         // Set up user interactions
         enableUserCardClicks();
@@ -215,7 +238,6 @@ public class GameFieldActivity extends AppCompatActivity {
     private void enableUserCardClicks() {
         for (int i = 0; i < userCards.size(); i++) {
             final int cardIndex = i;
-            fourCycle.add(userCards.get(cardIndex));
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
     }
@@ -225,6 +247,7 @@ public class GameFieldActivity extends AppCompatActivity {
         fourCenterCellViews[0].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
+        fourCycle.add(userCards.get(cardIndex));
         disableUserCardClicks();
         new Handler().postDelayed(this::botsTurn, 1500);
     }
@@ -236,9 +259,10 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     private void botsTurn() {
-        botTurn(firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        new Handler().postDelayed(() -> botTurn(secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2000);
-        new Handler().postDelayed(() -> botTurn(thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3500);
+        // botTurn(userCards.get(cardIndex), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
+        moveCardToCenter(firstBotCards.get(randomizer.nextInt(firstBotCards.size())), 1);
+        new Handler().postDelayed(() -> moveCardToCenter(secondBotCards.get(randomizer.nextInt(secondBotCards.size())), 2), 2000);
+        new Handler().postDelayed(() -> moveCardToCenter(thirdBotCards.get(randomizer.nextInt(thirdBotCards.size())), 3), 3500);
 
         int[] indexesInFirstCenterCardSuit = new int[4];
 
@@ -284,82 +308,57 @@ public class GameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(this::enableUserCardClicks, 5500);  // Re-enable user clicks after bots have played
     }
 
-    private void previousTrickWonUser() {
-
-    }
-
-    private void previousTrickWonFirstBot() {
-
-    }
-
-    private void previousTrickWonSecondBot() {
-
-    }
-
-    private void previousTrickWonThirdBot() {
-
-    }
-
-    private void botTurn(@NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
+    private void botTurn(int userCardID, @NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
                          List<Integer> botDiamonds, List<Integer> botHearts, int botCellIndex) {
         int list_size = botCards.size(), botCurrentCardID;
 
         // Checking the user card suit so bot can determine what card to throw
-        if (sortedSpades().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
+        if (sortedSpades().contains(userCardID)) {
             if (botSpades.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_spades = botSpades.size();
                 botCurrentCardID = botSpades.get(randomizer.nextInt(rand_spades));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedClubs().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
+        if (sortedClubs().contains(userCardID)) {
             if (botClubs.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_clubs = botClubs.size();
                 botCurrentCardID = botClubs.get(randomizer.nextInt(rand_clubs));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedDiamonds().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
+        if (sortedDiamonds().contains(userCardID)) {
             if (botDiamonds.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
-                    // fourCycle.add(R.drawable.king_of_hearts);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
                     moveCardToCenter(botCurrentCardID, botCellIndex);
-                    // fourCycle.add(botCurrentCardID);
                 }
             } else {
                 int rand_diamonds = botDiamonds.size();
                 botCurrentCardID = botDiamonds.get(randomizer.nextInt(rand_diamonds));
                 moveCardToCenter(botCurrentCardID, botCellIndex);
-                // fourCycle.add(botCurrentCardID);
             }
         }
 
-        if (sortedHearts().contains(userCards.get(userCards.indexOf(fourCycle.get(0))))) {
+        if (sortedHearts().contains(userCardID)) {
             if (botHearts.isEmpty()) {
                 botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
             } else {
@@ -367,7 +366,6 @@ public class GameFieldActivity extends AppCompatActivity {
                 botCurrentCardID = botHearts.get(randomizer.nextInt(rand_hearts));
             }
             moveCardToCenter(botCurrentCardID, botCellIndex);
-            // fourCycle.add(botCurrentCardID);
         }
     }
 
