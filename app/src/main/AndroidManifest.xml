@@ -17,7 +17,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".GameRulesActivity"
+            android:name=".inside_of_king.GameRulesActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
 
@@ -26,11 +26,11 @@
             android:value="true" />
 
         <activity
-            android:name=".GameFieldActivity"
+            android:name=".inside_of_king.GameFieldActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".StartingSplashActivity"
+            android:name=".outside_of_king.StartingSplashActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -40,23 +40,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserProfileAttributesActivity"
+            android:name=".inside_of_king.UserProfileAttributesActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".outside_of_king.ResetPasswordActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".inside_of_king.ProfileActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".outside_of_king.RegisterActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MainActivity"
+            android:name=".outside_of_king.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>

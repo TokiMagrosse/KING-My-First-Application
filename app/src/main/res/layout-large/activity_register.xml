@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/green_background"
-    tools:context=".RegisterActivity">
+    tools:context=".outside_of_king.RegisterActivity">
 
     <ScrollView
         android:layout_width="650sp"

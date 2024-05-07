@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/green_background"
-    tools:context=".ProfileActivity">
+    tools:context=".inside_of_king.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.poisonousking.helperclasses;
+package com.example.poisonousking.helper_classes;
 
 import androidx.annotation.NonNull;
 

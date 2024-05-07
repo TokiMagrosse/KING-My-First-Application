@@ -1,10 +1,12 @@
-package com.example.poisonousking;
+package com.example.poisonousking.outside_of_king;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.poisonousking.R;
 
 public class StartingSplashActivity extends AppCompatActivity {
 

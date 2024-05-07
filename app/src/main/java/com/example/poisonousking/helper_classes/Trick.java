@@ -1,8 +1,6 @@
-package com.example.poisonousking.helperclasses;
+package com.example.poisonousking.helper_classes;
 
 import androidx.annotation.NonNull;
-
-import com.example.poisonousking.R;
 
 import java.util.ArrayList;
 import java.util.List;

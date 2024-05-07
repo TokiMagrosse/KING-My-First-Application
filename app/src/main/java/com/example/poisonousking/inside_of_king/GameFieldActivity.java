@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.inside_of_king;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.poisonousking.helperclasses.Deck;
-import com.example.poisonousking.helperclasses.Trick;
+import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.Deck;
+import com.example.poisonousking.helper_classes.Trick;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.outside_of_king;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,12 +14,13 @@ import android.view.MotionEvent;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.poisonousking.inside_of_king.ProfileActivity;
+import com.example.poisonousking.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.inside_of_king;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.poisonousking.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

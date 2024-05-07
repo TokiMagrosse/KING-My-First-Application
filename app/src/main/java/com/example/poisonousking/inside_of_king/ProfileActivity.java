@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.inside_of_king;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.poisonousking.R;
+import com.example.poisonousking.outside_of_king.MainActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

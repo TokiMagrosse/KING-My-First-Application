@@ -1,4 +1,4 @@
-package com.example.poisonousking;
+package com.example.poisonousking.outside_of_king;
 
 import static android.content.ContentValues.TAG;
 
@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.poisonousking.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
