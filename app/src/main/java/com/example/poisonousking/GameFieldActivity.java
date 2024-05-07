@@ -1,14 +1,8 @@
-
 package com.example.poisonousking;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,45 +10,31 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.materialswitch.MaterialSwitch;
-
-import org.jetbrains.annotations.Contract;
+import com.example.poisonousking.helperclasses.Deck;
+import com.example.poisonousking.helperclasses.Trick;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class GameFieldActivity extends AppCompatActivity {
 
-    MaterialSwitch sound_switch, music_switch;
-    Button leave_the_game, close_menu;
-    Dialog dialog_menu, dialog_table;
     protected Button[] turners = new Button[3];
     TextView[] scoreViews = new TextView[4];
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardViews = new ImageView[8];
     Button table_button, menu_button;
-    private static final int[] initialDeckCards = {
-            R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades,
-            R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
-            R.drawable.nine_of_clubs, R.drawable.nine_of_diamonds, R.drawable.nine_of_hearts, R.drawable.nine_of_spades,
-            R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
-            R.drawable.jack_of_clubs, R.drawable.jack_of_diamonds, R.drawable.jack_of_hearts, R.drawable.jack_of_spades,
-            R.drawable.queen_of_clubs, R.drawable.queen_of_diamonds, R.drawable.queen_of_hearts, R.drawable.queen_of_spades,
-            R.drawable.king_of_clubs, R.drawable.king_of_diamonds, R.drawable.king_of_hearts, R.drawable.king_of_spades,
-            R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades
-    };
+    List<Integer> Spades = Deck.sortedSpades();
+    List<Integer> Clubs = Deck.sortedClubs();
+    List<Integer> Diamonds = Deck.sortedDiamonds();
+    List<Integer> Hearts = Deck.sortedHearts();
     List<Integer> userCards, userSpades, userClubs, userDiamonds, userHearts;
     List<Integer> firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts;
     List<Integer> secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts;
@@ -81,70 +61,6 @@ public class GameFieldActivity extends AppCompatActivity {
     private void initializeViews() {
         table_button = findViewById(R.id.table_button);
         menu_button = findViewById(R.id.menu_button);
-
-        // All necessary attributes for Big Game Dialog
-        /*dialog_menu = new Dialog(GameFieldActivity.this);
-        dialog_menu.setContentView(R.layout.dialog_menu_in_the_field);
-        Objects.requireNonNull(dialog_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
-        dialog_menu.setCancelable(false);
-
-        Window menu_window = dialog_menu.getWindow();
-        if (menu_window != null) {
-            menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
-            menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
-        }
-
-        sound_switch = dialog_menu.findViewById(R.id.sound_switch);
-        sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-        sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-        // Add a listener to the sound switch
-        sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // If the switch is on, start the music
-                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-            } else {
-                // If the switch is off, stop the music
-                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
-                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-            }
-        });
-
-        music_switch = dialog_menu.findViewById(R.id.music_switch);
-        music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-        // Add a listener to the music switch
-        music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // If the switch is on, start the music
-                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-            } else {
-                // If the switch is off, stop the music
-                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
-                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-
-            }
-        });
-
-        leave_the_game = dialog_menu.findViewById(R.id.leave_the_game);
-        close_menu = dialog_menu.findViewById(R.id.close_menu);
-
-        leave_the_game.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            dialog_menu.dismiss();
-        });
-
-        table_button.setOnClickListener(v -> dialog_menu.show());
-        close_menu.setOnClickListener(v -> dialog_menu.dismiss());*/
 
         turners[0] = findViewById(R.id.first_bot_turner);
         turners[1] = findViewById(R.id.second_bot_turner);
@@ -187,38 +103,38 @@ public class GameFieldActivity extends AppCompatActivity {
     private void setupPoisonousGameKing() {
         // Prepare the deck and distribute cards
         List<Integer> deck = new ArrayList<>();
-        for (int card : initialDeckCards) {
+        for (int card : Deck.deckOfCards) {
             deck.add(card);  // Add each card individually
         }
         Collections.shuffle(deck);  // Shuffle the deck
 
         // User cards sorted by suit and division into 4 parts:
-        userCards = currentPlayerCardsSortedBySuit(deck.subList(0, 8));
-        userSpades = currentPlayerSpades(userCards); // User spades, clubs, diamonds, hearts
-        userClubs = currentPlayerClubs(userCards);
-        userDiamonds = currentPlayerDiamonds(userCards);
-        userHearts = currentPlayerHearts(userCards);
+        userCards = Deck.currentPlayerCardsSortedBySuit(deck.subList(0, 8));
+        userSpades = Deck.currentPlayerSpades(userCards); // User spades, clubs, diamonds, hearts
+        userClubs = Deck.currentPlayerClubs(userCards);
+        userDiamonds = Deck.currentPlayerDiamonds(userCards);
+        userHearts = Deck.currentPlayerHearts(userCards);
 
         // First Bot cards sorted by suit and division into 4 parts:
-        firstBotCards = currentPlayerCardsSortedBySuit(deck.subList(8, 16));
-        firstBotSpades = currentPlayerSpades(firstBotCards); // First Bot spades, clubs, diamonds, hearts
-        firstBotClubs = currentPlayerClubs(firstBotCards);
-        firstBotDiamonds = currentPlayerDiamonds(firstBotCards);
-        firstBotHearts = currentPlayerHearts(firstBotCards);
+        firstBotCards = Deck.currentPlayerCardsSortedBySuit(deck.subList(8, 16));
+        firstBotSpades = Deck.currentPlayerSpades(firstBotCards); // First Bot spades, clubs, diamonds, hearts
+        firstBotClubs = Deck.currentPlayerClubs(firstBotCards);
+        firstBotDiamonds = Deck.currentPlayerDiamonds(firstBotCards);
+        firstBotHearts = Deck.currentPlayerHearts(firstBotCards);
 
         // Second Bot cards sorted by suit and division into 4 parts:
-        secondBotCards = currentPlayerCardsSortedBySuit(deck.subList(16, 24));
-        secondBotSpades = currentPlayerSpades(secondBotCards); // Second Bot spades, clubs, diamonds, hearts
-        secondBotClubs = currentPlayerClubs(secondBotCards);
-        secondBotDiamonds = currentPlayerDiamonds(secondBotCards);
-        secondBotHearts = currentPlayerHearts(secondBotCards);
+        secondBotCards = Deck.currentPlayerCardsSortedBySuit(deck.subList(16, 24));
+        secondBotSpades = Deck.currentPlayerSpades(secondBotCards); // Second Bot spades, clubs, diamonds, hearts
+        secondBotClubs = Deck.currentPlayerClubs(secondBotCards);
+        secondBotDiamonds = Deck.currentPlayerDiamonds(secondBotCards);
+        secondBotHearts = Deck.currentPlayerHearts(secondBotCards);
 
         // Third Bot cards sorted by suit and division into 4 parts:
-        thirdBotCards = currentPlayerCardsSortedBySuit(deck.subList(24, 32));
-        thirdBotSpades = currentPlayerSpades(thirdBotCards); // Third Bot spades, clubs, diamonds, hearts
-        thirdBotClubs = currentPlayerClubs(thirdBotCards);
-        thirdBotDiamonds = currentPlayerDiamonds(thirdBotCards);
-        thirdBotHearts = currentPlayerHearts(thirdBotCards);
+        thirdBotCards = Deck.currentPlayerCardsSortedBySuit(deck.subList(24, 32));
+        thirdBotSpades = Deck.currentPlayerSpades(thirdBotCards); // Third Bot spades, clubs, diamonds, hearts
+        thirdBotClubs = Deck.currentPlayerClubs(thirdBotCards);
+        thirdBotDiamonds = Deck.currentPlayerDiamonds(thirdBotCards);
+        thirdBotHearts = Deck.currentPlayerHearts(thirdBotCards);
 
         // Show up user's cards
         new Handler().postDelayed(() -> {
@@ -237,7 +153,7 @@ public class GameFieldActivity extends AppCompatActivity {
 
     private void enableUserCardClicks() {
         for (int i = 0; i < userCards.size(); i++) {
-            final int cardIndex = i;
+            int cardIndex = i;
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
     }
@@ -259,35 +175,20 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     private void botsTurn() {
-        // botTurn(userCards.get(cardIndex), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        moveCardToCenter(firstBotCards.get(randomizer.nextInt(firstBotCards.size())), 1);
-        new Handler().postDelayed(() -> moveCardToCenter(secondBotCards.get(randomizer.nextInt(secondBotCards.size())), 2), 2000);
-        new Handler().postDelayed(() -> moveCardToCenter(thirdBotCards.get(randomizer.nextInt(thirdBotCards.size())), 3), 3500);
+        botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
+        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2000);
+        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3500);
 
-        int[] indexesInFirstCenterCardSuit = new int[4];
+        int winner = determineTheWinnerOfTrick(fourCycle);
 
-        List<Integer> firstCardSuitList = cardSuitList(fourCycle.get(0), sortedSpades(), sortedClubs(), sortedDiamonds(), sortedHearts());
-        for (byte j = 0; j < 4; j++) {
-            if (firstCardSuitList.contains(fourCycle.get(j)))
-                indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCycle.get(j));
-            else indexesInFirstCenterCardSuit[j] = -1;
-        }
+        if (fourCycle.contains(R.drawable.king_of_hearts))
+            playersScores[winner] -= 40; // Actually it's a lost but...
+        else
+            playersScores[winner] += 10; // Winner of that trick gets +10 points
 
-        int winner = maxNumberIndexInTheArray(indexesInFirstCenterCardSuit);
-        if (fourCycle.contains(R.drawable.king_of_hearts)) playersScores[winner] -= 40;
-        else playersScores[winner] += 10;
+        new Handler().postDelayed(() -> scoreViews[winner].setText(String.valueOf(playersScores[winner])), 4500);
 
-        /*new Handler().postDelayed(() -> {
-            scores[0].setText(String.valueOf(userClickedCardIndex));
-        }, 4000);*/
-
-        /*new Handler().postDelayed(() -> scores[winner].setText(String.valueOf(initial_scores[winner])),
-        4000);*/
-
-        new Handler().postDelayed(() -> {
-            for (ImageView centerCellView : fourCenterCellViews)
-                centerCellView.setVisibility(View.INVISIBLE);
-        }, 4750);
+        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5000);
 
         /*new Handler().postDelayed(() -> {
             userCards.remove(fourCycle.get(0));
@@ -305,7 +206,25 @@ public class GameFieldActivity extends AppCompatActivity {
             fourCycle.clear();
         }, 4500);*/
 
-        new Handler().postDelayed(this::enableUserCardClicks, 5500);  // Re-enable user clicks after bots have played
+        new Handler().postDelayed(this::enableUserCardClicks, 6000);  // Re-enable user clicks after bots have played
+    }
+
+    private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
+        int[] indexesInFirstCenterCardSuit = new int[4];
+
+        List<Integer> firstCardSuitList = Deck.cardSuitList(fourCenterCardIDes.get(0), Spades, Clubs, Diamonds, Hearts);
+        for (byte j = 0; j < 4; j++) {
+            if (firstCardSuitList.contains(fourCenterCardIDes.get(j)))
+                indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCenterCardIDes.get(j));
+            else indexesInFirstCenterCardSuit[j] = -1;
+        }
+
+        return Trick.getMaxIndexInIndexes(indexesInFirstCenterCardSuit);
+    }
+
+    private void clearCenterCardsFromCenterView() {
+        for (ImageView centerCellView : fourCenterCellViews)
+            centerCellView.setVisibility(View.INVISIBLE);
     }
 
     private void botTurn(int userCardID, @NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
@@ -313,7 +232,7 @@ public class GameFieldActivity extends AppCompatActivity {
         int list_size = botCards.size(), botCurrentCardID;
 
         // Checking the user card suit so bot can determine what card to throw
-        if (sortedSpades().contains(userCardID)) {
+        if (Spades.contains(userCardID)) {
             if (botSpades.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
@@ -328,7 +247,7 @@ public class GameFieldActivity extends AppCompatActivity {
             }
         }
 
-        if (sortedClubs().contains(userCardID)) {
+        if (Clubs.contains(userCardID)) {
             if (botClubs.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
@@ -343,7 +262,7 @@ public class GameFieldActivity extends AppCompatActivity {
             }
         }
 
-        if (sortedDiamonds().contains(userCardID)) {
+        if (Diamonds.contains(userCardID)) {
             if (botDiamonds.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
                     moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
@@ -358,7 +277,7 @@ public class GameFieldActivity extends AppCompatActivity {
             }
         }
 
-        if (sortedHearts().contains(userCardID)) {
+        if (Hearts.contains(userCardID)) {
             if (botHearts.isEmpty()) {
                 botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
             } else {
@@ -375,137 +294,5 @@ public class GameFieldActivity extends AppCompatActivity {
         centerView.setImageResource(card);
         centerView.setVisibility(View.VISIBLE);
         fourCycle.add(card);
-    }
-
-    private List<Integer> cardSuitList(int currentCardID, @NonNull List<Integer> CS1, List<Integer> CS2, List<Integer> CS3, List<Integer> CS4) {
-        List<Integer> suitList;
-        if (CS1.contains(currentCardID))
-            suitList = CS1;
-        else if (CS2.contains(currentCardID))
-            suitList = CS2;
-        else if (CS3.contains(currentCardID))
-            suitList = CS3;
-        else
-            suitList = CS4;
-
-        return suitList;
-    }
-
-    @Contract(pure = true)
-    private int maxNumberIndexInTheArray(@NonNull int[] indexes) {
-        int max = indexes[0], maxIndex = 0;
-        for (byte i = 0; i < indexes.length; i++)
-            if (indexes[i] > max) {
-                max = indexes[i];
-                maxIndex = i;
-            }
-
-        return maxIndex;
-    }
-
-    @NonNull
-    private List<Integer> currentPlayerCardsSortedBySuit(List<Integer> current_player_card_IDes) {
-        int[] player_suitable_indexes = new int[8];
-        for (int i = 0; i < 8; i++)
-            player_suitable_indexes[i] = allCardsSortedBySuit().indexOf(current_player_card_IDes.get(i));
-
-        List<Integer> sorted_card_IDes = new ArrayList<>();
-        Arrays.sort(player_suitable_indexes);
-
-        for (int i = 0; i < 8; i++)
-            sorted_card_IDes.add(allCardsSortedBySuit().get(player_suitable_indexes[i]));
-
-        return sorted_card_IDes;
-    }
-
-    @NonNull
-    private static List<Integer> currentPlayerSpades(@NonNull List<Integer> currentCardIDes) {
-        List<Integer> spadesOfCurrentPlayer = new ArrayList<>();
-        for (byte i = 0; i < currentCardIDes.size(); i++)
-            if (sortedSpades().contains(currentCardIDes.get(i)))
-                spadesOfCurrentPlayer.add(currentCardIDes.get(i));
-
-        return spadesOfCurrentPlayer;
-    }
-
-    @NonNull
-    private static List<Integer> currentPlayerClubs(@NonNull List<Integer> currentCardIDes) {
-        List<Integer> clubsOfCurrentPlayer = new ArrayList<>();
-        for (byte i = 0; i < currentCardIDes.size(); i++)
-            if (sortedClubs().contains(currentCardIDes.get(i)))
-                clubsOfCurrentPlayer.add(currentCardIDes.get(i));
-
-        return clubsOfCurrentPlayer;
-    }
-
-    @NonNull
-    private static List<Integer> currentPlayerDiamonds(@NonNull List<Integer> currentCardIDes) {
-        List<Integer> diamondsOfCurrentPlayer = new ArrayList<>();
-        for (byte i = 0; i < currentCardIDes.size(); i++)
-            if (sortedDiamonds().contains(currentCardIDes.get(i)))
-                diamondsOfCurrentPlayer.add(currentCardIDes.get(i));
-
-        return diamondsOfCurrentPlayer;
-    }
-
-    @NonNull
-    private static List<Integer> currentPlayerHearts(@NonNull List<Integer> currentCardIDes) {
-        List<Integer> heartsOfCurrentPlayer = new ArrayList<>();
-        for (byte i = 0; i < currentCardIDes.size(); i++)
-            if (sortedHearts().contains(currentCardIDes.get(i)))
-                heartsOfCurrentPlayer.add(currentCardIDes.get(i));
-
-        return heartsOfCurrentPlayer;
-    }
-
-    @NonNull
-    private List<Integer> allCardsSortedBySuit() {
-        List<Integer> cards_sorted_by_suit = new ArrayList<>();
-        for (int i = 0; i < 8; i++)
-            cards_sorted_by_suit.add(sortedSpades().get(i));
-        for (int i = 0; i < 8; i++)
-            cards_sorted_by_suit.add(sortedClubs().get(i));
-        for (int i = 0; i < 8; i++)
-            cards_sorted_by_suit.add(sortedDiamonds().get(i));
-        for (int i = 0; i < 8; i++)
-            cards_sorted_by_suit.add(sortedHearts().get(i));
-
-        return cards_sorted_by_suit;
-    }
-
-    @NonNull
-    private static List<Integer> sortedClubs() {
-        List<Integer> CLUBS = new ArrayList<>();
-        for (int i = 0; i < initialDeckCards.length; i += 4) {
-            CLUBS.add(initialDeckCards[i]);
-        }
-        return CLUBS;
-    }
-
-    @NonNull
-    private static List<Integer> sortedDiamonds() {
-        List<Integer> DIAMONDS = new ArrayList<>();
-        for (int i = 1; i < initialDeckCards.length; i += 4) {
-            DIAMONDS.add(initialDeckCards[i]);
-        }
-        return DIAMONDS;
-    }
-
-    @NonNull
-    private static List<Integer> sortedHearts() {
-        List<Integer> HEARTS = new ArrayList<>();
-        for (int i = 2; i < initialDeckCards.length; i += 4) {
-            HEARTS.add(initialDeckCards[i]);
-        }
-        return HEARTS;
-    }
-
-    @NonNull
-    private static List<Integer> sortedSpades() {
-        List<Integer> SPADES = new ArrayList<>();
-        for (int i = 3; i < initialDeckCards.length; i += 4) {
-            SPADES.add(initialDeckCards[i]);
-        }
-        return SPADES;
     }
 }
