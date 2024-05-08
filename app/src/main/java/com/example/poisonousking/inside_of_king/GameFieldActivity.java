@@ -160,7 +160,7 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     private void userTurn(int cardIndex) {
-        fourCenterCellViews[0].setImageDrawable(userCardViews[cardIndex].getDrawable());
+        fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
         fourCenterCellViews[0].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
