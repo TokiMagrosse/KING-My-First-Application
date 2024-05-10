@@ -17,7 +17,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
-import com.example.poisonousking.helper_classes.Trick;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +42,7 @@ public class GameFieldActivity extends AppCompatActivity {
     private final Random randomizer = new Random();
     protected static List<Integer> fourCycle = new ArrayList<>();
     public int[] playersScores = {0, 0, 0, 0};
+    public static int winnerOfCorrespondingTrick = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +166,7 @@ public class GameFieldActivity extends AppCompatActivity {
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
         disableUserCardClicks();
-        new Handler().postDelayed(this::botsTurn, 1500);
+        new Handler().postDelayed(this::botsTurn, 1000);
     }
 
     private void disableUserCardClicks() {
@@ -176,51 +176,59 @@ public class GameFieldActivity extends AppCompatActivity {
     }
 
     private void botsTurn() {
-        botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2000);
-        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3500);
+        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1), 1250);
+        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2500);
+        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3750);
 
-        int winner = determineTheWinnerOfTrick(fourCycle);
+        winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
 
         if (fourCycle.contains(R.drawable.king_of_hearts))
-            playersScores[winner] -= 40; // Actually it's a lost but...
+            playersScores[winnerOfCorrespondingTrick] -= 40; // Actually it's a lost but...
         else
-            playersScores[winner] += 10; // Winner of that trick gets +10 points
+            playersScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
 
-        new Handler().postDelayed(() -> scoreViews[winner].setText(String.valueOf(playersScores[winner])), 4500);
+        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(playersScores[winnerOfCorrespondingTrick])), 4500);
 
-        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5000);
+        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
 
-        /*new Handler().postDelayed(() -> {
+        new Handler().postDelayed(() -> {
             userCards.remove(fourCycle.get(0));
-            cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).remove(fourCycle.get(0));
+            Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).remove(fourCycle.get(0));
 
             firstBotCards.remove(fourCycle.get(1));
-            cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
+            Deck.cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
 
             secondBotCards.remove(fourCycle.get(2));
-            cardSuitList(fourCycle.get(2), secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts).remove(fourCycle.get(2));
+            Deck.cardSuitList(fourCycle.get(2), secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts).remove(fourCycle.get(2));
 
             thirdBotCards.remove(fourCycle.get(3));
-            cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
+            Deck.cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
 
             fourCycle.clear();
-        }, 4500);*/
+        }, 5750);
 
-        new Handler().postDelayed(this::enableUserCardClicks, 6000);  // Re-enable user clicks after bots have played
+        new Handler().postDelayed(this::enableUserCardClicks, 5750);  // Re-enable user clicks after bots have played
     }
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
         int[] indexesInFirstCenterCardSuit = new int[4];
 
         List<Integer> firstCardSuitList = Deck.cardSuitList(fourCenterCardIDes.get(0), Spades, Clubs, Diamonds, Hearts);
-        for (byte j = 0; j < 4; j++) {
+        for (byte j = 0; j < fourCenterCardIDes.size(); j++) {
             if (firstCardSuitList.contains(fourCenterCardIDes.get(j)))
                 indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCenterCardIDes.get(j));
             else indexesInFirstCenterCardSuit[j] = -1;
         }
 
-        return Trick.getMaxIndexInIndexes(indexesInFirstCenterCardSuit);
+        int max = indexesInFirstCenterCardSuit[0], maxIndex = 0;
+
+        for (int j = 0; j < 4; j++)
+            if (indexesInFirstCenterCardSuit[j] > max) {
+                max = indexesInFirstCenterCardSuit[j];
+                maxIndex = j;
+            }
+
+        return maxIndex;
     }
 
     private void clearCenterCardsFromCenterView() {
