@@ -68,6 +68,7 @@
                 android:drawablePadding="10sp"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
+                android:drawableEnd="@drawable/visibility_off_icon"
                 android:padding="12sp"
                 android:autofillHints="password" />
 

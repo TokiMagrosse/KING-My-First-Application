@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,6 +8,20 @@
     android:layout_height="match_parent"
     android:background="@color/very_dark_green"
     tools:context=".inside_of_king.GameFieldActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="67.5sp"
+        android:fontFamily="@font/alata"
+        android:text="@string/no_king"
+        android:textColor="@color/fucking_green"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="70sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -27,18 +42,28 @@
             android:layout_marginStart="10sp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <Button
                 android:id="@+id/first_bot_turner"
-                android:layout_width="25sp"
-                android:layout_height="5sp"
-                app:cardCornerRadius="25sp"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/blue_grey"
+                app:cornerRadius="5sp"
+                android:visibility="invisible"
+                android:text="TURN"
+                android:fontFamily="@font/alata"
+                android:textSize="10dp"
+                android:padding="2.5sp"
+                android:textColor="@color/grey"
+                app:strokeColor="@color/grey_1"
+                app:strokeWidth="2sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                app:strokeWidth="2.5sp"
+                app:strokeColor="@color/white"
                 app:cardCornerRadius="7.5dp"
                 android:layout_marginTop="2.5sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +75,7 @@
                     android:layout_height="40sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
+                    android:src="@drawable/first_bot_picture" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -59,7 +84,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P1"
+                android:text="Bot-P1"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/white" />
@@ -140,19 +165,29 @@
             android:layout_marginEnd="10sp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <Button
                 android:id="@+id/third_bot_turner"
-                android:layout_width="25sp"
-                android:layout_height="5sp"
-                app:cardCornerRadius="25sp"
-                android:backgroundTint="@color/white"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/blue_grey"
+                app:cornerRadius="5sp"
+                android:text="TURN"
+                android:visibility="invisible"
+                android:fontFamily="@font/alata"
+                android:textSize="10dp"
+                android:padding="2.5sp"
+                android:textColor="@color/grey"
+                app:strokeColor="@color/grey_1"
+                app:strokeWidth="2sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2.5sp"
                 android:layout_gravity="center"
+                app:strokeWidth="2.5sp"
+                app:strokeColor="@color/white"
                 app:cardCornerRadius="7.5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -172,7 +207,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P3"
+                android:text="Bot-P3"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/white" />
@@ -200,6 +235,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -210,6 +246,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="1"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -226,6 +263,7 @@
                 android:id="@+id/card_door_2"
                 android:layout_width="50sp"
                 android:layout_height="5sp"
+                android:visibility="invisible"
                 app:cardCornerRadius="25sp"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
@@ -237,6 +275,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="2"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_4" />
 
@@ -252,6 +291,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -262,6 +302,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="3"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_8" />
 
@@ -277,6 +318,7 @@
                 android:layout_width="50sp"
                 app:cardCornerRadius="25sp"
                 android:layout_height="5sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -287,6 +329,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="4"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_6" />
 
@@ -302,6 +345,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -312,6 +356,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="5"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_5" />
 
@@ -327,6 +372,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -337,6 +383,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="6"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -352,6 +399,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -362,6 +410,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="7"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_3" />
 
@@ -377,6 +426,7 @@
                 android:layout_width="50sp"
                 android:layout_height="5sp"
                 app:cardCornerRadius="25sp"
+                android:visibility="invisible"
                 android:backgroundTint="@color/white"
                 android:layout_gravity="center_horizontal"/>
 
@@ -387,6 +437,7 @@
                 android:contentDescription="@string/todo"
                 android:src="@drawable/card_monotone_back"
                 android:tag="8"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/my_card_7" />
 
@@ -409,6 +460,7 @@
             android:layout_height="77.5sp"
             android:layout_gravity="center"
             android:layout_marginStart="5sp"
+            app:cardElevation="5sp"
             android:backgroundTint="@color/fucking_green"
             app:cardCornerRadius="7.5sp">
 
@@ -435,6 +487,7 @@
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
                             android:text="YOU"
+                            android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey_1"
                             android:textStyle="bold" />
@@ -458,6 +511,7 @@
                             android:fontFamily="@font/alata"
                             android:text="P1"
                             android:textSize="12.5sp"
+                            android:layout_marginBottom="1sp"
                             android:textColor="@color/grey_1"
                             android:textStyle="bold" />
                     </androidx.cardview.widget.CardView>
@@ -480,6 +534,7 @@
                             android:fontFamily="@font/alata"
                             android:text="P2"
                             android:textSize="12.5sp"
+                            android:layout_marginBottom="1sp"
                             android:textColor="@color/grey_1"
                             android:textStyle="bold" />
                     </androidx.cardview.widget.CardView>
@@ -501,6 +556,7 @@
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
                             android:text="P3"
+                            android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey_1"
                             android:textStyle="bold" />
@@ -523,18 +579,20 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/user_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
                         app:cardCornerRadius="3sp">
 
                         <TextView
-                            android:id="@+id/user_score"
+                            android:id="@+id/score_view_1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="140"
+                            android:text="0"
+                            android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey"
                             android:textStyle="bold" />
@@ -546,41 +604,20 @@
                         android:layout_weight="1" />
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="42.5sp"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#9e2a2b"
-                        app:cardCornerRadius="3sp">
-
-                        <TextView
-                            android:id="@+id/first_bot_score"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/alata"
-                            android:text="-200"
-                            android:textSize="12.5sp"
-                            android:textColor="@color/grey"
-                            android:textStyle="bold" />
-                    </androidx.cardview.widget.CardView>
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <androidx.cardview.widget.CardView
+                        android:id="@+id/P1_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_background"
                         app:cardCornerRadius="3sp">
 
                         <TextView
-                            android:id="@+id/second_bot_score"
+                            android:id="@+id/score_view_2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="40"
+                            android:text="0"
+                            android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey"
                             android:textStyle="bold" />
@@ -592,18 +629,45 @@
                         android:layout_weight="1" />
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/P2_score_board"
                         android:layout_width="42.5sp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#9e2a2b"
+                        android:backgroundTint="@color/green_background"
                         app:cardCornerRadius="3sp">
 
                         <TextView
-                            android:id="@+id/third_bot_score"
+                            android:id="@+id/score_view_3"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="-10"
+                            android:text="0"
+                            android:layout_marginBottom="1sp"
+                            android:textSize="12.5sp"
+                            android:textColor="@color/grey"
+                            android:textStyle="bold" />
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/P3_score_board"
+                        android:layout_width="42.5sp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/green_background"
+                        app:cardCornerRadius="3sp">
+
+                        <TextView
+                            android:id="@+id/score_view_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/alata"
+                            android:text="0"
+                            android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey"
                             android:textStyle="bold" />
@@ -620,28 +684,51 @@
             android:layout_weight="1" />
 
         <LinearLayout
-            android:layout_marginBottom="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:cardCornerRadius="7.5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/second_bot"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
-                    android:background="@drawable/default_profile_outlines"
-                    android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
-            </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:strokeWidth="2.5sp"
+                    app:strokeColor="@color/white"
+                    app:cardCornerRadius="7.5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/second_bot"
+                        android:layout_width="40sp"
+                        android:layout_height="40sp"
+                        android:background="@drawable/default_profile_outlines"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/second_bot_picture" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <Button
+                    android:id="@+id/second_bot_turner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30sp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue_grey"
+                    app:cornerRadius="5sp"
+                    android:visibility="invisible"
+                    android:text="TURN"
+                    android:fontFamily="@font/alata"
+                    android:textSize="10dp"
+                    android:padding="2.5sp"
+                    android:textColor="@color/grey"
+                    app:strokeColor="@color/grey_1"
+                    app:strokeWidth="2sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -649,7 +736,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5sp"
                 android:fontFamily="@font/alata"
-                android:text="BOT-P2"
+                android:text="Bot-P2"
+                android:layout_marginBottom="15sp"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textColor="@color/white" />
@@ -688,20 +776,5 @@
             app:cornerRadius="10dp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/image_ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alata"
-        android:text="IMAGE ID"
-        android:visibility="invisible"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:layout_constraintVertical_bias="0.431" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

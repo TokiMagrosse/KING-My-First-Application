@@ -68,4 +68,5 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="quick_game_description">Only 5 to 7 minutes. This mode will help beginners to roughly grasp the essence of the game. Here, one of the six possible games is randomly selected, which is played four times.</string>
+    <string name="no_king">NO KING</string>
 </resources>
