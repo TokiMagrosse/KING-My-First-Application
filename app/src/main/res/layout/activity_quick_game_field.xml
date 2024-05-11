@@ -9,15 +9,12 @@
     android:background="@color/very_dark_green"
     tools:context=".inside_of_king.QuickGameFieldActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="67.5sp"
-        android:fontFamily="@font/alata"
-        android:text="@string/no_king"
-        android:textColor="@color/fucking_green"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="70sp"
+    <ImageView
+        android:contentDescription="@string/todo"
+        android:src="@drawable/game_table_center_king"
+        android:layout_width="125sp"
+        android:layout_height="125sp"
+        android:layout_marginBottom="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

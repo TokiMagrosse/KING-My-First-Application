@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
@@ -20,6 +19,7 @@ import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -163,8 +163,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void userTurn(int cardIndex) {
         fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
         fourCenterCellViews[0].setVisibility(View.VISIBLE);
-        userCardViews[cardIndex].setVisibility(View.INVISIBLE);
-        userCardDoorViews[cardIndex].setVisibility(View.INVISIBLE);
+        userCardViews[cardIndex].setVisibility(View.GONE);
+        userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
         disableUserCardClicks();
         new Handler().postDelayed(this::botsTurn, 1000);
@@ -177,9 +177,22 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     }
 
     private void botsTurn() {
-        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1), 1250);
-        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2), 2500);
-        new Handler().postDelayed(() -> botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3), 3750);
+        new Handler().postDelayed(() -> {
+            turners[0].setVisibility(View.VISIBLE);
+            botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
+        }, 1250);
+
+        new Handler().postDelayed(() -> {
+            turners[0].setVisibility(View.INVISIBLE);
+            turners[1].setVisibility(View.VISIBLE);
+            botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2);
+        }, 2500);
+
+        new Handler().postDelayed(() -> {
+            turners[1].setVisibility(View.INVISIBLE);
+            turners[2].setVisibility(View.VISIBLE);
+            botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3);
+        }, 3750);
 
         winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
 
@@ -191,12 +204,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(playersScores[winnerOfCorrespondingTrick])), 4500);
 
         new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
+        new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
 
+        // Moving center cards to trash bin
         new Handler().postDelayed(() -> {
             userCards.set(userCards.indexOf(fourCycle.get(0)), -1);
             Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).
                     set(Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).indexOf(fourCycle.get(0)),
-                            -1);
+                            null);
 
             firstBotCards.remove(fourCycle.get(1));
             Deck.cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
@@ -215,24 +230,27 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
         int[] indexesInFirstCenterCardSuit = new int[4];
+        Arrays.fill(indexesInFirstCenterCardSuit, -1); // Initialize with -1 instead of 0
 
         List<Integer> firstCardSuitList = Deck.cardSuitList(fourCenterCardIDes.get(0), Spades, Clubs, Diamonds, Hearts);
         for (byte j = 0; j < fourCenterCardIDes.size(); j++) {
-            if (firstCardSuitList.contains(fourCenterCardIDes.get(j)))
+            if (firstCardSuitList.contains(fourCenterCardIDes.get(j))) {
                 indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCenterCardIDes.get(j));
-            else indexesInFirstCenterCardSuit[j] = -1;
+            }
         }
 
-        int max = indexesInFirstCenterCardSuit[0], maxIndex = 0;
-
-        for (int j = 0; j < 4; j++)
-            if (indexesInFirstCenterCardSuit[j] > max) {
+        int max = -1; // Initialize max with -1 instead of indexesInFirstCenterCardSuit[0]
+        int maxIndex = -1; // Initialize maxIndex with -1
+        for (int j = 0; j < 4; j++) {
+            if (indexesInFirstCenterCardSuit[j] != -1 && indexesInFirstCenterCardSuit[j] > max) {
                 max = indexesInFirstCenterCardSuit[j];
                 maxIndex = j;
             }
+        }
 
         return maxIndex;
     }
+
 
     private void clearCenterCardsFromCenterView() {
         for (ImageView centerCellView : fourCenterCellViews)
