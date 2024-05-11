@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
@@ -39,7 +40,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     List<Integer> firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts;
     List<Integer> secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts;
     List<Integer> thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts;
-    private final Random randomizer = new Random();
+    private static final Random randomizer = new Random();
     protected static List<Integer> fourCycle = new ArrayList<>();
     public int[] playersScores = {0, 0, 0, 0};
     public static int winnerOfCorrespondingTrick = 0;
@@ -56,7 +57,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         });
 
         initializeViews();
-        setupPoisonousGameKing();
+        setupQuickGameKing();
     }
 
     private void initializeViews() {
@@ -101,7 +102,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     }
 
-    private void setupPoisonousGameKing() {
+    private void setupQuickGameKing() {
         // Prepare the deck and distribute cards
         List<Integer> deck = new ArrayList<>();
         for (int card : Deck.deckOfCards) {
@@ -162,8 +163,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void userTurn(int cardIndex) {
         fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
         fourCenterCellViews[0].setVisibility(View.VISIBLE);
-        userCardViews[cardIndex].setVisibility(View.GONE);
-        userCardDoorViews[cardIndex].setVisibility(View.GONE);
+        userCardViews[cardIndex].setVisibility(View.INVISIBLE);
+        userCardDoorViews[cardIndex].setVisibility(View.INVISIBLE);
         fourCycle.add(userCards.get(cardIndex));
         disableUserCardClicks();
         new Handler().postDelayed(this::botsTurn, 1000);
@@ -192,8 +193,10 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
 
         new Handler().postDelayed(() -> {
-            userCards.remove(fourCycle.get(0));
-            Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).remove(fourCycle.get(0));
+            userCards.set(userCards.indexOf(fourCycle.get(0)), -1);
+            Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).
+                    set(Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).indexOf(fourCycle.get(0)),
+                            -1);
 
             firstBotCards.remove(fourCycle.get(1));
             Deck.cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
@@ -205,9 +208,9 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             Deck.cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
 
             fourCycle.clear();
-        }, 5750);
+        }, 5500);
 
-        new Handler().postDelayed(this::enableUserCardClicks, 5750);  // Re-enable user clicks after bots have played
+        new Handler().postDelayed(this::enableUserCardClicks, 6000);  // Re-enable user clicks after bots have played
     }
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
@@ -238,7 +241,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     private void botTurn(int userCardID, @NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
                          List<Integer> botDiamonds, List<Integer> botHearts, int botCellIndex) {
-        int list_size = botCards.size(), botCurrentCardID;
+        int botCurrentCardID, list_size = botCards.size();
 
         // Checking the user card suit so bot can determine what card to throw
         if (Spades.contains(userCardID)) {
