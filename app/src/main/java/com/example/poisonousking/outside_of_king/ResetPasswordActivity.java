@@ -30,7 +30,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         Button reset_password_button = findViewById(R.id.reset_password_button);
 
         from_reset_to_login.setOnClickListener(v -> {
-            Intent intent = new Intent(ResetPasswordActivity.this, MainActivity.class);
+            Intent intent = new Intent(ResetPasswordActivity.this, LogInActivity.class);
             startActivity(intent);
         });
 

@@ -64,8 +64,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Set both start and end drawables programmatically
         Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
-        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon);
-        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon);
+        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon_small);
+        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon_small);
         register_password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
 
         // Set touch listener for the visibility toggle in select password field
@@ -138,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         back_to_login_text.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
             startActivity(intent);
         });
 
@@ -261,7 +261,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.d(TAG, e.toString()));
 
         // Start MainActivity after successful registration
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
         startActivity(intent);
     }
 

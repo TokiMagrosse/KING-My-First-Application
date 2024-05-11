@@ -19,12 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.poisonousking.inside_of_king.ProfileActivity;
+import com.example.poisonousking.inside_of_king.HomeActivity;
 import com.example.poisonousking.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
     ProgressBar progress_bar;
     public byte password_length;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_log_in);
 
         forgot_password = findViewById(R.id.forgot_password);
         login_button = findViewById(R.id.login_button);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         register_text_reference.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
@@ -92,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set both start and end drawables programmatically
         Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
-        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon);
-        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon);
+        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon_small);
+        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon_small);
         password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
 
         // Set touch listener for the visibility toggle
@@ -171,19 +171,19 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = m_auth.getCurrentUser();
                             if (user != null && user.isEmailVerified()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(MainActivity.this, "You have successfully logged in",
+                                Toast.makeText(LogInActivity.this, "You have successfully logged in",
                                         Toast.LENGTH_SHORT).show();
                                 password_length = (byte) checkPassword.length();
-                                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
                                 // finish();
                             } else {
                                 // Email is not verified
-                                Toast.makeText(MainActivity.this, "Please verify your email address",
+                                Toast.makeText(LogInActivity.this, "Please verify your email address",
                                         Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Invalid email or password, please try again",
+                            Toast.makeText(LogInActivity.this, "Invalid email or password, please try again",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

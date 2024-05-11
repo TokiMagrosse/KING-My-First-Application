@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/very_dark_green"
-    tools:context=".inside_of_king.GameFieldActivity">
+    tools:context=".inside_of_king.QuickGameFieldActivity">
 
     <TextView
         android:layout_width="wrap_content"

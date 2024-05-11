@@ -7,15 +7,15 @@
     android:layout_height="match_parent"
     android:background="@color/green_background"
     android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
-    tools:context=".outside_of_king.MainActivity">
+    tools:context=".outside_of_king.LogInActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="1200dp"
-        android:layout_height="750dp"
+        android:layout_height="650dp"
         android:backgroundTint="@color/white"
         android:orientation="vertical"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="23dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,30 +24,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.493">
 
-        <TextView
-            android:id="@+id/king_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
-            android:fontFamily="@font/alata"
-            android:text="@string/king"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="70sp"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="1075dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20sp"
             android:orientation="vertical"
             android:padding="10dp">
+
+            <TextView
+                android:id="@+id/king_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/alata"
+                android:text="@string/king"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="70sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/email_address_or_username"
                 android:layout_width="match_parent"
                 android:layout_height="82dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/rounded_corner_small"
                 android:drawableStart="@drawable/email_icon"
                 android:drawablePadding="15dp"
@@ -88,7 +90,7 @@
                     android:gravity="center_vertical"
                     android:theme="@style/colored_checkbox."
                     android:text="@string/remember_me"
-                    android:textSize="28sp" />
+                    android:textSize="25sp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -101,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="27sp"
+                    android:textSize="26sp"
                     android:fontFamily="@font/alata"
                     android:text="@string/forgot_password"
                     android:textColor="@color/grey_1" />
@@ -128,19 +130,18 @@
                 android:textColor="@color/white"
                 app:cornerRadius="12dp" />
 
+            <TextView
+                android:id="@+id/register_text_reference"
+                android:layout_width="750dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20sp"
+                android:textSize="27.5sp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/alata"
+                android:text="@string/register"
+                android:textColor="@color/grey_1" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/register_text_reference"
-            android:layout_width="750dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="650dp"
-            android:gravity="center"
-            android:textSize="30sp"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/alata"
-            android:text="@string/register"
-            android:textColor="@color/grey_1" />
 
     </androidx.cardview.widget.CardView>
 

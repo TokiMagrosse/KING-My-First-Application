@@ -26,11 +26,11 @@
             android:value="true" />
 
         <activity
-            android:name=".inside_of_king.GameFieldActivity"
+            android:name=".inside_of_king.QuickGameFieldActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".outside_of_king.StartingSplashActivity"
+            android:name=".outside_of_king.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".inside_of_king.UserProfileAttributesActivity"
+            android:name=".inside_of_king.ProfileActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -48,7 +48,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".inside_of_king.ProfileActivity"
+            android:name=".inside_of_king.HomeActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
@@ -56,7 +56,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".outside_of_king.MainActivity"
+            android:name=".outside_of_king.LogInActivity"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>

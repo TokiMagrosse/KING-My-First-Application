@@ -8,16 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.poisonousking.R;
 
-public class StartingSplashActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_starting_splash);
+        setContentView(R.layout.activity_splash_screen);
 
         new Handler().postDelayed(() -> {
             // Start the main activity after the delay
-            Intent intent = new Intent(StartingSplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashScreenActivity.this, LogInActivity.class);
             startActivity(intent);
             finish();
 

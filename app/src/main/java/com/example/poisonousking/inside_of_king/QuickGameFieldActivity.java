@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class GameFieldActivity extends AppCompatActivity {
+public class QuickGameFieldActivity extends AppCompatActivity {
 
     protected Button[] turners = new Button[3];
     TextView[] scoreViews = new TextView[4];
@@ -48,7 +48,7 @@ public class GameFieldActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_game_field);
+        setContentView(R.layout.activity_quick_game_field);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
