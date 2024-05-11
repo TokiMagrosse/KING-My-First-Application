@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.123">
+        app:layout_constraintVertical_bias="0.2">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -45,13 +45,13 @@
                 android:layout_height="30sp"
                 android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/blue_grey"
-                app:cornerRadius="5sp"
-                android:visibility="invisible"
-                android:text="TURN"
                 android:fontFamily="@font/alata"
-                android:textSize="10dp"
                 android:padding="2.5sp"
+                android:text="TURN"
                 android:textColor="@color/grey"
+                android:textSize="10dp"
+                android:visibility="invisible"
+                app:cornerRadius="5sp"
                 app:strokeColor="@color/grey_1"
                 app:strokeWidth="2sp" />
 
@@ -59,12 +59,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:strokeWidth="2.5sp"
-                app:strokeColor="@color/white"
-                app:cardCornerRadius="7.5dp"
                 android:layout_marginTop="2.5sp"
+                app:cardCornerRadius="7.5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2.5sp">
 
                 <ImageView
                     android:id="@+id/first_bot"
@@ -82,9 +82,9 @@
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
                 android:text="Bot-P1"
+                android:textColor="@color/white"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -168,26 +168,26 @@
                 android:layout_height="30sp"
                 android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/blue_grey"
-                app:cornerRadius="5sp"
-                android:text="TURN"
-                android:visibility="invisible"
                 android:fontFamily="@font/alata"
-                android:textSize="10dp"
                 android:padding="2.5sp"
+                android:text="TURN"
                 android:textColor="@color/grey"
+                android:textSize="10dp"
+                android:visibility="invisible"
+                app:cornerRadius="5sp"
                 app:strokeColor="@color/grey_1"
                 app:strokeWidth="2sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2.5sp"
                 android:layout_gravity="center"
-                app:strokeWidth="2.5sp"
-                app:strokeColor="@color/white"
+                android:layout_marginTop="2.5sp"
                 app:cardCornerRadius="7.5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2.5sp">
 
                 <ImageView
                     android:id="@+id/third_bot"
@@ -205,9 +205,9 @@
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
                 android:text="Bot-P3"
+                android:textColor="@color/white"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

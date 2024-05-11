@@ -180,19 +180,19 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        }, 1250);
+        }, 1250); // First bot turn
 
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.INVISIBLE);
             turners[1].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2);
-        }, 2500);
+        }, 2500); // Second bot turn
 
         new Handler().postDelayed(() -> {
             turners[1].setVisibility(View.INVISIBLE);
             turners[2].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3);
-        }, 3750);
+        }, 3750); // Third bot turn
 
         winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
 
