@@ -265,45 +265,45 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         if (Spades.contains(userCardID)) {
             if (botSpades.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
+                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex);
+                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
                 }
             } else {
                 int rand_spades = botSpades.size();
                 botCurrentCardID = botSpades.get(randomizer.nextInt(rand_spades));
-                moveCardToCenter(botCurrentCardID, botCellIndex);
+                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
             }
         }
 
         if (Clubs.contains(userCardID)) {
             if (botClubs.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
+                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex);
+                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
                 }
             } else {
                 int rand_clubs = botClubs.size();
                 botCurrentCardID = botClubs.get(randomizer.nextInt(rand_clubs));
-                moveCardToCenter(botCurrentCardID, botCellIndex);
+                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
             }
         }
 
         if (Diamonds.contains(userCardID)) {
             if (botDiamonds.isEmpty()) {
                 if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex);
+                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
                 } else {
                     botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex);
+                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
                 }
             } else {
                 int rand_diamonds = botDiamonds.size();
                 botCurrentCardID = botDiamonds.get(randomizer.nextInt(rand_diamonds));
-                moveCardToCenter(botCurrentCardID, botCellIndex);
+                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
             }
         }
 
@@ -314,15 +314,15 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 int rand_hearts = botHearts.size();
                 botCurrentCardID = botHearts.get(randomizer.nextInt(rand_hearts));
             }
-            moveCardToCenter(botCurrentCardID, botCellIndex);
+            moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
         }
     }
 
-    private void moveCardToCenter(Integer card, int playerIndex) {
+    private void moveCardToCenter(Integer card, int playerIndex, @NonNull List<Integer> four_cycle) {
         // Visual logic to move card to center, perhaps setting image resources
         ImageView centerView = fourCenterCellViews[playerIndex];
         centerView.setImageResource(card);
         centerView.setVisibility(View.VISIBLE);
-        fourCycle.add(card);
+        four_cycle.add(card);
     }
 }
