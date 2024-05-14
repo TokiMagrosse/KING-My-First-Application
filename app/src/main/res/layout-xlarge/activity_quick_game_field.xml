@@ -58,7 +58,7 @@
                 <ImageView
                     android:id="@+id/first_bot"
                     android:layout_width="80sp"
-                    android:layout_height="80sp"
+                    android:layout_height="90dp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/first_bot_picture" />
@@ -734,19 +734,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/table_button"
-            android:layout_width="45sp"
-            android:layout_height="50sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="15sp"
-            android:layout_marginBottom="15sp"
-            android:backgroundTint="@color/grey"
-            android:drawableEnd="@drawable/table_small"
-            android:drawablePadding="15dp"
-            android:padding="7.5dp"
-            app:cornerRadius="10dp" />
 
         <Button
             android:id="@+id/menu_button"

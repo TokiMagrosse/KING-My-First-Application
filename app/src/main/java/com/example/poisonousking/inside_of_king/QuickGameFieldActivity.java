@@ -2,6 +2,7 @@ package com.example.poisonousking.inside_of_king;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -191,14 +192,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             turners[1].setVisibility(View.INVISIBLE);
             turners[2].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3);
+
+            winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
+            if (fourCycle.contains(R.drawable.king_of_hearts))
+                playersScores[winnerOfCorrespondingTrick] -= 40; // Actually it's a lost but...
+            else
+                playersScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
         }, 3750); // Third bot turn
-
-        winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
-
-        if (fourCycle.contains(R.drawable.king_of_hearts))
-            playersScores[winnerOfCorrespondingTrick] -= 40; // Actually it's a lost but...
-        else
-            playersScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
 
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(playersScores[winnerOfCorrespondingTrick])), 4500);
 
@@ -229,27 +229,30 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
         int[] indexesInFirstCenterCardSuit = new int[4];
-        Arrays.fill(indexesInFirstCenterCardSuit, -1); // Initialize with -1 instead of 0
+        Arrays.fill(indexesInFirstCenterCardSuit, -1);  // Initialize with -1
 
         List<Integer> firstCardSuitList = Deck.cardSuitList(fourCenterCardIDes.get(0), Spades, Clubs, Diamonds, Hearts);
+        Log.d("Debug", "First card suit list: " + firstCardSuitList.toString());
+
         for (byte j = 0; j < fourCenterCardIDes.size(); j++) {
             if (firstCardSuitList.contains(fourCenterCardIDes.get(j))) {
                 indexesInFirstCenterCardSuit[j] = firstCardSuitList.indexOf(fourCenterCardIDes.get(j));
             }
+            Log.d("Debug", "Card " + j + ": " + fourCenterCardIDes.get(j) + " Index in suit: " + indexesInFirstCenterCardSuit[j]);
         }
 
-        int max = -1; // Initialize max with -1 instead of indexesInFirstCenterCardSuit[0]
-        int maxIndex = -1; // Initialize maxIndex with -1
+        int max = -1;
+        int maxIndex = -1;
         for (int j = 0; j < fourCenterCardIDes.size(); j++) {
             if (indexesInFirstCenterCardSuit[j] != -1 && indexesInFirstCenterCardSuit[j] > max) {
                 max = indexesInFirstCenterCardSuit[j];
                 maxIndex = j;
             }
         }
+        Log.d("Debug", "Winner index: " + maxIndex);
 
         return maxIndex;
     }
-
 
     private void clearCenterCardsFromCenterView() {
         for (ImageView centerCellView : fourCenterCellViews)
