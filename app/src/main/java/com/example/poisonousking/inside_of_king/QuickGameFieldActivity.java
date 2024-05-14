@@ -99,7 +99,6 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         userCardDoorViews[5] = findViewById(R.id.card_door_6);
         userCardDoorViews[6] = findViewById(R.id.card_door_7);
         userCardDoorViews[7] = findViewById(R.id.card_door_8);
-
     }
 
     private void setupQuickGameKing() {
@@ -241,7 +240,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
         int max = -1; // Initialize max with -1 instead of indexesInFirstCenterCardSuit[0]
         int maxIndex = -1; // Initialize maxIndex with -1
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < fourCenterCardIDes.size(); j++) {
             if (indexesInFirstCenterCardSuit[j] != -1 && indexesInFirstCenterCardSuit[j] > max) {
                 max = indexesInFirstCenterCardSuit[j];
                 maxIndex = j;
