@@ -158,6 +158,11 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             int cardIndex = i;
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
+
+        turners[2].setOnClickListener(v -> {
+            userCards.clear();
+            setupQuickGameKing();
+        });
     }
 
     private void userTurn(int cardIndex) {
@@ -195,7 +200,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
             if (fourCycle.contains(R.drawable.king_of_hearts))
-                playersScores[winnerOfCorrespondingTrick] -= 40; // Actually it's a lost but...
+                playersScores[winnerOfCorrespondingTrick] -= 70; // Actually it's a lost but...
             else
                 playersScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
         }, 3750); // Third bot turn
@@ -203,7 +208,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(playersScores[winnerOfCorrespondingTrick])), 4500);
 
         new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
-        new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
+        // new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
 
         // Moving center cards to trash bin
         new Handler().postDelayed(() -> {
