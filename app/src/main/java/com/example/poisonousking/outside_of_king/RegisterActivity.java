@@ -141,7 +141,6 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
             startActivity(intent);
         });
-
     }
 
     private void checkCredentials() {

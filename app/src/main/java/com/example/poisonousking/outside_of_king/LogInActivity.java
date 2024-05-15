@@ -26,13 +26,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends AppCompatActivity {
 
-    ProgressBar progress_bar;
-    public byte password_length;
-    private FirebaseAuth m_auth;
-    TextView register_text_reference, forgot_password;
-    Button login_button;
-    CheckBox remember_me;
-    EditText email_address, password;
+    ProgressBar progressBar;
+    public byte passwordLength;
+    private FirebaseAuth mAuth;
+    TextView registerTextReference, forgotPassword;
+    Button loginButton;
+    CheckBox rememberMe;
+    EditText emailAddress, password;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -40,14 +40,14 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        forgot_password = findViewById(R.id.forgot_password);
-        login_button = findViewById(R.id.login_button);
-        remember_me = findViewById(R.id.remember_me);
-        email_address = findViewById(R.id.email_address_or_username);
+        forgotPassword = findViewById(R.id.forgot_password);
+        loginButton = findViewById(R.id.login_button);
+        rememberMe = findViewById(R.id.remember_me);
+        emailAddress = findViewById(R.id.email_address_or_username);
         password = findViewById(R.id.password);
-        progress_bar = findViewById(R.id.progress_bar);
-        register_text_reference = findViewById(R.id.register_text_reference);
-        m_auth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progress_bar);
+        registerTextReference = findViewById(R.id.register_text_reference);
+        mAuth = FirebaseAuth.getInstance();
 
         // Check if "Remember me" checkbox was previously checked
         /*SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
@@ -64,7 +64,7 @@ public class LogInActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
 
-        remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        rememberMe.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (buttonView.isChecked()) {
                 SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -78,7 +78,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        register_text_reference.setOnClickListener(v -> {
+        registerTextReference.setOnClickListener(v -> {
             Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
@@ -127,20 +127,20 @@ public class LogInActivity extends AppCompatActivity {
             return false;
         });
 
-        login_button.setOnClickListener(v -> checkCredentials());
+        loginButton.setOnClickListener(v -> checkCredentials());
     }
 
     private void checkCredentials() {
-        String checkEmailAddress = email_address.getText().toString().trim();
+        String checkEmailAddress = emailAddress.getText().toString().trim();
         String checkPassword = password.getText().toString();
         boolean isValid = true;
 
         if (checkEmailAddress.isEmpty()) {
-            showError(email_address, "Please enter your email");
+            showError(emailAddress, "Please enter your email");
             isValid = false;
         }
         else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".")) {
-            showError(email_address, "Please enter a valid email address");
+            showError(emailAddress, "Please enter a valid email address");
             isValid = false;
         }
         else if (checkPassword.isEmpty()) {
@@ -160,20 +160,20 @@ public class LogInActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        progress_bar.setVisibility(ViewStub.VISIBLE);
+        progressBar.setVisibility(ViewStub.VISIBLE);
 
         if (isValid) {
-            m_auth.signInWithEmailAndPassword(checkEmailAddress, checkPassword)
+            mAuth.signInWithEmailAndPassword(checkEmailAddress, checkPassword)
                     .addOnCompleteListener(this, task -> {
-                        progress_bar.setVisibility(ViewStub.GONE);
+                        progressBar.setVisibility(ViewStub.GONE);
 
                         if (task.isSuccessful()) {
-                            FirebaseUser user = m_auth.getCurrentUser();
+                            FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null && user.isEmailVerified()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(LogInActivity.this, "You have successfully logged in",
                                         Toast.LENGTH_SHORT).show();
-                                password_length = (byte) checkPassword.length();
+                                passwordLength = (byte) checkPassword.length();
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
                                 // finish();
@@ -189,10 +189,10 @@ public class LogInActivity extends AppCompatActivity {
                     });
         }
         else {
-            progress_bar.setVisibility(ViewStub.GONE);
+            progressBar.setVisibility(ViewStub.GONE);
         }
 
-        forgot_password.setOnClickListener(v -> openForgotPasswordActivity());
+        forgotPassword.setOnClickListener(v -> openForgotPasswordActivity());
     }
 
     private void showError(@NonNull EditText input, String errorText) {

@@ -1,10 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/blue_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".inside_of_king.GameRulesActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:layout_width="75sp"
+            android:layout_height="350sp"
+            android:drawableEnd="@drawable/rules_page_back"
+            android:layout_marginStart="10sp"
+            android:backgroundTint="@color/grey_1"
+            app:cornerRadius="20sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="15sp"
+            android:backgroundTint="@color/grey_1"
+            android:layout_width="475sp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="22sp"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/alata"
+                android:layout_gravity="center"
+                android:text="Do you already have some idea about the game King? If so, you can already play in this room where the competition for victory will be very intense. All 8 modes will be played (No Jacks, No Queens, No Last 2, No PKing, Take Tricks (Spades, Clubs, Diamonds, Hearts)). Each will have 2 variations."
+                android:layout_width="425sp"
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+
+        <Button
+            android:layout_width="75sp"
+            android:layout_height="350sp"
+            android:drawableEnd="@drawable/rules_page_forward"
+            android:layout_marginEnd="10sp"
+            android:backgroundTint="@color/grey_1"
+            app:cornerRadius="20sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

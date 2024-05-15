@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -160,6 +161,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
+        game_rules.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, GameRulesActivity.class);
+            startActivity(intent);
+        });
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
         // All necessary attributes for Log out Dialog
