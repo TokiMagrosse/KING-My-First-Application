@@ -98,7 +98,7 @@
 
                 <TextView
                     android:id="@+id/forgot_password"
-                    android:layout_width="275sp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:layout_gravity="center_horizontal"
@@ -119,12 +119,12 @@
             <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="73dp"
                 android:textStyle="bold"
                 android:layout_marginTop="12.5dp"
                 android:backgroundTint="@color/super_dark_green"
                 android:text="@string/log_in"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:fontFamily="@font/alata"
                 android:textColor="@color/white"
                 app:cornerRadius="15dp" />

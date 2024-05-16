@@ -1,38 +1,57 @@
 package com.example.poisonousking.inside_of_king;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    TextView[][] final_score_table = new TextView[4][5];
+    ImageView[] badges = new ImageView[4];
+    FirebaseAuth auth;
+    private static String userID;
+    ImageView user_profile_picture;
+    Button exit_button, play_again_button;
+    Dialog dialog_final_results, dialog_menu;
     protected Button[] turners = new Button[3];
     TextView[] scoreViews = new TextView[4];
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardViews = new ImageView[8];
-    Button table_button, menu_button;
+    Button menu_button;
     List<Integer> Spades = Deck.sortedSpades();
     List<Integer> Clubs = Deck.sortedClubs();
     List<Integer> Diamonds = Deck.sortedDiamonds();
@@ -43,7 +62,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     List<Integer> thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts;
     private static final Random randomizer = new Random();
     protected static List<Integer> fourCycle = new ArrayList<>();
-    public int[] playersScores = {0, 0, 0, 0};
+    public int[] totalScores = {0, 0, 0, 0};
+    public int[][] playersScores = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
     public static int winnerOfCorrespondingTrick = 0;
 
     @Override
@@ -62,7 +87,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        table_button = findViewById(R.id.table_button);
+        auth = FirebaseAuth.getInstance();
+        userID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         menu_button = findViewById(R.id.menu_button);
 
         turners[0] = findViewById(R.id.first_bot_turner);
@@ -100,6 +126,63 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         userCardDoorViews[5] = findViewById(R.id.card_door_6);
         userCardDoorViews[6] = findViewById(R.id.card_door_7);
         userCardDoorViews[7] = findViewById(R.id.card_door_8);
+
+        dialog_final_results = new Dialog(QuickGameFieldActivity.this);
+        dialog_final_results.setContentView(R.layout.dialog_game_final_results);
+        Objects.requireNonNull(dialog_final_results.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_final_results.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
+        dialog_final_results.setCancelable(false);
+
+        Window results_window = dialog_final_results.getWindow();
+        if (results_window != null) {
+            results_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            results_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            results_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        user_profile_picture = dialog_final_results.findViewById(R.id.user_picture);
+        fetchAndDisplayProfileImage(user_profile_picture);
+
+        exit_button = dialog_final_results.findViewById(R.id.exit_the_game);
+        exit_button.setOnClickListener(v -> {
+            Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            dialog_final_results.dismiss();
+        });
+
+        play_again_button = dialog_final_results.findViewById(R.id.play_again);
+        play_again_button.setOnClickListener(v -> {
+            // Logic of resetting the game from the beginning...
+        });
+
+        menu_button.setOnClickListener(v -> {
+            dialog_final_results.show();
+        });
+
+        badges[0] = dialog_final_results.findViewById(R.id.user_badge);
+        badges[1] = dialog_final_results.findViewById(R.id.first_bot_badge);
+        badges[2] = dialog_final_results.findViewById(R.id.second_bot_badge);
+        badges[3] = dialog_final_results.findViewById(R.id.third_bot_badge);
+
+        final_score_table[0][0] = dialog_final_results.findViewById(R.id.user_round_1);
+        final_score_table[0][1] = dialog_final_results.findViewById(R.id.user_round_2);
+        final_score_table[0][2] = dialog_final_results.findViewById(R.id.user_round_3);
+        final_score_table[0][3] = dialog_final_results.findViewById(R.id.user_round_4);
+        final_score_table[1][0] = dialog_final_results.findViewById(R.id.first_bot_round_1);
+        final_score_table[1][1] = dialog_final_results.findViewById(R.id.first_bot_round_2);
+        final_score_table[1][2] = dialog_final_results.findViewById(R.id.first_bot_round_3);
+        final_score_table[1][3] = dialog_final_results.findViewById(R.id.first_bot_round_4);
+        final_score_table[2][0] = dialog_final_results.findViewById(R.id.second_bot_round_1);
+        final_score_table[2][1] = dialog_final_results.findViewById(R.id.second_bot_round_2);
+        final_score_table[2][2] = dialog_final_results.findViewById(R.id.second_bot_round_3);
+        final_score_table[2][3] = dialog_final_results.findViewById(R.id.second_bot_round_4);
+        final_score_table[3][0] = dialog_final_results.findViewById(R.id.third_bot_round_1);
+        final_score_table[3][1] = dialog_final_results.findViewById(R.id.third_bot_round_2);
+        final_score_table[3][2] = dialog_final_results.findViewById(R.id.third_bot_round_3);
+        final_score_table[3][3] = dialog_final_results.findViewById(R.id.third_bot_round_4);
+
     }
 
     private void setupQuickGameKing() {
@@ -159,10 +242,10 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
 
-        turners[2].setOnClickListener(v -> {
+        /*turners[2].setOnClickListener(v -> {
             userCards.clear();
             setupQuickGameKing();
-        });
+        });*/
     }
 
     private void userTurn(int cardIndex) {
@@ -200,15 +283,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
             if (fourCycle.contains(R.drawable.king_of_hearts))
-                playersScores[winnerOfCorrespondingTrick] -= 70; // Actually it's a lost but...
+                totalScores[winnerOfCorrespondingTrick] -= 50; // Actually it's a lost but...
             else
-                playersScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
+                totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
         }, 3750); // Third bot turn
 
-        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(playersScores[winnerOfCorrespondingTrick])), 4500);
+        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 4500);
 
         new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
-        // new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
 
         // Moving center cards to trash bin
         new Handler().postDelayed(() -> {
@@ -331,5 +413,24 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         centerView.setImageResource(card);
         centerView.setVisibility(View.VISIBLE);
         four_cycle.add(card);
+    }
+
+    private void fetchAndDisplayProfileImage(ImageView imageView) {
+        DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("all my users").document(userID);
+
+        userDocRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String imageUrl = documentSnapshot.getString("profileImageUrl");
+                if (imageUrl != null) {
+                    // Load and display the profile image using Glide
+                    Glide.with(this)
+                            .load(imageUrl)
+                            .into(imageView);
+                }
+            }
+        }).addOnFailureListener(e -> {
+            // Handle failure to fetch profile image URL
+            Toast.makeText(this, "Failed to fetch profile image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 }

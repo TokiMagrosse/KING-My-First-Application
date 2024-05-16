@@ -33,6 +33,7 @@ public class LogInActivity extends AppCompatActivity {
     Button loginButton;
     CheckBox rememberMe;
     EditText emailAddress, password;
+    public static final String SHARED_PREFS = "sharedPrefs";
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -49,46 +50,10 @@ public class LogInActivity extends AppCompatActivity {
         registerTextReference = findViewById(R.id.register_text_reference);
         mAuth = FirebaseAuth.getInstance();
 
-        // Check if "Remember me" checkbox was previously checked
-        /*SharedPreferences preferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        boolean rememberMeChecked = preferences.getBoolean("rememberMe", false);
-        if (rememberMeChecked) {
-            // Restore email and password from shared preferences
-            String savedEmail = preferences.getString("email", "");
-            String savedPassword = preferences.getString("password", "");
-            email_address.setText(savedEmail);
-            password.setText(savedPassword);
-            remember_me.setChecked(true);
-        }*/
-
-        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-        String checkbox = preferences.getString("remember", "");
-
-        rememberMe.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isChecked()) {
-                SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("remember", "true");
-                editor.apply();
-            } else if (!buttonView.isChecked()) {
-                SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-            }
-        });
-
         registerTextReference.setOnClickListener(v -> {
             Intent intent = new Intent(LogInActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
-
-        /*remember_me.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Save "Remember me" checkbox state
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("rememberMe", isChecked);
-            editor.apply();
-        });*/
 
         // Set both start and end drawables programmatically
         Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
@@ -170,13 +135,17 @@ public class LogInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null && user.isEmailVerified()) {
+                                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                editor.putString("name", "true");
+                                editor.apply();
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(LogInActivity.this, "You have successfully logged in",
                                         Toast.LENGTH_SHORT).show();
                                 passwordLength = (byte) checkPassword.length();
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                 startActivity(intent);
-                                // finish();
                             } else {
                                 // Email is not verified
                                 Toast.makeText(LogInActivity.this, "Please verify your email address",
