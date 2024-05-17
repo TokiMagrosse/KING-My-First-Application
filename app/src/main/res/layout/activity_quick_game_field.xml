@@ -53,7 +53,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/white"
-                app:strokeWidth="2.5sp">
+                app:strokeWidth="1.5sp">
 
                 <ImageView
                     android:id="@+id/first_bot"
@@ -176,7 +176,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/white"
-                app:strokeWidth="2.5sp">
+                app:strokeWidth="1.5sp">
 
                 <ImageView
                     android:id="@+id/third_bot"
@@ -184,7 +184,7 @@
                     android:layout_height="40sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
+                    android:src="@drawable/third_bot_profile_picture" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -684,7 +684,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:strokeWidth="2.5sp"
+                    app:strokeWidth="1.5sp"
                     app:strokeColor="@color/white"
                     app:cardCornerRadius="7.5dp"
                     app:layout_constraintStart_toStartOf="parent"

@@ -333,5 +333,4 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to fetch profile image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
-
 }

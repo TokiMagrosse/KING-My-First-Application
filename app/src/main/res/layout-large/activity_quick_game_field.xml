@@ -184,7 +184,7 @@
                     android:layout_height="80sp"
                     android:background="@drawable/default_profile_outlines"
                     android:contentDescription="@string/todo"
-                    android:src="@drawable/default_bot_picture" />
+                    android:src="@drawable/third_bot_profile_picture" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView

@@ -33,7 +33,17 @@ public class LogInActivity extends AppCompatActivity {
     Button loginButton;
     CheckBox rememberMe;
     EditText emailAddress, password;
-    public static final String SHARED_PREFS = "sharedPrefs";
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && user.isEmailVerified()) {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -43,9 +53,9 @@ public class LogInActivity extends AppCompatActivity {
 
         forgotPassword = findViewById(R.id.forgot_password);
         loginButton = findViewById(R.id.login_button);
-        rememberMe = findViewById(R.id.remember_me);
         emailAddress = findViewById(R.id.email_address_or_username);
         password = findViewById(R.id.password);
+        rememberMe = findViewById(R.id.remember_me);
         progressBar = findViewById(R.id.progress_bar);
         registerTextReference = findViewById(R.id.register_text_reference);
         mAuth = FirebaseAuth.getInstance();
@@ -103,24 +113,19 @@ public class LogInActivity extends AppCompatActivity {
         if (checkEmailAddress.isEmpty()) {
             showError(emailAddress, "Please enter your email");
             isValid = false;
-        }
-        else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".")) {
+        } else if (!checkEmailAddress.contains("@") && !checkEmailAddress.contains(".")) {
             showError(emailAddress, "Please enter a valid email address");
             isValid = false;
-        }
-        else if (checkPassword.isEmpty()) {
+        } else if (checkPassword.isEmpty()) {
             showError(password, "Please enter your password");
             isValid = false;
-        }
-        else if (checkPassword.length() < 8) {
+        } else if (checkPassword.length() < 8) {
             showError(password, "Your password length must be at least 8 characters");
             isValid = false;
-        }
-        else if (checkPassword.contains(" ")) {
+        } else if (checkPassword.contains(" ")) {
             showError(password, "Your password should not contain spaces");
             isValid = false;
-        }
-        else if (checkPassword.length() > 64) {
+        } else if (checkPassword.length() > 64) {
             showError(password, "Your password can have at most 64 characters");
             isValid = false;
         }
@@ -135,11 +140,6 @@ public class LogInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null && user.isEmailVerified()) {
-                                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                                editor.putString("name", "true");
-                                editor.apply();
                                 // Sign in success, update UI with the signed-in user's information
                                 Toast.makeText(LogInActivity.this, "You have successfully logged in",
                                         Toast.LENGTH_SHORT).show();
@@ -156,8 +156,7 @@ public class LogInActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-        }
-        else {
+        } else {
             progressBar.setVisibility(ViewStub.GONE);
         }
 
@@ -174,4 +173,3 @@ public class LogInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-

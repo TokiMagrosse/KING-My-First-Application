@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,9 +27,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +43,8 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    MaterialSwitch sound_switch, music_switch;
+    TextView score_table_title;
     TextView[][] final_score_table = new TextView[4][5];
     ImageView[] badges = new ImageView[4];
     FirebaseAuth auth;
@@ -51,7 +57,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardViews = new ImageView[8];
-    Button menu_button;
+    Button menu_button, leave_the_game_button, close_menu_button;
     List<Integer> Spades = Deck.sortedSpades();
     List<Integer> Clubs = Deck.sortedClubs();
     List<Integer> Diamonds = Deck.sortedDiamonds();
@@ -62,6 +68,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     List<Integer> thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts;
     private static final Random randomizer = new Random();
     protected static List<Integer> fourCycle = new ArrayList<>();
+    byte currentRound = 0;
     public int[] totalScores = {0, 0, 0, 0};
     public int[][] playersScores = {
             {0, 0, 0, 0},
@@ -127,6 +134,60 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         userCardDoorViews[6] = findViewById(R.id.card_door_7);
         userCardDoorViews[7] = findViewById(R.id.card_door_8);
 
+        // All necessary attributes for Menu Dialog
+        /*dialog_menu = new Dialog(QuickGameFieldActivity.this);
+        dialog_menu.setContentView(R.layout.dialog_menu_in_the_field);
+        Objects.requireNonNull(dialog_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
+        dialog_menu.setCancelable(false);
+
+        Window menu_window = dialog_final_results.getWindow();
+        if (menu_window != null) {
+            menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        sound_switch = dialog_menu.findViewById(R.id.sound_switch);
+        sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+        // Add a listener to the sound switch
+        sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // If the switch is on, start the music
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+            } else {
+                // If the switch is off, stop the music
+                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
+            }
+        });
+
+        music_switch = dialog_menu.findViewById(R.id.music_switch);
+        music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+        // Add a listener to the music switch
+        music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // If the switch is on, start the music
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
+
+            } else {
+                // If the switch is off, stop the music
+                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
+                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
+
+            }
+        });
+
+        leave_the_game_button = dialog_menu.findViewById(R.id.leave_the_game);
+        close_menu_button = dialog_menu.findViewById(R.id.close_menu);*/
+
+        // All necessary attributes for Score Table Dialog
         dialog_final_results = new Dialog(QuickGameFieldActivity.this);
         dialog_final_results.setContentView(R.layout.dialog_game_final_results);
         Objects.requireNonNull(dialog_final_results.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -145,43 +206,55 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
         exit_button = dialog_final_results.findViewById(R.id.exit_the_game);
         exit_button.setOnClickListener(v -> {
+            // ...
+        });
+
+        play_again_button = dialog_final_results.findViewById(R.id.play_again);
+        play_again_button.setOnClickListener(v -> {
+            dialog_final_results.dismiss();
+            for (int i = 0; i < userCards.size(); i++) {
+                userCardViews[i].setVisibility(View.INVISIBLE);
+            }
+            setupQuickGameKing();
+        });
+
+        /*menu_button.setOnClickListener(v -> dialog_menu.show());
+        close_menu_button.setOnClickListener(v -> dialog_menu.dismiss());
+        leave_the_game_button.setOnClickListener(v -> {
             Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
             dialog_final_results.dismiss();
-        });
-
-        play_again_button = dialog_final_results.findViewById(R.id.play_again);
-        play_again_button.setOnClickListener(v -> {
-            // Logic of resetting the game from the beginning...
-        });
-
-        menu_button.setOnClickListener(v -> {
-            dialog_final_results.show();
-        });
+        });*/
 
         badges[0] = dialog_final_results.findViewById(R.id.user_badge);
         badges[1] = dialog_final_results.findViewById(R.id.first_bot_badge);
         badges[2] = dialog_final_results.findViewById(R.id.second_bot_badge);
         badges[3] = dialog_final_results.findViewById(R.id.third_bot_badge);
 
+        score_table_title = dialog_final_results.findViewById(R.id.score_table_title);
+
         final_score_table[0][0] = dialog_final_results.findViewById(R.id.user_round_1);
-        final_score_table[0][1] = dialog_final_results.findViewById(R.id.user_round_2);
-        final_score_table[0][2] = dialog_final_results.findViewById(R.id.user_round_3);
-        final_score_table[0][3] = dialog_final_results.findViewById(R.id.user_round_4);
         final_score_table[1][0] = dialog_final_results.findViewById(R.id.first_bot_round_1);
-        final_score_table[1][1] = dialog_final_results.findViewById(R.id.first_bot_round_2);
-        final_score_table[1][2] = dialog_final_results.findViewById(R.id.first_bot_round_3);
-        final_score_table[1][3] = dialog_final_results.findViewById(R.id.first_bot_round_4);
         final_score_table[2][0] = dialog_final_results.findViewById(R.id.second_bot_round_1);
-        final_score_table[2][1] = dialog_final_results.findViewById(R.id.second_bot_round_2);
-        final_score_table[2][2] = dialog_final_results.findViewById(R.id.second_bot_round_3);
-        final_score_table[2][3] = dialog_final_results.findViewById(R.id.second_bot_round_4);
         final_score_table[3][0] = dialog_final_results.findViewById(R.id.third_bot_round_1);
+        final_score_table[0][1] = dialog_final_results.findViewById(R.id.user_round_2);
+        final_score_table[1][1] = dialog_final_results.findViewById(R.id.first_bot_round_2);
+        final_score_table[2][1] = dialog_final_results.findViewById(R.id.second_bot_round_2);
         final_score_table[3][1] = dialog_final_results.findViewById(R.id.third_bot_round_2);
+        final_score_table[0][2] = dialog_final_results.findViewById(R.id.user_round_3);
+        final_score_table[1][2] = dialog_final_results.findViewById(R.id.first_bot_round_3);
+        final_score_table[2][2] = dialog_final_results.findViewById(R.id.second_bot_round_3);
         final_score_table[3][2] = dialog_final_results.findViewById(R.id.third_bot_round_3);
+        final_score_table[0][3] = dialog_final_results.findViewById(R.id.user_round_4);
+        final_score_table[1][3] = dialog_final_results.findViewById(R.id.first_bot_round_4);
+        final_score_table[2][3] = dialog_final_results.findViewById(R.id.second_bot_round_4);
         final_score_table[3][3] = dialog_final_results.findViewById(R.id.third_bot_round_4);
+        final_score_table[0][4] = dialog_final_results.findViewById(R.id.user_total);
+        final_score_table[1][4] = dialog_final_results.findViewById(R.id.first_bot_total);
+        final_score_table[2][4] = dialog_final_results.findViewById(R.id.second_bot_total);
+        final_score_table[3][4] = dialog_final_results.findViewById(R.id.third_bot_total);
 
     }
 
@@ -241,11 +314,6 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             int cardIndex = i;
             userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
-
-        /*turners[2].setOnClickListener(v -> {
-            userCards.clear();
-            setupQuickGameKing();
-        });*/
     }
 
     private void userTurn(int cardIndex) {
@@ -282,15 +350,20 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             botTurn(fourCycle.get(0), thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 3);
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
-            if (fourCycle.contains(R.drawable.king_of_hearts))
-                totalScores[winnerOfCorrespondingTrick] -= 50; // Actually it's a lost but...
-            else
+            if (fourCycle.contains(R.drawable.king_of_hearts)) {
+                totalScores[winnerOfCorrespondingTrick] -= 50;// Actually it's a lost but...
+                playersScores[winnerOfCorrespondingTrick][currentRound] -= 50;
+            }
+            else {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
+                playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
+            }
         }, 3750); // Third bot turn
 
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 4500);
 
         new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
+        new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
 
         // Moving center cards to trash bin
         new Handler().postDelayed(() -> {
@@ -311,7 +384,38 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             fourCycle.clear();
         }, 5500);
 
+        new Handler().postDelayed(() -> {
+            if (thirdBotCards.isEmpty()) {
+                for (int j = 0; j < 4; j++) {
+                    final_score_table[j][4].setText(String.valueOf(totalScores[j]));
+                    final_score_table[j][currentRound].setText(String.valueOf(playersScores[j][currentRound]));
+                }
+                if (currentRound == 3) {
+                    play_again_button.setVisibility(View.GONE);
+                    for (int w = 0; w < gameWinnerOrMaxNumberIndexes(totalScores).size(); w++)
+                        badges[gameWinnerOrMaxNumberIndexes(totalScores).get(w)].setVisibility(View.VISIBLE);
+                }
+                dialog_final_results.show();
+                currentRound++;
+            }
+        }, 6500);
+
         new Handler().postDelayed(this::enableUserCardClicks, 6000);  // Re-enable user clicks after bots have played
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private List<Integer> gameWinnerOrMaxNumberIndexes(@NonNull int[] finalScores) {
+        List<Integer> indexesOfMaxNumbers = new ArrayList<>();
+        int max = finalScores[0];
+        for (int finalScore : finalScores)
+            if (max < finalScore)
+                max = finalScore;
+        for (int j = 0; j < finalScores.length; j++)
+            if (finalScores[j] == max)
+                indexesOfMaxNumbers.add(j);
+
+        return indexesOfMaxNumbers;
     }
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
