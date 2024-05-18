@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.19">
+        app:layout_constraintVertical_bias="0.171">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -706,6 +706,7 @@
                     android:layout_gravity="center_horizontal"
                     android:backgroundTint="@color/blue_grey"
                     app:cornerRadius="5sp"
+                    android:layout_marginTop="2.5sp"
                     android:visibility="invisible"
                     android:text="TURN"
                     android:fontFamily="@font/alata"
@@ -736,17 +737,18 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/menu_button"
-            android:layout_width="45sp"
-            android:layout_height="50sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="12.5sp"
-            android:layout_marginBottom="15sp"
-            android:backgroundTint="@color/grey"
-            android:drawableEnd="@drawable/menu"
-            android:drawablePadding="15dp"
-            android:padding="7dp"
-            app:cornerRadius="10dp" />
+            android:id="@+id/leave_the_game_forever"
+            android:layout_width="125sp"
+            android:text="LEAVE THE GAME"
+            android:textColor="@color/white"
+            android:fontFamily="@font/alata"
+            android:textStyle="bold"
+            android:layout_marginTop="5sp"
+            android:textSize="10sp"
+            android:layout_height="40sp"
+            android:layout_marginEnd="10sp"
+            android:backgroundTint="@color/red_4"
+            app:cornerRadius="7.5dp" />
 
     </LinearLayout>
 

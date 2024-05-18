@@ -17,6 +17,10 @@
     <string name="your_nickname">Enter your username</string>
     <string name="already_have_an_account">I already have an account</string>
     <string name="google">Google</string>
+    <string name="first_round">First Round Results</string>
+    <string name="second_round">Second Round Results</string>
+    <string name="third_round">Third Round Results</string>
+    <string name="final_round">Final Results</string>
     <string name="facebook">Facebook</string>
     <string name="mail_ru">Mail.ru</string>
     <string name="log_out">LOG OUT</string>

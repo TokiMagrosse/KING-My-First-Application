@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -33,9 +32,9 @@ public class HomeActivity extends AppCompatActivity {
 
     // Define the volume level you want (0.0 - 1.0 range)
     MediaPlayer buttonClickSound;
-    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 20% for background music
+    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
     SwitchMaterial sound_switch, music_switch;
-    Button game_rules, log_out, change_color, delete_account, close;
+    Button game_rules, log_out, language, delete_account, close;
     TextView privacy_policy, terms_and_conditions;
     FirebaseAuth auth;
     Button play_button_1, play_button_2, play_button_3, menu_button, add_poison_coins;
@@ -128,7 +127,6 @@ public class HomeActivity extends AppCompatActivity {
         Objects.requireNonNull(dialog_profile_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_profile_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         dialog_profile_menu.setCancelable(false);
-
         sound_switch = dialog_profile_menu.findViewById(R.id.sound_switch);
         sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
         sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
@@ -154,27 +152,27 @@ public class HomeActivity extends AppCompatActivity {
 
         // Add a listener to the music switch
         music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Intent intent = new Intent(HomeActivity.this, MusicService.class);
+            // Intent intent = new Intent(HomeActivity.this, MusicService.class);
             if (isChecked) {
                 // If the switch is on, start the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-                intent.setAction(MusicService.ACTION_PLAY);
-                startService(intent);
+                /*intent.setAction(MusicService.ACTION_PLAY);
+                startService(intent);*/
             } else {
                 // If the switch is off, stop the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-                intent.setAction(MusicService.ACTION_STOP);
-                startService(intent);
+                /*intent.setAction(MusicService.ACTION_STOP);
+                startService(intent);*/
             }
         });
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
         game_rules.setOnClickListener(v -> {
             buttonClickSound.start();
-            Intent intent = new Intent(HomeActivity.this, GameRulesActivity.class);
-            startActivity(intent);
+            /*Intent intent = new Intent(HomeActivity.this, GameRulesActivity.class);
+            startActivity(intent);*/
         });
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
@@ -207,7 +205,7 @@ public class HomeActivity extends AppCompatActivity {
             log_out_dialog.dismiss();
         });
 
-        change_color = dialog_profile_menu.findViewById(R.id.change_color_button);
+        language = dialog_profile_menu.findViewById(R.id.change_color_button);
         delete_account = dialog_profile_menu.findViewById(R.id.delete_account_button);
 
         // All necessary attributes for Delete account Dialog

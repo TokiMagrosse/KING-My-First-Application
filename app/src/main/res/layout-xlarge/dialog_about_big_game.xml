@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="425sp"
-    android:layout_height="315sp"
+    android:layout_width="650sp"
+    android:layout_height="435sp"
     app:cardElevation="15sp"
     android:layout_gravity="center"
     android:backgroundTint="#9e2a2b"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7.5sp">
+    app:cardCornerRadius="12.5sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,11 +17,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/alata"
             android:text="Big Game Rules"
             android:textColor="@color/grey"
-            android:textSize="27.5sp"
+            android:textSize="42.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,12 +29,12 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="370sp"
-            android:layout_height="200sp"
+            android:layout_width="560sp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/alata"
             android:text="The real interest starts here. It's recommended to play in this mode when you are completely free, as every move can be decisive and drastically change the course of the game. In the classic room, you were only allowed to choose two modes out of 8. Here, you can choose whichever one you want, of course, when it's your turn."
             android:textColor="@color/grey"
-            android:textSize="17.5sp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
@@ -43,16 +43,17 @@
 
         <Button
             android:id="@+id/big_game_close_button"
-            android:layout_width="125sp"
-            android:layout_height="37.5sp"
+            android:layout_width="175sp"
+            android:layout_height="50sp"
             android:layout_gravity="center_vertical"
             android:backgroundTint="@color/grey"
             android:padding="3.5sp"
             android:text="Close"
-            android:layout_marginBottom="2.5sp"
+            android:textSize="20sp"
+            android:layout_marginBottom="5sp"
             android:fontFamily="@font/alata"
             android:textColor="@color/grey_1"
-            app:cornerRadius="5dp"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

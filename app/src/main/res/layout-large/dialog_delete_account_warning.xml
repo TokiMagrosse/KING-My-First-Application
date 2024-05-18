@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400sp"
-    android:layout_height="185sp"
+    android:layout_width="550sp"
+    android:layout_height="250sp"
     app:cardElevation="10sp"
     android:layout_gravity="center"
     android:backgroundTint="@color/grey_1"
@@ -17,11 +17,11 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/alata"
             android:text="Are you sure you want to delete your"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,11 +30,11 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="65dp"
             android:fontFamily="@font/alata"
             android:text="account forever?"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="50sp"
+            android:layout_height="70sp"
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,24 +52,24 @@
 
             <Button
                 android:id="@+id/delete_forever"
-                android:layout_width="150sp"
+                android:layout_width="200sp"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/red_3"
                 android:fontFamily="@font/alata"
                 android:text="YES"
-                android:textSize="15sp"
+                android:textSize="21sp"
                 android:textStyle="bold"
                 app:cornerRadius="10sp" />
 
             <Button
                 android:id="@+id/cancel_deletion"
-                android:layout_width="150sp"
+                android:layout_width="200sp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="40sp"
+                android:layout_marginStart="75sp"
                 android:backgroundTint="@color/very_dark_green"
                 android:fontFamily="@font/alata"
                 android:text="CANCEL"
-                android:textSize="15sp"
+                android:textSize="21sp"
                 android:textStyle="bold"
                 app:cornerRadius="10sp" />
         </LinearLayout>

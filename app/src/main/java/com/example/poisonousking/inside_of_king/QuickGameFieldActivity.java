@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,7 +27,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
-import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,10 +42,9 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
-    private MediaPlayer cardClickSound;
-    // Define the volume level you want (0.0 - 1.0 range)
-    private static final float BACKGROUND_MUSIC_VOLUME = 0.3f;
-    MaterialSwitch sound_switch, music_switch;
+    private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
+    private MediaPlayer cardClickSound, buttonClickSound;
+    private static final float USER_CARD_CLICK_VOLUME = 0.3f;
     TextView score_table_title;
     TextView[][] final_score_table = new TextView[4][5];
     ImageView[] badges = new ImageView[4];
@@ -55,13 +52,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private static String userID;
     ImageView user_profile_picture;
     Button exit_button, play_again_button;
-    Dialog dialog_final_results, dialog_menu;
+    Dialog dialog_final_results;
     protected Button[] turners = new Button[3];
     TextView[] scoreViews = new TextView[4];
     private final CardView[] userCardDoorViews = new CardView[8];
     ImageView[] fourCenterCellViews = new ImageView[4];
     private final ImageView[] userCardViews = new ImageView[8];
-    Button menu_button, leave_the_game_button, close_menu_button;
+    Button leave_the_game_forever;
     List<Integer> Spades = Deck.sortedSpades();
     List<Integer> Clubs = Deck.sortedClubs();
     List<Integer> Diamonds = Deck.sortedDiamonds();
@@ -95,9 +92,12 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
         initializeViews();
 
+        buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
+        // Set the volume of the mediaPlayer to a lower level (background music volume)
+        buttonClickSound.setVolume(BUTTON_CLICK_VOLUME, BUTTON_CLICK_VOLUME);
         cardClickSound = MediaPlayer.create(this, R.raw.user_card_click_sound);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
-        cardClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+        cardClickSound.setVolume(USER_CARD_CLICK_VOLUME, USER_CARD_CLICK_VOLUME);
 
         setupQuickGameKing();
     }
@@ -105,7 +105,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void initializeViews() {
         auth = FirebaseAuth.getInstance();
         userID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-        menu_button = findViewById(R.id.menu_button);
+        leave_the_game_forever = findViewById(R.id.leave_the_game_forever);
 
         turners[0] = findViewById(R.id.first_bot_turner);
         turners[1] = findViewById(R.id.second_bot_turner);
@@ -143,68 +143,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         userCardDoorViews[6] = findViewById(R.id.card_door_7);
         userCardDoorViews[7] = findViewById(R.id.card_door_8);
 
-        // All necessary attributes for Menu Dialog
-        /*dialog_menu = new Dialog(QuickGameFieldActivity.this);
-        dialog_menu.setContentView(R.layout.dialog_field_menu);
-        Objects.requireNonNull(dialog_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
-        dialog_menu.setCancelable(false);
-
-        Window menu_window = dialog_menu.getWindow();
-        if (menu_window != null) {
-            menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
-            menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
-        }
-
-        sound_switch = dialog_menu.findViewById(R.id.sound_switch);
-        sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-        sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-        // Add a listener to the sound switch
-        sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // If the switch is on, start the music
-                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-            } else {
-                // If the switch is off, stop the music
-                sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
-                sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-            }
-        });
-
-        music_switch = dialog_menu.findViewById(R.id.music_switch);
-        music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-        music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-        // Add a listener to the music switch
-        music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // If the switch is on, start the music
-                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
-                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
-            } else {
-                // If the switch is off, stop the music
-                music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
-                music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-
-            }
-        });
-
-        leave_the_game_button = dialog_menu.findViewById(R.id.leave_the_game);
-        close_menu_button = dialog_menu.findViewById(R.id.close_menu);
-
-        menu_button.setOnClickListener(v -> dialog_menu.show());
-        close_menu_button.setOnClickListener(v -> dialog_menu.dismiss());
-        leave_the_game_button.setOnClickListener(v -> {
+        leave_the_game_forever.setOnClickListener(v -> {
+            buttonClickSound.start();
             Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
             dialog_final_results.dismiss();
-        });*/
+        });
 
         // All necessary attributes for Score Table Dialog
         dialog_final_results = new Dialog(QuickGameFieldActivity.this);
@@ -228,6 +174,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
         play_again_button.setOnClickListener(v -> {
             dialog_final_results.dismiss();
+            buttonClickSound.start();
             for (int i = 0; i < userCards.size(); i++) {
                 userCardViews[i].setVisibility(View.INVISIBLE);
             }
@@ -342,13 +289,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        }, 1250); // First bot turn
+        }, 1000); // First bot turn
 
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.INVISIBLE);
             turners[1].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2);
-        }, 2500); // Second bot turn
+        }, 2200); // Second bot turn
 
         new Handler().postDelayed(() -> {
             turners[1].setVisibility(View.INVISIBLE);
@@ -364,7 +311,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
                 playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
             }
-        }, 3750); // Third bot turn
+        }, 3500); // Third bot turn
 
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 4500);
 
@@ -397,15 +344,16 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                     final_score_table[j][currentRound].setText(String.valueOf(playersScores[j][currentRound]));
                 }
                 if (currentRound == 0)
-                    score_table_title.setText("First Round Results");
+                    score_table_title.setText(R.string.first_round);
                 else if (currentRound == 1)
-                    score_table_title.setText("Second Round results");
+                    score_table_title.setText(R.string.second_round);
                 else if (currentRound == 2)
-                    score_table_title.setText("Third Round Results");
+                    score_table_title.setText(R.string.third_round);
                 else {
-                    score_table_title.setText("Final Results");
+                    score_table_title.setText(R.string.final_round);
                     play_again_button.setVisibility(View.GONE);
                     exit_button.setOnClickListener(v -> {
+                        buttonClickSound.start();
                         Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);

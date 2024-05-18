@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="425sp"
-    android:layout_height="225sp"
+    android:layout_width="550sp"
+    android:layout_height="375sp"
     app:cardElevation="15sp"
     android:layout_gravity="center"
     android:backgroundTint="#124559"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7.5sp">
+    app:cardCornerRadius="12.5sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,11 +17,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/alata"
             android:text="Quick Game Rules"
             android:textColor="@color/grey"
-            android:textSize="27.5sp"
+            android:textSize="42.5sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,12 +32,12 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="375sp"
-            android:layout_height="110sp"
+            android:layout_width="460sp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/alata"
             android:text="@string/quick_game_description"
             android:textColor="@color/grey"
-            android:textSize="17.5sp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,16 +46,17 @@
 
         <Button
             android:id="@+id/quick_game_close_button"
-            android:layout_width="125sp"
-            android:layout_height="37.5sp"
+            android:layout_width="175sp"
+            android:layout_height="50sp"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="10sp"
             android:backgroundTint="@color/grey"
             android:fontFamily="@font/alata"
             android:padding="3.5sp"
             android:text="Close"
+            android:textSize="20sp"
             android:textColor="@color/grey_1"
-            app:cornerRadius="5dp"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

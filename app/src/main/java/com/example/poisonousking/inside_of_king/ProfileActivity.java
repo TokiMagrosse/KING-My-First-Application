@@ -3,6 +3,7 @@ package com.example.poisonousking.inside_of_king;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,9 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    // Define the volume level you want (0.0 - 1.0 range)
+    MediaPlayer buttonClickSound;
+    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
     Uri selected_image_uri;
     ActivityResultLauncher<Intent> image_pick_launcher;
     StorageReference storageReference;
@@ -63,6 +67,10 @@ public class ProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
         id = findViewById(R.id.id_in_profile);
+
+        buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
+        // Set the volume of the mediaPlayer to a lower level (background music volume)
+        buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
 
         // Logic of setting profile image
         image_pick_launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -106,22 +114,27 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Set up the back to main button
         back_to_main.setOnClickListener(view -> {
+            buttonClickSound.start();
             Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 
         // Handle profile picture change
-        change_profile.setOnClickListener(v -> ImagePicker.with(this)
+        change_profile.setOnClickListener(v -> {
+            buttonClickSound.start();
+            ImagePicker.with(this)
                 .cropSquare()
                 .compress(518)
                 .maxResultSize(518, 518)
                 .createIntent(intent -> {
                     image_pick_launcher.launch(intent);
                     return null;
-                }));
+                });
+        });
 
         // Handle saving changes
         save_changes.setOnClickListener(v -> {
+            buttonClickSound.start();
             if (selected_image_uri != null) {
                 // Upload the selected image to Firebase Storage
                 uploadProfileImageToStorage(selected_image_uri);

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="425sp"
-    android:layout_height="295sp"
+    android:layout_width="650sp"
+    android:layout_height="425sp"
     app:cardElevation="15sp"
     android:layout_gravity="center"
     android:backgroundTint="#588157"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7.5sp">
+    app:cardCornerRadius="12.5sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,11 +17,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/alata"
             android:text="Classic Game Rules"
             android:textColor="@color/grey"
-            android:textSize="27.5sp"
+            android:textSize="42.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,12 +29,12 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="375sp"
+            android:layout_width="560sp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alata"
             android:text="Do you already have some idea about the game King? If so, you can already play in this room where the competition for victory will be very intense. All 8 modes will be played (No Jacks, No Queens, No Last 2, No PKing, Take Tricks (Spades, Clubs, Diamonds, Hearts)). Each will have 2 variations."
             android:textColor="@color/grey"
-            android:textSize="17.5sp"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,16 +43,17 @@
 
         <Button
             android:id="@+id/classic_game_close_button"
-            android:layout_width="125sp"
-            android:layout_height="37.5sp"
+            android:layout_width="175sp"
+            android:layout_height="50sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="2.5sp"
+            android:layout_marginBottom="5sp"
             android:backgroundTint="@color/grey"
             android:fontFamily="@font/alata"
             android:padding="3.5sp"
+            android:textSize="20sp"
             android:text="Close"
             android:textColor="@color/grey_1"
-            app:cornerRadius="5dp"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
