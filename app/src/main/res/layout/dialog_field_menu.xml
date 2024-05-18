@@ -122,7 +122,7 @@
                 android:backgroundTint="@color/red_3"
                 android:fontFamily="@font/alata"
                 android:padding="5sp"
-                android:text="Leave the game"
+                android:text="LEAVE THE GAME"
                 android:textColor="@color/grey"
                 android:textSize="15sp"
                 app:cornerRadius="7.5sp" />
@@ -139,7 +139,7 @@
                 android:backgroundTint="@color/grey_2"
                 android:fontFamily="@font/alata"
                 android:padding="5sp"
-                android:text="Close"
+                android:text="CLOSE"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:cornerRadius="7.5sp" />

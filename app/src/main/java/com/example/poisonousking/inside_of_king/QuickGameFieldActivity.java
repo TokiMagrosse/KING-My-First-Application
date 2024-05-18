@@ -2,6 +2,7 @@ package com.example.poisonousking.inside_of_king;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -43,6 +44,9 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    private MediaPlayer cardClickSound;
+    // Define the volume level you want (0.0 - 1.0 range)
+    private static final float BACKGROUND_MUSIC_VOLUME = 0.3f;
     MaterialSwitch sound_switch, music_switch;
     TextView score_table_title;
     TextView[][] final_score_table = new TextView[4][5];
@@ -90,6 +94,11 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         });
 
         initializeViews();
+
+        cardClickSound = MediaPlayer.create(this, R.raw.user_card_click_sound);
+        // Set the volume of the mediaPlayer to a lower level (background music volume)
+        cardClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+
         setupQuickGameKing();
     }
 
@@ -136,12 +145,12 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
         // All necessary attributes for Menu Dialog
         /*dialog_menu = new Dialog(QuickGameFieldActivity.this);
-        dialog_menu.setContentView(R.layout.dialog_menu_in_the_field);
+        dialog_menu.setContentView(R.layout.dialog_field_menu);
         Objects.requireNonNull(dialog_menu.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog_menu.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
         dialog_menu.setCancelable(false);
 
-        Window menu_window = dialog_final_results.getWindow();
+        Window menu_window = dialog_menu.getWindow();
         if (menu_window != null) {
             menu_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             menu_window.setGravity(Gravity.CENTER); // Set the gravity to top
@@ -185,7 +194,17 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         });
 
         leave_the_game_button = dialog_menu.findViewById(R.id.leave_the_game);
-        close_menu_button = dialog_menu.findViewById(R.id.close_menu);*/
+        close_menu_button = dialog_menu.findViewById(R.id.close_menu);
+
+        menu_button.setOnClickListener(v -> dialog_menu.show());
+        close_menu_button.setOnClickListener(v -> dialog_menu.dismiss());
+        leave_the_game_button.setOnClickListener(v -> {
+            Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            dialog_final_results.dismiss();
+        });*/
 
         // All necessary attributes for Score Table Dialog
         dialog_final_results = new Dialog(QuickGameFieldActivity.this);
@@ -205,11 +224,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         fetchAndDisplayProfileImage(user_profile_picture);
 
         exit_button = dialog_final_results.findViewById(R.id.exit_the_game);
-        exit_button.setOnClickListener(v -> {
-            // ...
-        });
-
         play_again_button = dialog_final_results.findViewById(R.id.play_again);
+
         play_again_button.setOnClickListener(v -> {
             dialog_final_results.dismiss();
             for (int i = 0; i < userCards.size(); i++) {
@@ -217,16 +233,6 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             }
             setupQuickGameKing();
         });
-
-        /*menu_button.setOnClickListener(v -> dialog_menu.show());
-        close_menu_button.setOnClickListener(v -> dialog_menu.dismiss());
-        leave_the_game_button.setOnClickListener(v -> {
-            Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            dialog_final_results.dismiss();
-        });*/
 
         badges[0] = dialog_final_results.findViewById(R.id.user_badge);
         badges[1] = dialog_final_results.findViewById(R.id.first_bot_badge);
@@ -255,7 +261,6 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         final_score_table[1][4] = dialog_final_results.findViewById(R.id.first_bot_total);
         final_score_table[2][4] = dialog_final_results.findViewById(R.id.second_bot_total);
         final_score_table[3][4] = dialog_final_results.findViewById(R.id.third_bot_total);
-
     }
 
     private void setupQuickGameKing() {
@@ -318,6 +323,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     private void userTurn(int cardIndex) {
         fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
+        cardClickSound.start();
         fourCenterCellViews[0].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
@@ -390,8 +396,22 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                     final_score_table[j][4].setText(String.valueOf(totalScores[j]));
                     final_score_table[j][currentRound].setText(String.valueOf(playersScores[j][currentRound]));
                 }
-                if (currentRound == 3) {
+                if (currentRound == 0)
+                    score_table_title.setText("First Round Results");
+                else if (currentRound == 1)
+                    score_table_title.setText("Second Round results");
+                else if (currentRound == 2)
+                    score_table_title.setText("Third Round Results");
+                else {
+                    score_table_title.setText("Final Results");
                     play_again_button.setVisibility(View.GONE);
+                    exit_button.setOnClickListener(v -> {
+                        Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                        dialog_final_results.dismiss();
+                    });
                     for (int w = 0; w < gameWinnerOrMaxNumberIndexes(totalScores).size(); w++)
                         badges[gameWinnerOrMaxNumberIndexes(totalScores).get(w)].setVisibility(View.VISIBLE);
                 }
@@ -515,6 +535,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         // Visual logic to move card to center, perhaps setting image resources
         ImageView centerView = fourCenterCellViews[playerIndex];
         centerView.setImageResource(card);
+        cardClickSound.start();
         centerView.setVisibility(View.VISIBLE);
         four_cycle.add(card);
     }

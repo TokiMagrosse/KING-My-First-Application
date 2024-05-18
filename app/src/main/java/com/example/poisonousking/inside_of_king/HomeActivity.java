@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.MusicService;
 import com.example.poisonousking.outside_of_king.LogInActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,10 +31,9 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
-    // Define the MediaPlayer instance
-    private MediaPlayer mediaPlayer;
     // Define the volume level you want (0.0 - 1.0 range)
-    private static final float BACKGROUND_MUSIC_VOLUME = 0.32f; // Set volume level to 20% for background music
+    MediaPlayer buttonClickSound;
+    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 20% for background music
     SwitchMaterial sound_switch, music_switch;
     Button game_rules, log_out, change_color, delete_account, close;
     TextView privacy_policy, terms_and_conditions;
@@ -68,29 +68,34 @@ public class HomeActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
-        // Initialize the MediaPlayer with the MP3 file from the raw directory
-        mediaPlayer = MediaPlayer.create(this, R.raw.game_smooth_music); // Replace "game_smooth_music" with your file name
-
-        // Start playing the music
-        // mediaPlayer.start();
-
-        // Set the music to loop
-        // mediaPlayer.setLooping(true);
-
+        buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
-        // mediaPlayer.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+        buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+
+        Intent musicIntent = new Intent(this, MusicService.class);
+        startService(musicIntent);
 
         play_button_1.setOnClickListener(v -> {
+            buttonClickSound.start();
+            Intent intentTwo = new Intent(this, MusicService.class);
+            stopService(intentTwo);
             Intent intent = new Intent(HomeActivity.this, QuickGameFieldActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
         });
 
-        play_button_2.setOnClickListener(v -> Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show());
+        play_button_2.setOnClickListener(v -> {
+            buttonClickSound.start();
+            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
+        });
 
-        play_button_3.setOnClickListener(v -> Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show());
+        play_button_3.setOnClickListener(v -> {
+            buttonClickSound.start();
+            Toast.makeText(this, "Sorry! I'm still working on this", Toast.LENGTH_SHORT).show();
+        });
 
         your_profile_picture.setOnClickListener(v -> {
+            buttonClickSound.start();
             Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
             startActivity(intent);
         });
@@ -131,10 +136,12 @@ public class HomeActivity extends AppCompatActivity {
         // Add a listener to the sound switch
         sound_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
+                // buttonClickSound.reset();
                 // If the switch is on, start the music
                 sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
                 sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
             } else {
+                buttonClickSound.stop();
                 // If the switch is off, stop the music
                 sound_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
                 sound_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
@@ -147,21 +154,25 @@ public class HomeActivity extends AppCompatActivity {
 
         // Add a listener to the music switch
         music_switch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Intent intent = new Intent(HomeActivity.this, MusicService.class);
             if (isChecked) {
                 // If the switch is on, start the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-
+                intent.setAction(MusicService.ACTION_PLAY);
+                startService(intent);
             } else {
                 // If the switch is off, stop the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-
+                intent.setAction(MusicService.ACTION_STOP);
+                startService(intent);
             }
         });
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
         game_rules.setOnClickListener(v -> {
+            buttonClickSound.start();
             Intent intent = new Intent(HomeActivity.this, GameRulesActivity.class);
             startActivity(intent);
         });
@@ -183,9 +194,18 @@ public class HomeActivity extends AppCompatActivity {
         yes_log_out = log_out_dialog.findViewById(R.id.yes_button);
         cancel_log_out = log_out_dialog.findViewById(R.id.cancel_button);
 
-        log_out.setOnClickListener(v -> log_out_dialog.show());
-        yes_log_out.setOnClickListener(v -> onLogOutButtonClick());
-        cancel_log_out.setOnClickListener(v -> log_out_dialog.dismiss());
+        log_out.setOnClickListener(v -> {
+            buttonClickSound.start();
+            log_out_dialog.show();
+        });
+        yes_log_out.setOnClickListener(v -> {
+            buttonClickSound.start();
+            onLogOutButtonClick();
+        });
+        cancel_log_out.setOnClickListener(v -> {
+            buttonClickSound.start();
+            log_out_dialog.dismiss();
+        });
 
         change_color = dialog_profile_menu.findViewById(R.id.change_color_button);
         delete_account = dialog_profile_menu.findViewById(R.id.delete_account_button);
@@ -203,15 +223,22 @@ public class HomeActivity extends AppCompatActivity {
             delete_window.setGravity(Gravity.CENTER); // Set the gravity to top
         }
 
-        delete_account.setOnClickListener(v -> delete_account_dialog.show());
+        delete_account.setOnClickListener(v -> {
+            buttonClickSound.start();
+            delete_account_dialog.show();
+        });
         delete_forever = delete_account_dialog.findViewById(R.id.delete_forever);
         cancel_deletion = delete_account_dialog.findViewById(R.id.cancel_deletion);
 
         delete_forever.setOnClickListener(v -> {
+            buttonClickSound.start();
             deleteAccountForever();
             onLogOutButtonClick();
         });
-        cancel_deletion.setOnClickListener(v -> delete_account_dialog.dismiss());
+        cancel_deletion.setOnClickListener(v -> {
+            buttonClickSound.start();
+            delete_account_dialog.dismiss();
+        });
 
         close = dialog_profile_menu.findViewById(R.id.close_button);
         privacy_policy = dialog_profile_menu.findViewById(R.id.privacy_policy);
@@ -224,8 +251,14 @@ public class HomeActivity extends AppCompatActivity {
             menu_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
         }
 
-        menu_button.setOnClickListener(v -> dialog_profile_menu.show());
-        close.setOnClickListener(v -> dialog_profile_menu.dismiss());
+        menu_button.setOnClickListener(v -> {
+            buttonClickSound.start();
+            dialog_profile_menu.show();
+        });
+        close.setOnClickListener(v -> {
+            buttonClickSound.start();
+            dialog_profile_menu.dismiss();
+        });
 
         // All necessary attributes for Quick Game Dialog
         quick_game_dialog = new Dialog(HomeActivity.this);
@@ -243,8 +276,14 @@ public class HomeActivity extends AppCompatActivity {
             quick_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
         }
 
-        about_quick_game.setOnClickListener(v -> quick_game_dialog.show());
-        quick_game_close.setOnClickListener(v -> quick_game_dialog.dismiss());
+        about_quick_game.setOnClickListener(v -> {
+            buttonClickSound.start();
+            quick_game_dialog.show();
+        });
+        quick_game_close.setOnClickListener(v -> {
+            buttonClickSound.start();
+            quick_game_dialog.dismiss();
+        });
 
         // All necessary attributes for Classic Game Dialog
         classic_game_dialog = new Dialog(HomeActivity.this);
@@ -262,8 +301,14 @@ public class HomeActivity extends AppCompatActivity {
             classic_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
         }
 
-        about_classic_game.setOnClickListener(v -> classic_game_dialog.show());
-        classic_game_close.setOnClickListener(v -> classic_game_dialog.dismiss());
+        about_classic_game.setOnClickListener(v -> {
+            buttonClickSound.start();
+            classic_game_dialog.show();
+        });
+        classic_game_close.setOnClickListener(v -> {
+            buttonClickSound.start();
+            classic_game_dialog.dismiss();
+        });
 
         // All necessary attributes for Big Game Dialog
         big_game_dialog = new Dialog(HomeActivity.this);
@@ -281,8 +326,14 @@ public class HomeActivity extends AppCompatActivity {
             big_game_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
         }
 
-        about_big_game.setOnClickListener(v -> big_game_dialog.show());
-        big_game_close.setOnClickListener(v -> big_game_dialog.dismiss());
+        about_big_game.setOnClickListener(v -> {
+            buttonClickSound.start();
+            big_game_dialog.show();
+        });
+        big_game_close.setOnClickListener(v -> {
+            buttonClickSound.start();
+            big_game_dialog.dismiss();
+        });
     }
 
     private void deleteAccountForever() {

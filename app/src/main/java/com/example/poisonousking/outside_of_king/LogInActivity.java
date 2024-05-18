@@ -2,15 +2,10 @@ package com.example.poisonousking.outside_of_king;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -66,7 +61,7 @@ public class LogInActivity extends AppCompatActivity {
         });
 
         // Set both start and end drawables programmatically
-        Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
+        /*Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
         Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon_small);
         Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon_small);
         password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
@@ -100,7 +95,7 @@ public class LogInActivity extends AppCompatActivity {
                 }
             }
             return false;
-        });
+        });*/
 
         loginButton.setOnClickListener(v -> checkCredentials());
     }

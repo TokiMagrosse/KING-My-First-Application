@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <service android:name=".helper_classes.MusicService" android:exported="false"/>
         <activity
             android:name=".inside_of_king.ClassicGameFieldActivity"
             android:exported="false"
