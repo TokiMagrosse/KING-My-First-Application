@@ -1,12 +1,17 @@
 package com.example.poisonousking.inside_of_king;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +20,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
@@ -30,6 +36,8 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    Dialog dialog_change_profile;
+    Button change_username, change_email, change_password, change_image, close_change_dialog;
     // Define the volume level you want (0.0 - 1.0 range)
     MediaPlayer buttonClickSound;
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
@@ -67,6 +75,41 @@ public class ProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
         id = findViewById(R.id.id_in_profile);
+
+        dialog_change_profile = new Dialog(ProfileActivity.this);
+        dialog_change_profile.setContentView(R.layout.dialog_change_profile);
+        Objects.requireNonNull(dialog_change_profile.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_change_profile.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
+        dialog_change_profile.setCancelable(false);
+
+        Window change_profile_window = dialog_change_profile.getWindow();
+        if (change_profile_window != null) {
+            change_profile_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            change_profile_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            change_profile_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        change_username = dialog_change_profile.findViewById(R.id.change_users_username);
+        change_email = dialog_change_profile.findViewById(R.id.change_users_email_address);
+        change_password = dialog_change_profile.findViewById(R.id.change_users_password);
+        change_image = dialog_change_profile.findViewById(R.id.change_users_profile_image);
+        close_change_dialog = dialog_change_profile.findViewById(R.id.close_change_profile_dialog);
+
+        close_change_dialog.setOnClickListener(v -> {
+            buttonClickSound.start();
+            dialog_change_profile.dismiss();
+        });
+        change_image.setOnClickListener(v -> {
+            buttonClickSound.start();
+            ImagePicker.with(this)
+                .cropSquare()
+                .compress(518)
+                .maxResultSize(518, 518)
+                .createIntent(intent -> {
+                    image_pick_launcher.launch(intent);
+                    return null;
+                });
+        });
 
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
@@ -122,14 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Handle profile picture change
         change_profile.setOnClickListener(v -> {
             buttonClickSound.start();
-            ImagePicker.with(this)
-                .cropSquare()
-                .compress(518)
-                .maxResultSize(518, 518)
-                .createIntent(intent -> {
-                    image_pick_launcher.launch(intent);
-                    return null;
-                });
+            dialog_change_profile.show();
         });
 
         // Handle saving changes

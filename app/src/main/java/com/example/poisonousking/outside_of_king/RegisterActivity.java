@@ -259,7 +259,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Extract the first 10 characters to ensure the ID is 10 digits long
             return hexString.toString().substring(0, 10);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "No Such Algorithm", Toast.LENGTH_SHORT).show();
             return null;
         }
     }

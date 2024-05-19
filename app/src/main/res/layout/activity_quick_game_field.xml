@@ -70,9 +70,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="Bot-P1"
+                android:text="Bot 1"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="13.5sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -193,9 +193,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3sp"
                 android:fontFamily="@font/alata"
-                android:text="Bot-P3"
+                android:text="Bot 3"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="13.5sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -495,7 +495,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="P1"
+                            android:text="B1"
                             android:textSize="12.5sp"
                             android:layout_marginBottom="1sp"
                             android:textColor="@color/grey_1"
@@ -518,7 +518,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="P2"
+                            android:text="B2"
                             android:textSize="12.5sp"
                             android:layout_marginBottom="1sp"
                             android:textColor="@color/grey_1"
@@ -541,7 +541,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/alata"
-                            android:text="P3"
+                            android:text="B3"
                             android:layout_marginBottom="1sp"
                             android:textSize="12.5sp"
                             android:textColor="@color/grey_1"
@@ -723,10 +723,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5sp"
                 android:fontFamily="@font/alata"
-                android:text="Bot-P2"
-                android:layout_marginBottom="15sp"
+                android:text="Bot 2"
+                android:layout_marginBottom="16.5sp"
                 android:textStyle="bold"
-                android:textSize="12sp"
+                android:textSize="13.5sp"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -738,14 +738,14 @@
 
         <Button
             android:id="@+id/leave_the_game_forever"
-            android:layout_width="125sp"
+            android:layout_width="140sp"
             android:text="LEAVE THE GAME"
             android:textColor="@color/white"
             android:fontFamily="@font/alata"
             android:textStyle="bold"
             android:layout_marginTop="5sp"
-            android:textSize="10sp"
-            android:layout_height="40sp"
+            android:textSize="11sp"
+            android:layout_height="45sp"
             android:layout_marginEnd="10sp"
             android:backgroundTint="@color/red_4"
             app:cornerRadius="7.5dp" />

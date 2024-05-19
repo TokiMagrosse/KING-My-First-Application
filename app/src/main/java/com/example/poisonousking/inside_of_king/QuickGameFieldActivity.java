@@ -42,6 +42,8 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+
+
     private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
     private MediaPlayer cardClickSound, buttonClickSound;
     private static final float USER_CARD_CLICK_VOLUME = 0.3f;
@@ -265,20 +267,29 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void enableUserCardClicks() {
         for (int i = 0; i < userCards.size(); i++) {
             int cardIndex = i;
-            userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
+            userCardViews[i].setOnClickListener(v -> userTurn(cardIndex, 0));
         }
     }
 
-    private void userTurn(int cardIndex) {
-        fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
+    private void userTurn(int cardIndex, int centerCellIndex) {
+        fourCenterCellViews[centerCellIndex].setImageResource(userCards.get(cardIndex));
         cardClickSound.start();
-        fourCenterCellViews[0].setVisibility(View.VISIBLE);
+        fourCenterCellViews[centerCellIndex].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
         disableUserCardClicks();
         new Handler().postDelayed(this::botsTurn, 1000);
     }
+
+    /*private void userTurnButNotFirst(int cardIndex, int centerCellIndex) {
+        fourCenterCellViews[centerCellIndex].setImageResource(userCards.get(cardIndex));
+        cardClickSound.start();
+        fourCenterCellViews[centerCellIndex].setVisibility(View.VISIBLE);
+        userCardViews[cardIndex].setVisibility(View.GONE);
+        userCardDoorViews[cardIndex].setVisibility(View.GONE);
+        fourCycle.add(userCards.get(cardIndex));
+    }*/
 
     private void disableUserCardClicks() {
         for (ImageView cardView : userCardViews) {
@@ -290,13 +301,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), firstBotCards, firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts, 1);
-        }, 1000); // First bot turn
+        }, 750); // First bot turn
 
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.INVISIBLE);
             turners[1].setVisibility(View.VISIBLE);
             botTurn(fourCycle.get(0), secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 2);
-        }, 2200); // Second bot turn
+        }, 1500); // Second bot turn
 
         new Handler().postDelayed(() -> {
             turners[1].setVisibility(View.INVISIBLE);
@@ -305,19 +316,19 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
             if (fourCycle.contains(R.drawable.king_of_hearts)) {
-                totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
-                playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
+                totalScores[winnerOfCorrespondingTrick] -= 50;// Actually it's a lost but...
+                playersScores[winnerOfCorrespondingTrick][currentRound] -= 50;
             }
             else {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
                 playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
             }
-        }, 3500); // Third bot turn
+        }, 2750); // Third bot turn
 
-        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 4500);
+        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 3250);
 
-        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 5500);
-        new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 5500);
+        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 4250);
+        new Handler().postDelayed(() -> turners[2].setVisibility(View.INVISIBLE), 4250);
 
         // Moving center cards to trash bin
         new Handler().postDelayed(() -> {
@@ -336,7 +347,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             Deck.cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
 
             fourCycle.clear();
-        }, 5500);
+        }, 4250);
 
         new Handler().postDelayed(() -> {
             if (thirdBotCards.isEmpty()) {
@@ -367,9 +378,9 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 dialog_final_results.show();
                 currentRound++;
             }
-        }, 6500);
+        }, 5500);
 
-        new Handler().postDelayed(this::enableUserCardClicks, 6000);  // Re-enable user clicks after bots have played
+        new Handler().postDelayed(this::enableUserCardClicks, 4500);  // Re-enable user clicks after bots have played
     }
 
     @NonNull
@@ -419,66 +430,102 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             centerCellView.setVisibility(View.INVISIBLE);
     }
 
-    private void botTurn(int userCardID, @NonNull List<Integer> botCards, List<Integer> botSpades, List<Integer> botClubs,
-                         List<Integer> botDiamonds, List<Integer> botHearts, int botCellIndex) {
-        int botCurrentCardID, list_size = botCards.size();
+    private void botTurn(int firstCenterCardID, @NonNull List<Integer> playerCards, List<Integer> playerSpades, List<Integer> playerClubs,
+                         List<Integer> playerDiamonds, List<Integer> playerHearts, int centerCellIndex) {
+        int botCurrentCardID, list_size = playerCards.size();
 
         // Checking the user card suit so bot can determine what card to throw
-        if (Spades.contains(userCardID)) {
-            if (botSpades.isEmpty()) {
-                if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
+        if (Spades.contains(firstCenterCardID)) {
+            if (playerSpades.isEmpty()) {
+                if (playerCards.contains(R.drawable.king_of_hearts)) {
+                    moveCardToCenter(R.drawable.king_of_hearts, centerCellIndex, fourCycle);
                 } else {
-                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                    botCurrentCardID = playerCards.get(randomizer.nextInt(list_size));
+                    moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
                 }
             } else {
-                int rand_spades = botSpades.size();
-                botCurrentCardID = botSpades.get(randomizer.nextInt(rand_spades));
-                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                int rand_spades = playerSpades.size();
+                botCurrentCardID = playerSpades.get(randomizer.nextInt(rand_spades));
+                moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
             }
         }
 
-        if (Clubs.contains(userCardID)) {
-            if (botClubs.isEmpty()) {
-                if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
+        if (Clubs.contains(firstCenterCardID)) {
+            if (playerClubs.isEmpty()) {
+                if (playerCards.contains(R.drawable.king_of_hearts)) {
+                    moveCardToCenter(R.drawable.king_of_hearts, centerCellIndex, fourCycle);
                 } else {
-                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                    botCurrentCardID = playerCards.get(randomizer.nextInt(list_size));
+                    moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
                 }
             } else {
-                int rand_clubs = botClubs.size();
-                botCurrentCardID = botClubs.get(randomizer.nextInt(rand_clubs));
-                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                int rand_clubs = playerClubs.size();
+                botCurrentCardID = playerClubs.get(randomizer.nextInt(rand_clubs));
+                moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
             }
         }
 
-        if (Diamonds.contains(userCardID)) {
-            if (botDiamonds.isEmpty()) {
-                if (botCards.contains(R.drawable.king_of_hearts)) {
-                    moveCardToCenter(R.drawable.king_of_hearts, botCellIndex, fourCycle);
+        if (Diamonds.contains(firstCenterCardID)) {
+            if (playerDiamonds.isEmpty()) {
+                if (playerCards.contains(R.drawable.king_of_hearts)) {
+                    moveCardToCenter(R.drawable.king_of_hearts, centerCellIndex, fourCycle);
                 } else {
-                    botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
-                    moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                    botCurrentCardID = playerCards.get(randomizer.nextInt(list_size));
+                    moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
                 }
             } else {
-                int rand_diamonds = botDiamonds.size();
-                botCurrentCardID = botDiamonds.get(randomizer.nextInt(rand_diamonds));
-                moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+                int rand_diamonds = playerDiamonds.size();
+                botCurrentCardID = playerDiamonds.get(randomizer.nextInt(rand_diamonds));
+                moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
             }
         }
 
-        if (Hearts.contains(userCardID)) {
-            if (botHearts.isEmpty()) {
-                botCurrentCardID = botCards.get(randomizer.nextInt(list_size));
+        if (Hearts.contains(firstCenterCardID)) {
+            if (playerHearts.isEmpty()) {
+                botCurrentCardID = playerCards.get(randomizer.nextInt(list_size));
             } else {
-                int rand_hearts = botHearts.size();
-                botCurrentCardID = botHearts.get(randomizer.nextInt(rand_hearts));
+                int rand_hearts = playerHearts.size();
+                botCurrentCardID = playerHearts.get(randomizer.nextInt(rand_hearts));
             }
-            moveCardToCenter(botCurrentCardID, botCellIndex, fourCycle);
+            moveCardToCenter(botCurrentCardID, centerCellIndex, fourCycle);
         }
     }
+
+    /*private void ifTheTrickWinsFirstBot() {
+        disableUserCardClicks();
+        int firstBotRandomCardID;
+        int randCard = firstBotCards.size();
+        firstBotRandomCardID = firstBotCards.get(randomizer.nextInt(randCard));
+
+        new Handler().postDelayed(() -> moveCardToCenter(firstBotRandomCardID, 0, fourCycle), 750);
+        new Handler().postDelayed(() -> {
+            turners[0].setVisibility(View.INVISIBLE);
+            turners[1].setVisibility(View.VISIBLE);
+            botTurn(firstBotRandomCardID, secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 1);
+        }, 1500);
+        new Handler().postDelayed(() -> {
+            turners[1].setVisibility(View.INVISIBLE);
+            turners[2].setVisibility(View.VISIBLE);
+            botTurn(firstBotRandomCardID, thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 2);
+        }, 2750);
+
+        for (int i = 0; i < userCards.size(); i++) {
+            if (!Deck.cardSuitList(firstBotRandomCardID, Spades, Clubs, Diamonds, Hearts).contains(userCards.get(i))) {
+
+            }
+            int cardIndex = i;
+            userCardViews[i].setOnClickListener(v -> userTurnButNotFirst(cardIndex, 0));
+        }
+
+    }*/
+
+    /*private void ifTheTrickWinsSecondBot() {
+
+    }*/
+
+    /*private void ifTheTrickWinsThirdBot() {
+
+    }*/
 
     private void moveCardToCenter(Integer card, int playerIndex, @NonNull List<Integer> four_cycle) {
         // Visual logic to move card to center, perhaps setting image resources

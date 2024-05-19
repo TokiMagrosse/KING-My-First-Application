@@ -175,8 +175,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_gravity="center_vertical"
                 app:cardCornerRadius="7.5dp"
-                app:strokeWidth="2sp"
-                app:strokeColor="@color/white"
+                app:strokeWidth="1.75sp"
+                app:strokeColor="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
