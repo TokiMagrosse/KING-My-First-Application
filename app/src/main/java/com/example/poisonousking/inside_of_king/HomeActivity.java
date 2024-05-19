@@ -157,23 +157,17 @@ public class HomeActivity extends AppCompatActivity {
                 // If the switch is on, start the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.fucking_green));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.green_2));
-                /*intent.setAction(MusicService.ACTION_PLAY);
-                startService(intent);*/
+
             } else {
                 // If the switch is off, stop the music
                 music_switch.setThumbTintList(ContextCompat.getColorStateList(this, R.color.black));
                 music_switch.setTrackTintList(ContextCompat.getColorStateList(this, R.color.grey_4));
-                /*intent.setAction(MusicService.ACTION_STOP);
-                startService(intent);*/
+
             }
         });
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
-        game_rules.setOnClickListener(v -> {
-            buttonClickSound.start();
-            /*Intent intent = new Intent(HomeActivity.this, GameRulesActivity.class);
-            startActivity(intent);*/
-        });
+        game_rules.setOnClickListener(v -> buttonClickSound.start());
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
         // All necessary attributes for Log out Dialog

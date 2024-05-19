@@ -22,6 +22,7 @@
             android:name=".inside_of_king.ClassicGameFieldActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
+
         <activity
             android:name=".inside_of_king.GameRulesActivity"
             android:exported="false"
@@ -35,6 +36,7 @@
             android:name=".inside_of_king.QuickGameFieldActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".outside_of_king.SplashScreenActivity"
             android:exported="true"
@@ -45,22 +47,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".inside_of_king.ProfileActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".outside_of_king.ResetPasswordActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".inside_of_king.HomeActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".outside_of_king.RegisterActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".outside_of_king.LogInActivity"
             android:exported="true"

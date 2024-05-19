@@ -95,6 +95,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
         buttonClickSound.setVolume(BUTTON_CLICK_VOLUME, BUTTON_CLICK_VOLUME);
+
         cardClickSound = MediaPlayer.create(this, R.raw.user_card_click_sound);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
         cardClickSound.setVolume(USER_CARD_CLICK_VOLUME, USER_CARD_CLICK_VOLUME);
@@ -304,8 +305,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
             if (fourCycle.contains(R.drawable.king_of_hearts)) {
-                totalScores[winnerOfCorrespondingTrick] -= 50;// Actually it's a lost but...
-                playersScores[winnerOfCorrespondingTrick][currentRound] -= 50;
+                totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
+                playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
             }
             else {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points

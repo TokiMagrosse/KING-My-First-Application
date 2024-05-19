@@ -51,16 +51,6 @@ public class MusicService extends Service {
         return START_STICKY;
     }
 
-    /*@Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
-        unregisterReceiver(shutdownReceiver);
-    }*/
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;

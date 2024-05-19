@@ -60,43 +60,6 @@ public class LogInActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Set both start and end drawables programmatically
-        /*Drawable lockDrawable = ContextCompat.getDrawable(this, R.drawable.password_logo_icon_small);
-        Drawable visibilityOffDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_off_icon_small);
-        Drawable visibilityOnDrawable = ContextCompat.getDrawable(this, R.drawable.visibility_on_icon_small);
-        password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
-
-        // Set touch listener for the visibility toggle
-        final boolean[] isVisible = {false}; // Variable to track password visibility
-        password.setOnTouchListener((v, event) -> {
-            final int right = 2;
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                int drawableWidth = password.getCompoundDrawables()[right].getBounds().width();
-                if (drawableWidth > 0) { // Ensure the compound drawable exists
-                    int drawableRight = password.getRight() - password.getPaddingRight(); // Adjusted calculation for right position
-                    if (event.getRawX() >= drawableRight - drawableWidth) {
-                        int selection = password.getSelectionEnd();
-                        if (isVisible[0]) {
-                            // Setting visibility eye drawable image here
-                            password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOffDrawable, null);
-                            // For hide password
-                            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                            isVisible[0] = false;
-                        } else {
-                            // Setting visibility eye drawable image here
-                            password.setCompoundDrawablesRelativeWithIntrinsicBounds(lockDrawable, null, visibilityOnDrawable, null);
-                            // For showing password
-                            password.setTransformationMethod(null); // Set null to show the password
-                            isVisible[0] = true;
-                        }
-                        password.setSelection(selection);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });*/
-
         loginButton.setOnClickListener(v -> checkCredentials());
     }
 
