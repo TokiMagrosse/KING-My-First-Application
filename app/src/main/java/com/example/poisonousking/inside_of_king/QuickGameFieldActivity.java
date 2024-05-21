@@ -42,8 +42,6 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
-
-
     private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
     private MediaPlayer cardClickSound, buttonClickSound;
     private static final float USER_CARD_CLICK_VOLUME = 0.3f;
@@ -282,14 +280,15 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(this::botsTurn, 1000);
     }
 
-    /*private void userTurnButNotFirst(int cardIndex, int centerCellIndex) {
+    private void userTurnButNotFirst(int cardIndex, int centerCellIndex) {
         fourCenterCellViews[centerCellIndex].setImageResource(userCards.get(cardIndex));
         cardClickSound.start();
         fourCenterCellViews[centerCellIndex].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
-    }*/
+        disableUserCardClicks();
+    }
 
     private void disableUserCardClicks() {
         for (ImageView cardView : userCardViews) {
@@ -316,14 +315,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
             winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
             if (fourCycle.contains(R.drawable.king_of_hearts)) {
-                totalScores[winnerOfCorrespondingTrick] -= 50;// Actually it's a lost but...
-                playersScores[winnerOfCorrespondingTrick][currentRound] -= 50;
+                totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
+                playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
             }
             else {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
                 playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
             }
-        }, 2750); // Third bot turn
+        }, 2250); // Third bot turn
 
         new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 3250);
 
@@ -434,7 +433,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                          List<Integer> playerDiamonds, List<Integer> playerHearts, int centerCellIndex) {
         int botCurrentCardID, list_size = playerCards.size();
 
-        // Checking the user card suit so bot can determine what card to throw
+        // Checking the first player card suit so others can determine what card to throw
         if (Spades.contains(firstCenterCardID)) {
             if (playerSpades.isEmpty()) {
                 if (playerCards.contains(R.drawable.king_of_hearts)) {
@@ -491,41 +490,77 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         }
     }
 
-    /*private void ifTheTrickWinsFirstBot() {
+    private void ifTheTrickWinsFirstBot() {
         disableUserCardClicks();
         int firstBotRandomCardID;
         int randCard = firstBotCards.size();
         firstBotRandomCardID = firstBotCards.get(randomizer.nextInt(randCard));
 
         new Handler().postDelayed(() -> moveCardToCenter(firstBotRandomCardID, 0, fourCycle), 750);
+
         new Handler().postDelayed(() -> {
             turners[0].setVisibility(View.INVISIBLE);
             turners[1].setVisibility(View.VISIBLE);
             botTurn(firstBotRandomCardID, secondBotCards, secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts, 1);
         }, 1500);
+
         new Handler().postDelayed(() -> {
             turners[1].setVisibility(View.INVISIBLE);
             turners[2].setVisibility(View.VISIBLE);
             botTurn(firstBotRandomCardID, thirdBotCards, thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts, 2);
         }, 2750);
 
-        for (int i = 0; i < userCards.size(); i++) {
-            if (!Deck.cardSuitList(firstBotRandomCardID, Spades, Clubs, Diamonds, Hearts).contains(userCards.get(i))) {
-
+        new Handler().postDelayed(() -> {
+            turners[2].setVisibility(View.INVISIBLE);
+            for (int i = 0; i < userCards.size(); i++) {
+                int cardIndex = i;
+                userCardViews[i].setOnClickListener(v -> userTurnButNotFirst(cardIndex, 3));
             }
-            int cardIndex = i;
-            userCardViews[i].setOnClickListener(v -> userTurnButNotFirst(cardIndex, 0));
-        }
+            if (fourCycle.size() == 4) {
+                winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
+                if (fourCycle.contains(R.drawable.king_of_hearts)) {
+                    totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
+                    playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
+                }
+                else {
+                    totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
+                    playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
+                }
+            }
+        }, 3000);
 
-    }*/
+        new Handler().postDelayed(() -> scoreViews[winnerOfCorrespondingTrick].setText(String.valueOf(totalScores[winnerOfCorrespondingTrick])), 3500);
 
-    /*private void ifTheTrickWinsSecondBot() {
+        new Handler().postDelayed(this::clearCenterCardsFromCenterView, 4000);
 
-    }*/
+        // Moving center cards to trash bin
+        new Handler().postDelayed(() -> {
+            userCards.set(userCards.indexOf(fourCycle.get(0)), -1);
+            Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).
+                    set(Deck.cardSuitList(fourCycle.get(0), userSpades, userClubs, userDiamonds, userHearts).indexOf(fourCycle.get(0)),
+                            null);
 
-    /*private void ifTheTrickWinsThirdBot() {
+            firstBotCards.remove(fourCycle.get(1));
+            Deck.cardSuitList(fourCycle.get(1), firstBotSpades, firstBotClubs, firstBotDiamonds, firstBotHearts).remove(fourCycle.get(1));
 
-    }*/
+            secondBotCards.remove(fourCycle.get(2));
+            Deck.cardSuitList(fourCycle.get(2), secondBotSpades, secondBotClubs, secondBotDiamonds, secondBotHearts).remove(fourCycle.get(2));
+
+            thirdBotCards.remove(fourCycle.get(3));
+            Deck.cardSuitList(fourCycle.get(3), thirdBotSpades, thirdBotClubs, thirdBotDiamonds, thirdBotHearts).remove(fourCycle.get(3));
+
+            fourCycle.clear();
+        }, 4250);
+
+    }
+
+    private void ifTheTrickWinsSecondBot() {
+
+    }
+
+    private void ifTheTrickWinsThirdBot() {
+
+    }
 
     private void moveCardToCenter(Integer card, int playerIndex, @NonNull List<Integer> four_cycle) {
         // Visual logic to move card to center, perhaps setting image resources

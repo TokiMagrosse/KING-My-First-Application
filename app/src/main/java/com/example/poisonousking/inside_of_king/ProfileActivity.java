@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -28,6 +27,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -47,7 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
-    TextView rating, rank, level, wins, loses;
+    TextView rating, rank, level, total_games, wins, loses;
+    private int total_games_count, won_games_count, lost_games_count;
     ImageView profile_picture;
     static String userID;
     Button change_profile, save_changes, back_to_main;
@@ -66,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         rating = findViewById(R.id.rating);
         rank = findViewById(R.id.rank);
         level = findViewById(R.id.level);
+        total_games = findViewById(R.id.total_games);
         wins = findViewById(R.id.wins);
         loses = findViewById(R.id.loses);
         profile_picture = findViewById(R.id.your_profile_picture);
@@ -75,6 +77,12 @@ public class ProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.username_in_profile);
         email_address = findViewById(R.id.email_in_profile);
         id = findViewById(R.id.id_in_profile);
+
+        getUserStats(userID);
+
+        total_games.setText(String.valueOf(total_games_count));
+        wins.setText(String.valueOf(won_games_count));
+        loses.setText(String.valueOf(lost_games_count));
 
         dialog_change_profile = new Dialog(ProfileActivity.this);
         dialog_change_profile.setContentView(R.layout.dialog_change_profile);
@@ -245,6 +253,31 @@ public class ProfileActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> {
             // Handle failure to fetch profile image URL
             Toast.makeText(this, "Failed to fetch profile image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void getUserStats(String documentId) {
+        DocumentReference docRef = f_store.collection("all my users").document(documentId);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
+                    won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
+                    lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
+
+                    // Log to verify
+                    Log.d("QuickGameActivity", "Total games: " + total_games_count);
+                    Log.d("QuickGameActivity", "Won games: " + won_games_count);
+                    Log.d("QuickGameActivity", "Lost games: " + lost_games_count);
+
+                    // Now you can use these variables in your activity
+                } else {
+                    Log.d("QuickGameActivity", "No such document");
+                }
+            } else {
+                Log.d("QuickGameActivity", "get failed with ", task.getException());
+            }
         });
     }
 
