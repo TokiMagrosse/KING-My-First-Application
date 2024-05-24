@@ -27,8 +27,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.Contract;
@@ -36,12 +39,16 @@ import org.jetbrains.annotations.Contract;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    FirebaseFirestore fStore;
+    public int total_games_count, won_games_count, lost_games_count;
     private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
     private MediaPlayer cardClickSound, buttonClickSound;
     private static final float USER_CARD_CLICK_VOLUME = 0.3f;
@@ -104,6 +111,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        fStore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         userID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         leave_the_game_forever = findViewById(R.id.leave_the_game_forever);
@@ -143,6 +151,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         userCardDoorViews[5] = findViewById(R.id.card_door_6);
         userCardDoorViews[6] = findViewById(R.id.card_door_7);
         userCardDoorViews[7] = findViewById(R.id.card_door_8);
+
+        getUserStats(userID);
 
         leave_the_game_forever.setOnClickListener(v -> {
             buttonClickSound.start();
@@ -369,6 +379,10 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
+                        if (gameWinnerOrMaxNumberIndexes(totalScores).contains(0))
+                            updateGameCountsOnWin(userID);
+                        else
+                            updateGameCountsOnLoss(userID);
                         dialog_final_results.dismiss();
                     });
                     for (int w = 0; w < gameWinnerOrMaxNumberIndexes(totalScores).size(); w++)
@@ -571,8 +585,61 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         four_cycle.add(card);
     }
 
+    private void getUserStats(String documentId) {
+        DocumentReference docRef = fStore.collection("all my users").document(documentId);
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
+                    won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
+                    lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
+
+                    // Log to verify
+                    Log.d("QuickGameActivity", "Total games: " + total_games_count);
+                    Log.d("QuickGameActivity", "Won games: " + won_games_count);
+                    Log.d("QuickGameActivity", "Lost games: " + lost_games_count);
+
+                    // Now you can use these variables in your activity
+                } else {
+                    Log.d("QuickGameActivity", "No such document");
+                }
+            } else {
+                Log.d("QuickGameActivity", "get failed with ", task.getException());
+            }
+        });
+    }
+
+    // Method to update game counts when a user wins
+    private void updateGameCountsOnWin(String documentId) {
+        total_games_count++;
+        won_games_count++;
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Total games count", total_games_count);
+        updates.put("Won games count", won_games_count);
+
+        fStore.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("QuickGameActivity", "Error updating document", e));
+    }
+
+    // Method to update game counts when a user loses
+    private void updateGameCountsOnLoss(String documentId) {
+        total_games_count++;
+        lost_games_count++;
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Total games count", total_games_count);
+        updates.put("Lost games count", lost_games_count);
+
+        fStore.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("QuickGameActivity", "Error updating document", e));
+    }
+
     private void fetchAndDisplayProfileImage(ImageView imageView) {
-        DocumentReference userDocRef = FirebaseFirestore.getInstance().collection("all my users").document(userID);
+        DocumentReference userDocRef = fStore.collection("all my users").document(userID);
 
         userDocRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {

@@ -59,11 +59,16 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        initializeViews();
+        fetchAndDisplayProfileImage();
+    }
+
+    private void initializeViews() {
         f_auth = FirebaseAuth.getInstance();
         f_store = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         user = f_auth.getCurrentUser();
-        userID = Objects.requireNonNull(f_auth.getCurrentUser()).getUid();
+        userID = Objects.requireNonNull(user).getUid();
         rating = findViewById(R.id.rating);
         rank = findViewById(R.id.rank);
         level = findViewById(R.id.level);
@@ -79,10 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
         id = findViewById(R.id.id_in_profile);
 
         getUserStats(userID);
-
-        total_games.setText(String.valueOf(total_games_count));
-        wins.setText(String.valueOf(won_games_count));
-        loses.setText(String.valueOf(lost_games_count));
 
         dialog_change_profile = new Dialog(ProfileActivity.this);
         dialog_change_profile.setContentView(R.layout.dialog_change_profile);
@@ -110,13 +111,13 @@ public class ProfileActivity extends AppCompatActivity {
         change_image.setOnClickListener(v -> {
             buttonClickSound.start();
             ImagePicker.with(this)
-                .cropSquare()
-                .compress(518)
-                .maxResultSize(518, 518)
-                .createIntent(intent -> {
-                    image_pick_launcher.launch(intent);
-                    return null;
-                });
+                    .cropSquare()
+                    .compress(518)
+                    .maxResultSize(518, 518)
+                    .createIntent(intent -> {
+                        image_pick_launcher.launch(intent);
+                        return null;
+                    });
         });
 
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
@@ -163,6 +164,10 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        total_games.setText(String.valueOf(total_games_count));
+        wins.setText(String.valueOf(won_games_count));
+        loses.setText(String.valueOf(lost_games_count));
+
         // Set up the back to main button
         back_to_main.setOnClickListener(view -> {
             buttonClickSound.start();
@@ -186,8 +191,6 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
             }
         });
-
-        fetchAndDisplayProfileImage();
     }
 
     // Method to set the profile picture in the ImageView
@@ -257,8 +260,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getUserStats(String documentId) {
-        DocumentReference docRef = f_store.collection("all my users").document(documentId);
-        docRef.get().addOnCompleteListener(task -> {
+        DocumentReference gameCountDocRef = f_store.collection("all my users").document(documentId);
+        gameCountDocRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
