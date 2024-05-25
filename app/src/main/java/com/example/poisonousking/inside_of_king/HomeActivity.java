@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,12 +25,17 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public int gold_coins_count, user_rating_number;
+    FirebaseFirestore f_store;
     // Define the volume level you want (0.0 - 1.0 range)
     MediaPlayer buttonClickSound;
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
@@ -39,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button play_button_1, play_button_2, play_button_3, menu_button, add_poison_coins;
     ImageView your_profile_picture;
-    TextView your_username;
+    TextView your_username, gold_coins, my_rating;
     FirebaseUser user;
     static String userID;
     Dialog dialog_profile_menu, quick_game_dialog, classic_game_dialog, big_game_dialog, log_out_dialog, delete_account_dialog;
@@ -52,11 +58,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Initialize Firebase
-        FirebaseFirestore f_store = FirebaseFirestore.getInstance();
+        f_store = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         userID = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
+        gold_coins = findViewById(R.id.gold_coins_count);
         play_button_1 = findViewById(R.id.play_button_1);
         play_button_2 = findViewById(R.id.play_button_2);
         play_button_3 = findViewById(R.id.play_button_3);
@@ -67,9 +74,16 @@ public class HomeActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
+        // getUserStats(userID);
+
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
         buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
+
+        /*add_poison_coins.setOnClickListener(v -> {
+            if (gold_coins_count <= 1000) getHundredCoinsForFree(userID);
+            else Toast.makeText(this, "You have more than 1000 coins to be able to play", Toast.LENGTH_SHORT).show();
+        });*/
 
         Intent musicIntent = new Intent(this, MusicService.class);
         startService(musicIntent);
@@ -375,5 +389,41 @@ public class HomeActivity extends AppCompatActivity {
             // Handle failure to fetch profile image URL
             Toast.makeText(this, "Failed to fetch profile image URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void getUserStats(String documentId) {
+        DocumentReference gameCountDocRef = f_store.collection("all my users").document(documentId);
+        gameCountDocRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    gold_coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
+                    user_rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
+
+                    // Update the TextViews with the fetched data on the main thread
+                    runOnUiThread(() -> {
+                        gold_coins.setText(String.valueOf(gold_coins_count));
+                        my_rating.setText(String.valueOf(user_rating_number));
+                    });
+
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show());
+                }
+            } else {
+                Log.d("HomeActivity", "get failed with ", task.getException());
+            }
+        });
+    }
+
+    // Method to update game counts when a user wins
+    private void getHundredCoinsForFree(String documentId) {
+        gold_coins_count += 100;
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Coins", gold_coins_count);
+
+        f_store.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("HomeActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("HomeActivity", "Error updating document", e));
     }
 }

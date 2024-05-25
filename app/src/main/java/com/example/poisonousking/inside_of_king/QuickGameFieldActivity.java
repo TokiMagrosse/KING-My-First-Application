@@ -373,16 +373,16 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 else {
                     score_table_title.setText(R.string.final_round);
                     play_again_button.setVisibility(View.GONE);
+                    if (gameWinnerOrMaxNumberIndexes(totalScores).contains(0))
+                        updateGameCountsOnWin(userID);
+                    else
+                        updateGameCountsOnLoss(userID);
                     exit_button.setOnClickListener(v -> {
                         buttonClickSound.start();
                         Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
-                        if (gameWinnerOrMaxNumberIndexes(totalScores).contains(0))
-                            updateGameCountsOnWin(userID);
-                        else
-                            updateGameCountsOnLoss(userID);
                         dialog_final_results.dismiss();
                     });
                     for (int w = 0; w < gameWinnerOrMaxNumberIndexes(totalScores).size(); w++)
@@ -569,11 +569,11 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     }
 
     private void ifTheTrickWinsSecondBot() {
-
+        // NO LOGIC YET...
     }
 
     private void ifTheTrickWinsThirdBot() {
-
+        // NO LOGIC YET...
     }
 
     private void moveCardToCenter(Integer card, int playerIndex, @NonNull List<Integer> four_cycle) {

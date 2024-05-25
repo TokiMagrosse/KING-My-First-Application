@@ -9,23 +9,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
+import com.example.poisonousking.outside_of_king.ChangePasswordActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,8 +41,11 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Dialog dialog_change_profile;
+    Dialog dialog_change_profile, dialog_change_username, dialog_change_email;
+    EditText new_username, new_email;
     Button change_username, change_email, change_password, change_image, close_change_dialog;
+    Button apply_new_username, close_username_dialog;
+    Button apply_new_email, close_email_dialog;
     // Define the volume level you want (0.0 - 1.0 range)
     MediaPlayer buttonClickSound;
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
@@ -104,6 +112,38 @@ public class ProfileActivity extends AppCompatActivity {
         change_image = dialog_change_profile.findViewById(R.id.change_users_profile_image);
         close_change_dialog = dialog_change_profile.findViewById(R.id.close_change_profile_dialog);
 
+        dialog_change_username = new Dialog(ProfileActivity.this);
+        dialog_change_username.setContentView(R.layout.dialog_change_username);
+        Objects.requireNonNull(dialog_change_username.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog_change_username.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(this, R.drawable.custom_dialog_bg));
+        dialog_change_username.setCancelable(false);
+
+        Window change_email_window = dialog_change_username.getWindow();
+        if (change_email_window != null) {
+            change_email_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            change_email_window.setGravity(Gravity.CENTER); // Set the gravity to top
+            change_email_window.setWindowAnimations(R.style.DialogAnimation); // Set the animation
+        }
+
+        new_username = dialog_change_username.findViewById(R.id.new_username);
+        apply_new_username = dialog_change_username.findViewById(R.id.apply_new_username);
+        close_username_dialog = dialog_change_username.findViewById(R.id.close_username_dialog);
+
+        apply_new_username.setOnClickListener(v -> {
+            buttonClickSound.start();
+            applyNewUsername(new_username);
+        });
+
+        change_username.setOnClickListener(v -> {
+            buttonClickSound.start();
+            dialog_change_username.show();
+        });
+
+        close_username_dialog.setOnClickListener(v -> {
+            buttonClickSound.start();
+            dialog_change_username.dismiss();
+        });
+
         close_change_dialog.setOnClickListener(v -> {
             buttonClickSound.start();
             dialog_change_profile.dismiss();
@@ -118,6 +158,10 @@ public class ProfileActivity extends AppCompatActivity {
                         image_pick_launcher.launch(intent);
                         return null;
                     });
+        });
+        change_password.setOnClickListener(task -> {
+            Intent i = new Intent(this, ChangePasswordActivity.class);
+            startActivity(i);
         });
 
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
@@ -164,10 +208,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        total_games.setText(String.valueOf(total_games_count));
-        wins.setText(String.valueOf(won_games_count));
-        loses.setText(String.valueOf(lost_games_count));
-
         // Set up the back to main button
         back_to_main.setOnClickListener(view -> {
             buttonClickSound.start();
@@ -188,9 +228,45 @@ public class ProfileActivity extends AppCompatActivity {
                 // Upload the selected image to Firebase Storage
                 uploadProfileImageToStorage(selected_image_uri);
             } else {
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You haven't changed anything", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void applyNewUsername(@NonNull EditText newUsername) {
+        String checkUsername = newUsername.getText().toString().trim();
+
+        boolean isValid = true;
+
+        if (checkUsername.isEmpty()) {
+            showError(newUsername, "Please enter your username");
+            isValid = false;
+        }
+        else if (checkUsername.contains("-") ||
+                checkUsername.contains("*") || checkUsername.contains("&") ||
+                checkUsername.contains("#") || checkUsername.contains("%") ||
+                checkUsername.contains("@") || checkUsername.contains("$") ||
+                checkUsername.contains("|") || checkUsername.contains("/") ||
+                checkUsername.contains("^") || checkUsername.contains("?") ||
+                checkUsername.contains("(") || checkUsername.contains(")") ||
+                checkUsername.contains("+") || checkUsername.contains("=") ||
+                checkUsername.contains("<") || checkUsername.contains(">") ||
+                checkUsername.contains(",") || checkUsername.contains("'")) {
+            showError(newUsername, "Your username can contain only specific character underscore '_'");
+            isValid = false;
+        }
+        else if (checkUsername.contains(" ")) {
+            showError(newUsername, "Your username should not contain spaces");
+            isValid = false;
+        }
+        else if (checkUsername.length() < 5 || checkUsername.length() > 23) {
+            showError(newUsername, "Your username length range is from 5 characters to 23");
+            isValid = false;
+        }
+
+        if (isValid) {
+            updateUsername(checkUsername);
+        }
     }
 
     // Method to set the profile picture in the ImageView
@@ -270,18 +346,62 @@ public class ProfileActivity extends AppCompatActivity {
                     lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
 
                     // Log to verify
-                    Log.d("QuickGameActivity", "Total games: " + total_games_count);
-                    Log.d("QuickGameActivity", "Won games: " + won_games_count);
-                    Log.d("QuickGameActivity", "Lost games: " + lost_games_count);
+                    Log.d("ProfileActivity", "Total games: " + total_games_count);
+                    Log.d("ProfileActivity", "Won games: " + won_games_count);
+                    Log.d("ProfileActivity", "Lost games: " + lost_games_count);
 
-                    // Now you can use these variables in your activity
+                    // Update the TextViews with the fetched data on the main thread
+                    runOnUiThread(() -> {
+                        total_games.setText(String.valueOf(total_games_count));
+                        wins.setText(String.valueOf(won_games_count));
+                        loses.setText(String.valueOf(lost_games_count));
+                    });
+
                 } else {
-                    Log.d("QuickGameActivity", "No such document");
+                    runOnUiThread(() -> Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show());
                 }
             } else {
-                Log.d("QuickGameActivity", "get failed with ", task.getException());
+                Log.d("ProfileActivity", "get failed with ", task.getException());
             }
         });
     }
 
+    private void showError(@NonNull EditText input, String errorText) {
+        input.setError(errorText);
+        input.requestFocus();
+    }
+
+    private void updateUsername(String newUsername) {
+        FirebaseUser user = f_auth.getCurrentUser();
+
+        if (user != null) {
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(newUsername)
+                    .build();
+
+            user.updateProfile(profileUpdates)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ProfileActivity.this, "Username updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "Failed to update username", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void updateEmail(String newEmail) {
+        FirebaseUser user = f_auth.getCurrentUser();
+
+        if (user != null) {
+            user.updateEmail(newEmail)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(ProfileActivity.this, "Email updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "Failed to update email", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
 }

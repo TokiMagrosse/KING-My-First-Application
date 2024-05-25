@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500sp"
+    android:layout_height="225sp"
+    app:cardElevation="10sp"
+    android:layout_gravity="center"
+    android:backgroundTint="@color/grey_1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15sp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="CHANGE YOUR USERNAME"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/alata"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15sp"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/new_username"
+            android:layout_width="457.5sp"
+            android:layout_height="48sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/rounded_corner"
+            android:drawableStart="@drawable/baseline_account_circle_small"
+            android:drawablePadding="10sp"
+            android:fontFamily="@font/alata"
+            android:hint="@string/new_username"
+            android:inputType="textEmailAddress"
+            android:padding="12sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="457.5sp"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/apply_new_username"
+                android:textSize="15sp"
+                android:text="APPLY"
+                app:cornerRadius="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/alata"
+                android:backgroundTint="@color/green_background"
+                android:layout_width="200sp"
+                android:layout_height="50sp"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/close_username_dialog"
+                android:textSize="15sp"
+                android:text="CLOSE"
+                app:cornerRadius="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:fontFamily="@font/alata"
+                android:backgroundTint="@color/red_4"
+                android:layout_width="200sp"
+                android:layout_height="50sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

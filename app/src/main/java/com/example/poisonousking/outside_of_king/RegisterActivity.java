@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                 checkUsername.contains("+") || checkUsername.contains("=") ||
                 checkUsername.contains("<") || checkUsername.contains(">") ||
                 checkUsername.contains(",") || checkUsername.contains("'")) {
-            showError(username, "Your username can contain only specific character ( _ )");
+            showError(username, "Your username can contain only specific character underscore '_'");
             isValid = false;
         }
         else if (checkUsername.contains(" ")) {
