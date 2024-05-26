@@ -74,4 +74,17 @@
     <string name="quick_game_description">Only 5 to 7 minutes. This mode will help beginners to roughly grasp the essence of the game. Here, one of the six possible games is randomly selected, which is played four times.</string>
     <string name="no_king">NO KING</string>
     <string name="new_username">Enter your new username</string>
+
+    <string-array name="titles">
+        <item>Newbie</item>
+        <item>Beginner</item>
+        <item>Trainee</item>
+        <item>Student</item>
+        <item>Expert</item>
+        <item>Master</item>
+        <item>Veteran</item>
+        <item>Captain</item>
+        <item>Lord</item>
+        <item>KING</item>
+    </string-array>
 </resources>

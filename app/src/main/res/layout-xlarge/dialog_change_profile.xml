@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="360sp"
-    android:layout_height="200sp"
+    android:layout_width="550sp"
+    android:layout_height="187.5sp"
     android:layout_gravity="center"
     android:backgroundTint="@color/grey_1"
-    app:cardCornerRadius="10sp">
+    app:cardCornerRadius="15sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
             android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +30,7 @@
                 android:layout_height="47.5sp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20sp"
+                android:visibility="gone"
                 android:backgroundTint="@color/grey"
                 android:fontFamily="@font/alata"
                 android:text="Username"
@@ -50,6 +52,7 @@
                 android:layout_marginEnd="20sp"
                 android:backgroundTint="@color/grey"
                 android:fontFamily="@font/alata"
+                android:visibility="gone"
                 android:text="Email address"
                 android:textColor="@color/grey_1"
                 android:textSize="15sp"
@@ -62,26 +65,26 @@
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/close_change_profile_dialog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.09">
 
             <Button
                 android:id="@+id/change_users_password"
-                android:layout_width="150sp"
-                android:layout_height="47.5sp"
+                android:layout_width="200sp"
+                android:layout_height="70sp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20sp"
                 android:backgroundTint="@color/grey"
                 android:fontFamily="@font/alata"
                 android:text="Password"
                 android:textColor="@color/grey_1"
-                android:textSize="15sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:cornerRadius="10sp" />
 
@@ -92,15 +95,15 @@
 
             <Button
                 android:id="@+id/change_users_profile_image"
-                android:layout_width="150sp"
-                android:layout_height="47.5sp"
+                android:layout_width="200sp"
+                android:layout_height="70sp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="20sp"
                 android:backgroundTint="@color/grey"
                 android:fontFamily="@font/alata"
                 android:text="Profile Image"
                 android:textColor="@color/grey_1"
-                android:textSize="15sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:cornerRadius="10sp" />
 
@@ -108,21 +111,24 @@
 
         <Button
             android:id="@+id/close_change_profile_dialog"
-            android:layout_width="125sp"
-            android:layout_height="41.5sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
+            android:layout_width="195sp"
+            android:layout_height="60sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="2.5sp"
             android:backgroundTint="@color/red_4"
             android:fontFamily="@font/alata"
+            android:padding="3.5sp"
             android:text="Close"
             android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:cornerRadius="7.5sp"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.895" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
