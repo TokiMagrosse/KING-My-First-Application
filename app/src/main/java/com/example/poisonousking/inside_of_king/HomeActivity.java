@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         your_profile_picture = findViewById(R.id.your_profile_picture);
         your_username = findViewById(R.id.your_username);
         gold_coins = findViewById(R.id.gold_coins_count);
+        my_rating = findViewById(R.id.my_rating);
         play_button_1 = findViewById(R.id.play_button_1);
         play_button_2 = findViewById(R.id.play_button_2);
         play_button_3 = findViewById(R.id.play_button_3);
@@ -74,16 +76,16 @@ public class HomeActivity extends AppCompatActivity {
         menu_button = findViewById(R.id.menu_button);
         user = auth.getCurrentUser();
 
-        // getUserStats(userID);
+        getUserStats(userID);
 
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
         // Set the volume of the mediaPlayer to a lower level (background music volume)
         buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
 
-        /*add_poison_coins.setOnClickListener(v -> {
-            if (gold_coins_count <= 1000) getHundredCoinsForFree(userID);
-            else Toast.makeText(this, "You have more than 1000 coins to be able to play", Toast.LENGTH_SHORT).show();
-        });*/
+        add_poison_coins.setOnClickListener(v -> {
+            if (gold_coins_count <= 600) getHundredCoinsForFree(userID);
+            else Toast.makeText(this, "You have enough coins to play", Toast.LENGTH_SHORT).show();
+        });
 
         Intent musicIntent = new Intent(this, MusicService.class);
         startService(musicIntent);
@@ -92,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             buttonClickSound.start();
             Intent intentTwo = new Intent(this, MusicService.class);
             stopService(intentTwo);
+            userBet(userID);
             Intent intent = new Intent(HomeActivity.this, QuickGameFieldActivity.class);
             startActivity(intent);
             Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
@@ -228,6 +231,13 @@ public class HomeActivity extends AppCompatActivity {
             delete_window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             delete_window.setGravity(Gravity.CENTER); // Set the gravity to top
         }
+
+        language.setOnClickListener(v -> {
+            buttonClickSound.start();
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            dialog_profile_menu.dismiss();
+        });
 
         delete_account.setOnClickListener(v -> {
             buttonClickSound.start();
@@ -397,13 +407,13 @@ public class HomeActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    gold_coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
                     user_rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
+                    gold_coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
 
                     // Update the TextViews with the fetched data on the main thread
                     runOnUiThread(() -> {
-                        gold_coins.setText(String.valueOf(gold_coins_count));
                         my_rating.setText(String.valueOf(user_rating_number));
+                        gold_coins.setText(String.valueOf(gold_coins_count));
                     });
 
                 } else {
@@ -413,6 +423,16 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("HomeActivity", "get failed with ", task.getException());
             }
         });
+    }
+
+    private void userBet(String documentId) {
+        gold_coins_count -= 100;
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Coins", gold_coins_count);
+
+        f_store.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("QuickGameActivity", "Error updating document", e));
     }
 
     // Method to update game counts when a user wins

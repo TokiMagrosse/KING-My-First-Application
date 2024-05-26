@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -41,11 +40,10 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    Dialog dialog_change_profile, dialog_change_username, dialog_change_email;
-    EditText new_username, new_email;
+    Dialog dialog_change_profile, dialog_change_username;
+    EditText new_username;
     Button change_username, change_email, change_password, change_image, close_change_dialog;
     Button apply_new_username, close_username_dialog;
-    Button apply_new_email, close_email_dialog;
     // Define the volume level you want (0.0 - 1.0 range)
     MediaPlayer buttonClickSound;
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
@@ -55,8 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
-    TextView rating, rank, level, total_games, wins, loses;
-    private int total_games_count, won_games_count, lost_games_count;
+    TextView rating, rank, p_coins, total_games, wins, loses;
+    private int total_games_count, won_games_count, lost_games_count, coins_count, rating_number;
     ImageView profile_picture;
     static String userID;
     Button change_profile, save_changes, back_to_main;
@@ -79,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         userID = Objects.requireNonNull(user).getUid();
         rating = findViewById(R.id.rating);
         rank = findViewById(R.id.rank);
-        level = findViewById(R.id.level);
+        p_coins = findViewById(R.id.level);
         total_games = findViewById(R.id.total_games);
         wins = findViewById(R.id.wins);
         loses = findViewById(R.id.loses);
@@ -341,6 +339,8 @@ public class ProfileActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
+                    coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
                     total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
                     won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
                     lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
@@ -352,6 +352,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                     // Update the TextViews with the fetched data on the main thread
                     runOnUiThread(() -> {
+                        rating.setText(String.valueOf(rating_number));
+                        p_coins.setText(String.valueOf(coins_count));
                         total_games.setText(String.valueOf(total_games_count));
                         wins.setText(String.valueOf(won_games_count));
                         loses.setText(String.valueOf(lost_games_count));
@@ -385,21 +387,6 @@ public class ProfileActivity extends AppCompatActivity {
                             Toast.makeText(ProfileActivity.this, "Username updated successfully", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ProfileActivity.this, "Failed to update username", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
-
-    private void updateEmail(String newEmail) {
-        FirebaseUser user = f_auth.getCurrentUser();
-
-        if (user != null) {
-            user.updateEmail(newEmail)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ProfileActivity.this, "Email updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ProfileActivity.this, "Failed to update email", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

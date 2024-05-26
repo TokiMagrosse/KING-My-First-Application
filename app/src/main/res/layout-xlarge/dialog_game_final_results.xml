@@ -777,7 +777,7 @@
                 android:backgroundTint="@color/grey"
                 android:fontFamily="@font/alata"
                 android:text="NEXT ROUND"
-                android:layout_marginStart="30sp"
+                android:visibility="gone"
                 android:textColor="@color/fucking_green"
                 android:textSize="18sp"
                 android:textStyle="bold"

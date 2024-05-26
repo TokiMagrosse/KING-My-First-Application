@@ -48,7 +48,7 @@ import java.util.Random;
 public class QuickGameFieldActivity extends AppCompatActivity {
 
     FirebaseFirestore fStore;
-    public int total_games_count, won_games_count, lost_games_count;
+    public int total_games_count, won_games_count, lost_games_count, coins_count, user_rating_number;
     private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
     private MediaPlayer cardClickSound, buttonClickSound;
     private static final float USER_CARD_CLICK_VOLUME = 0.3f;
@@ -327,8 +327,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             if (fourCycle.contains(R.drawable.king_of_hearts)) {
                 totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
                 playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
-            }
-            else {
+            } else {
                 totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
                 playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
             }
@@ -373,10 +372,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 else {
                     score_table_title.setText(R.string.final_round);
                     play_again_button.setVisibility(View.GONE);
+                    exit_button.setVisibility(View.VISIBLE);
+
+                    ratingProgressOrRegress(userID, totalScores);
                     if (gameWinnerOrMaxNumberIndexes(totalScores).contains(0))
                         updateGameCountsOnWin(userID);
                     else
                         updateGameCountsOnLoss(userID);
+
                     exit_button.setOnClickListener(v -> {
                         buttonClickSound.start();
                         Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
@@ -409,6 +412,12 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 indexesOfMaxNumbers.add(j);
 
         return indexesOfMaxNumbers;
+    }
+
+    @Contract(pure = true)
+    private int ratingUpOrDown(@NonNull int[] totalScores) {
+        int average = (totalScores[0] + (totalScores[1] + totalScores[2] + totalScores[3]) / 3) / 2;
+        return average < 0 ? (int) (average / 1.5) : (int) (average * 1.5);
     }
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
@@ -535,8 +544,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 if (fourCycle.contains(R.drawable.king_of_hearts)) {
                     totalScores[winnerOfCorrespondingTrick] -= 70;// Actually it's a lost but...
                     playersScores[winnerOfCorrespondingTrick][currentRound] -= 70;
-                }
-                else {
+                } else {
                     totalScores[winnerOfCorrespondingTrick] += 10; // Winner of that trick gets +10 points
                     playersScores[winnerOfCorrespondingTrick][currentRound] += 10;
                 }
@@ -591,6 +599,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    user_rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
+                    coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
                     total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
                     won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
                     lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
@@ -610,14 +620,27 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         });
     }
 
+    private void ratingProgressOrRegress(String documentId, int[] finalScores) {
+        user_rating_number += ratingUpOrDown(finalScores);
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Rating", user_rating_number);
+
+        fStore.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("QuickGameActivity", "Error updating document", e));
+    }
+
     // Method to update game counts when a user wins
     private void updateGameCountsOnWin(String documentId) {
+        coins_count += 300;
         total_games_count++;
         won_games_count++;
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("Total games count", total_games_count);
         updates.put("Won games count", won_games_count);
+        updates.put("Coins", coins_count);
 
         fStore.collection("all my users").document(documentId).update(updates)
                 .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))

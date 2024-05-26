@@ -177,7 +177,7 @@
                     android:backgroundTint="@color/grey_2"
                     android:fontFamily="@font/alata"
                     android:padding="5sp"
-                    android:text="Language"
+                    android:text="My Profile"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:cornerRadius="7.5sp" />
