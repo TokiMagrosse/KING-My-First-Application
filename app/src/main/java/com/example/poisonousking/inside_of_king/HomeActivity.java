@@ -184,7 +184,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
-        game_rules.setOnClickListener(v -> buttonClickSound.start());
+        game_rules.setOnClickListener(v -> {
+            buttonClickSound.start();
+            Toast.makeText(this, "Working on this", Toast.LENGTH_SHORT).show();
+        });
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
         // All necessary attributes for Log out Dialog

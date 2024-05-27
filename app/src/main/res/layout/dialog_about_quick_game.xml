@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="425sp"
-    android:layout_height="225sp"
+    android:layout_height="250sp"
     app:cardElevation="15sp"
     android:layout_gravity="center"
     android:backgroundTint="#124559"
@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="375sp"
-            android:layout_height="110sp"
+            android:layout_height="125sp"
             android:fontFamily="@font/alata"
             android:text="@string/quick_game_description"
             android:textColor="@color/grey"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.495" />
+            app:layout_constraintVertical_bias="0.504" />
 
         <Button
             android:id="@+id/quick_game_close_button"
