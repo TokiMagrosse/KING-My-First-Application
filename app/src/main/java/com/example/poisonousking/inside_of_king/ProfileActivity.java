@@ -54,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseAuth f_auth;
     FirebaseFirestore f_store;
     TextView rating, rank, p_coins, total_games, wins, loses;
+    String title;
     private int total_games_count, won_games_count, lost_games_count, coins_count, rating_number;
     ImageView profile_picture;
     static String userID;
@@ -339,19 +340,16 @@ public class ProfileActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    title = Objects.requireNonNull(document.getString("Title"));
                     rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
                     coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
                     total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
                     won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
                     lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
 
-                    // Log to verify
-                    Log.d("ProfileActivity", "Total games: " + total_games_count);
-                    Log.d("ProfileActivity", "Won games: " + won_games_count);
-                    Log.d("ProfileActivity", "Lost games: " + lost_games_count);
-
                     // Update the TextViews with the fetched data on the main thread
                     runOnUiThread(() -> {
+                        rank.setText(title);
                         rating.setText(String.valueOf(rating_number));
                         p_coins.setText(String.valueOf(coins_count));
                         total_games.setText(String.valueOf(total_games_count));

@@ -47,6 +47,9 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    protected String[] titles = {"Newbie", "Beginner", "Trainee", "Student", "Expert",
+            "Master", "Veteran", "Captain", "Lord", "KING"};
+    String title;
     FirebaseFirestore fStore;
     public int total_games_count, won_games_count, lost_games_count, coins_count, user_rating_number;
     private static final float BUTTON_CLICK_VOLUME = 0.4f; // Set volume level to 35% for background music
@@ -380,6 +383,8 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                     else
                         updateGameCountsOnLoss(userID);
 
+                    titleUpOrDown(userID, title);
+
                     exit_button.setOnClickListener(v -> {
                         buttonClickSound.start();
                         Intent intent = new Intent(QuickGameFieldActivity.this, HomeActivity.class);
@@ -599,16 +604,12 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    title = Objects.requireNonNull(document.getString("Title")); // *****
                     user_rating_number = Objects.requireNonNull(document.getLong("Rating")).intValue();
                     coins_count = Objects.requireNonNull(document.getLong("Coins")).intValue();
                     total_games_count = Objects.requireNonNull(document.getLong("Total games count")).intValue();
                     won_games_count = Objects.requireNonNull(document.getLong("Won games count")).intValue();
                     lost_games_count = Objects.requireNonNull(document.getLong("Lost games count")).intValue();
-
-                    // Log to verify
-                    Log.d("QuickGameActivity", "Total games: " + total_games_count);
-                    Log.d("QuickGameActivity", "Won games: " + won_games_count);
-                    Log.d("QuickGameActivity", "Lost games: " + lost_games_count);
 
                     // Now you can use these variables in your activity
                 } else {
@@ -618,6 +619,37 @@ public class QuickGameFieldActivity extends AppCompatActivity {
                 Log.d("QuickGameActivity", "get failed with ", task.getException());
             }
         });
+    }
+
+    private void titleUpOrDown(String documentId, String title) {
+        if (user_rating_number < 250)
+            title = titles[0];
+        if (user_rating_number >= 250 && user_rating_number < 300)
+            title = titles[1];
+        if (user_rating_number >= 300 && user_rating_number < 350)
+            title = titles[2];
+        if (user_rating_number >= 350 && user_rating_number < 400)
+            title = titles[3];
+        if (user_rating_number >= 400 && user_rating_number < 450)
+            title = titles[4];
+        if (user_rating_number >= 450 && user_rating_number < 550)
+            title = titles[5];
+        if (user_rating_number >= 550 && user_rating_number < 700)
+            title = titles[6];
+        if (user_rating_number >= 700 && user_rating_number < 850)
+            title = titles[7];
+        if (user_rating_number >= 850 && user_rating_number < 1000)
+            title = titles[8];
+        if (user_rating_number >= 1000) {
+            title = titles[9];
+        }
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("Title", title);
+
+        fStore.collection("all my users").document(documentId).update(updates)
+                .addOnSuccessListener(aVoid -> Log.d("QuickGameActivity", "DocumentSnapshot successfully updated!"))
+                .addOnFailureListener(e -> Log.w("QuickGameActivity", "Error updating document", e));
     }
 
     private void ratingProgressOrRegress(String documentId, int[] finalScores) {
