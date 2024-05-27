@@ -82,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
 
         add_poison_coins.setOnClickListener(v -> {
-            if (gold_coins_count <= 600) getHundredCoinsForFree(userID);
+            if (gold_coins_count <= 500) getHundredCoinsForFree(userID);
             else Toast.makeText(this, "You have enough coins to play", Toast.LENGTH_SHORT).show();
         });
 
@@ -93,10 +93,14 @@ public class HomeActivity extends AppCompatActivity {
             buttonClickSound.start();
             Intent intentTwo = new Intent(this, MusicService.class);
             stopService(intentTwo);
-            userBet(userID);
-            Intent intent = new Intent(HomeActivity.this, QuickGameFieldActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+            if (gold_coins_count < 100)
+                Toast.makeText(this, "You don't have enough coins", Toast.LENGTH_SHORT).show();
+            if (gold_coins_count >= 100) {
+                userBet(userID);
+                Intent intent = new Intent(HomeActivity.this, QuickGameFieldActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         play_button_2.setOnClickListener(v -> {
@@ -185,7 +189,9 @@ public class HomeActivity extends AppCompatActivity {
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
         game_rules.setOnClickListener(v -> {
             buttonClickSound.start();
-            Toast.makeText(this, "Working on this", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Haven't drown the rules yet", Toast.LENGTH_SHORT).show();
+            /*Intent intent = new Intent(this, GameRulesActivity.class);
+            startActivity(intent);*/
         });
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
