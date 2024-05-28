@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.example.poisonousking.inside_of_king.HomeActivity;
 import com.example.poisonousking.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LogInActivity extends AppCompatActivity {
 
+    public View decorView;
     ProgressBar progressBar;
     public byte passwordLength;
     private FirebaseAuth mAuth;
@@ -46,6 +49,12 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
+
         forgotPassword = findViewById(R.id.forgot_password);
         loginButton = findViewById(R.id.login_button);
         emailAddress = findViewById(R.id.email_address_or_username);
@@ -61,6 +70,13 @@ public class LogInActivity extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> checkCredentials());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void checkCredentials() {

@@ -2,6 +2,7 @@ package com.example.poisonousking.outside_of_king;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,11 +16,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.example.poisonousking.inside_of_king.ProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    public View decorView;
     private EditText edit_text_email;
     private FirebaseAuth m_auth;
     TextView from_reset_to_login;
@@ -35,6 +38,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return insets;
         });
 
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
+
         m_auth = FirebaseAuth.getInstance();
         edit_text_email = findViewById(R.id.edit_text_email);
         from_reset_to_login = findViewById(R.id.from_reset_to_login);
@@ -46,6 +55,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         });
 
         reset_password_button.setOnClickListener(v -> resetPassword());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void resetPassword() {

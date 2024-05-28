@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
+    public View decorView;
     private EditText edit_text_email;
     private FirebaseAuth m_auth;
     TextView from_reset_to_login;
@@ -23,6 +26,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
+
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
 
         m_auth = FirebaseAuth.getInstance();
         edit_text_email = findViewById(R.id.edit_text_email);
@@ -35,6 +44,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
 
         reset_password_button.setOnClickListener(v -> resetPassword());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void resetPassword() {

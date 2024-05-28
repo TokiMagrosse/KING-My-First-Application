@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,6 +34,7 @@ import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    public View decorView;
     public String Username, EmailAddress, ID;
     EditText username, email_address, register_password, confirm_password;
     Button register_button;
@@ -47,6 +49,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
 
         username = findViewById(R.id.username);
         email_address = findViewById(R.id.email_address);
@@ -69,6 +77,13 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(RegisterActivity.this, LogInActivity.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void checkCredentials() {

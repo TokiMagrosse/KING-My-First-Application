@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,7 @@ import java.util.Random;
 
 public class QuickGameFieldActivity extends AppCompatActivity {
 
+    public View decorView;
     protected String[] titles = {"Newbie", "Beginner", "Trainee", "Student", "Expert",
             "Master", "Veteran", "Captain", "Lord", "KING"};
     String title;
@@ -100,6 +102,12 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             return insets;
         });
 
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
+
         initializeViews();
 
         buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
@@ -111,6 +119,13 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         cardClickSound.setVolume(USER_CARD_CLICK_VOLUME, USER_CARD_CLICK_VOLUME);
 
         setupQuickGameKing();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void initializeViews() {

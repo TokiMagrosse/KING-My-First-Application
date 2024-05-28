@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -25,6 +26,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.example.poisonousking.outside_of_king.ChangePasswordActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +42,7 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    public View decorView;
     Dialog dialog_change_profile, dialog_change_username;
     EditText new_username;
     Button change_username, change_email, change_password, change_image, close_change_dialog;
@@ -66,8 +69,21 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
+
         initializeViews();
         fetchAndDisplayProfileImage();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void initializeViews() {

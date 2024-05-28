@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
+import com.example.poisonousking.helper_classes.HideTheBars;
 import com.example.poisonousking.helper_classes.MusicService;
 import com.example.poisonousking.outside_of_king.LogInActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -34,6 +36,7 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public View decorView;
     public int gold_coins_count, user_rating_number;
     FirebaseFirestore f_store;
     // Define the volume level you want (0.0 - 1.0 range)
@@ -56,6 +59,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            if (visibility == 0)
+                decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
+        });
 
         // Initialize Firebase
         f_store = FirebaseFirestore.getInstance();
@@ -189,9 +198,8 @@ public class HomeActivity extends AppCompatActivity {
         game_rules = dialog_profile_menu.findViewById(R.id.game_rules_button);
         game_rules.setOnClickListener(v -> {
             buttonClickSound.start();
-            Toast.makeText(this, "Haven't drown the rules yet", Toast.LENGTH_SHORT).show();
-            /*Intent intent = new Intent(this, GameRulesActivity.class);
-            startActivity(intent);*/
+            Intent intent = new Intent(this, GameRulesActivity.class);
+            startActivity(intent);
         });
         log_out = dialog_profile_menu.findViewById(R.id.logout);
 
@@ -244,7 +252,6 @@ public class HomeActivity extends AppCompatActivity {
             buttonClickSound.start();
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
-            dialog_profile_menu.dismiss();
         });
 
         delete_account.setOnClickListener(v -> {
@@ -358,6 +365,13 @@ public class HomeActivity extends AppCompatActivity {
             buttonClickSound.start();
             big_game_dialog.dismiss();
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+            decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
     }
 
     private void deleteAccountForever() {
