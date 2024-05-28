@@ -421,8 +421,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
 
     @Contract(pure = true)
     private int ratingUpOrDown(@NonNull int[] totalScores) {
-        int average = (totalScores[0] + (totalScores[1] + totalScores[2] + totalScores[3]) / 3) / 2;
-        return average < 0 ? (int) (average / 1.5) : (int) (average * 1.5);
+        return (int) (1.23052007 * ((totalScores[0] + (totalScores[1] + totalScores[2] + totalScores[3]) / 3) / 2));
     }
 
     private int determineTheWinnerOfTrick(@NonNull List<Integer> fourCenterCardIDes) {
@@ -624,23 +623,23 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void titleUpOrDown(String documentId, String title) {
         if (user_rating_number < 250)
             title = titles[0];
-        if (user_rating_number >= 250 && user_rating_number < 300)
+        if (user_rating_number >= 250 && user_rating_number < 350)
             title = titles[1];
-        if (user_rating_number >= 300 && user_rating_number < 350)
+        if (user_rating_number >= 350 && user_rating_number < 450)
             title = titles[2];
-        if (user_rating_number >= 350 && user_rating_number < 400)
-            title = titles[3];
-        if (user_rating_number >= 400 && user_rating_number < 450)
-            title = titles[4];
         if (user_rating_number >= 450 && user_rating_number < 550)
-            title = titles[5];
+            title = titles[3];
         if (user_rating_number >= 550 && user_rating_number < 700)
-            title = titles[6];
+            title = titles[4];
         if (user_rating_number >= 700 && user_rating_number < 850)
-            title = titles[7];
+            title = titles[5];
         if (user_rating_number >= 850 && user_rating_number < 1000)
+            title = titles[6];
+        if (user_rating_number >= 1000 && user_rating_number < 1200)
+            title = titles[7];
+        if (user_rating_number >= 1200 && user_rating_number < 1500)
             title = titles[8];
-        if (user_rating_number >= 1000) {
+        if (user_rating_number >= 1500) {
             title = titles[9];
         }
 
