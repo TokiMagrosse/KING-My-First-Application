@@ -107,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
             if (gold_coins_count >= 100) {
                 userBet(userID);
                 Intent intent = new Intent(HomeActivity.this, QuickGameFieldActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 Toast.makeText(this, "Your game will start soon. Good luck!", Toast.LENGTH_SHORT).show();
             }

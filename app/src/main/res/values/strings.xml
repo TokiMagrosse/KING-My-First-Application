@@ -82,6 +82,7 @@
     <string name="coins_in_rules">So that the user is able to play one of the game modes, which in this case is the only accessible Quick Game mode, he should  donate 100 out of his initial 2000 gold coins. In case of winning the user shall gain 300 gold coins, and in case of losing shall gain nothing.</string>
     <string name="rating_system_in_rules">All the users shall have an initial rating – 200 and titles which shall change depending on rating (a rating may also be negative):</string>
     <string name="rating_calculation_in_rules">The increase or decrease of a rating shall be established by the following scheme: let us suppose that upon 4 game rounds the final results will be:</string>
+    <string name="greater_then_1500">greater than or equal to 1500 – KING</string>
 
     <string-array name="titles">
         <item>Newbie</item>

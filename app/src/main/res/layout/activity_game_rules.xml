@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/intro"
                         android:textStyle="bold"
                         android:textSize="27.5sp"
                         android:layout_gravity="center_horizontal"
@@ -50,6 +51,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/intro_in_rules"
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
@@ -59,6 +61,7 @@
                         android:text="@string/intro_in_game_rules"/>
 
                     <TextView
+                        android:id="@+id/quick_game"
                         android:textStyle="bold"
                         android:layout_marginTop="15sp"
                         android:textSize="27.5sp"
@@ -70,6 +73,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/quick_game_in_rules"
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
@@ -110,6 +114,7 @@
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/case_1"
                             android:textSize="16sp"
                             android:fontFamily="@font/alata"
                             android:textColor="@color/grey"
@@ -156,6 +161,7 @@
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/case_2"
                             android:textSize="16sp"
                             android:fontFamily="@font/alata"
                             android:textColor="@color/grey"
@@ -171,6 +177,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/points_in_rules"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -191,6 +198,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/coins_in_rules"
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
@@ -200,6 +208,7 @@
                         android:text="@string/coins_in_rules"/>
 
                     <TextView
+                        android:id="@+id/rating_system"
                         android:textStyle="bold"
                         android:layout_marginTop="15sp"
                         android:textSize="27.5sp"
@@ -211,6 +220,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/rating_system_in_rules"
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
@@ -220,6 +230,7 @@
                         android:text="@string/rating_system_in_rules"/>
 
                     <TextView
+                        android:id="@+id/less_than_250"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -234,7 +245,7 @@
                         android:textColor="@color/grey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="(250; 350] – Beginner"/>
+                        android:text="[250; 350) – Beginner"/>
                     <TextView
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
@@ -292,15 +303,17 @@
                         android:layout_height="match_parent"
                         android:text="[1200; 1500) – Lord"/>
                     <TextView
+                        android:id="@+id/greater_than_1500"
                         android:layout_marginTop="2.5sp"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="greater then or equal to 1500 – KING"/>
+                        android:text="@string/greater_then_1500"/>
 
                     <TextView
+                        android:id="@+id/rating_scheme_in_rules"
                         android:textSize="16.75sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
