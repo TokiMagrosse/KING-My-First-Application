@@ -1,6 +1,7 @@
 package com.example.poisonousking.inside_of_king;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,8 @@ import com.example.poisonousking.helper_classes.HideTheBars;
 
 public class GameRulesActivity extends AppCompatActivity {
 
+    MediaPlayer buttonClickSound;
+    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f; // Set volume level to 35% for background music
     TextView intro, intro_in_rules, quick_game_in_rules, case_1, case_2, points_in_rules, coins_in_rules;
     TextView rating_system, rating_system_in_rules, less_than_250, greater_than_1500, rating_scheme_in_rules;
     TextView x_points, a_points, b_points, c_points, step_1, bap, step_2, result, the_last_one;
@@ -39,6 +42,10 @@ public class GameRulesActivity extends AppCompatActivity {
             if (visibility == 0)
                 decorView.setSystemUiVisibility(HideTheBars.hideSystemBars());
         });
+
+        buttonClickSound = MediaPlayer.create(this, R.raw.button_click_sound_1);
+        // Set the volume of the mediaPlayer to a lower level (background music volume)
+        buttonClickSound.setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME);
 
         intro = findViewById(R.id.intro);
         intro_in_rules = findViewById(R.id.intro_in_rules);
@@ -68,6 +75,7 @@ public class GameRulesActivity extends AppCompatActivity {
         back_to_main = findViewById(R.id.back_to_main);
 
         eng.setOnClickListener(task -> {
+            buttonClickSound.start();
             rus.setBackgroundColor(getResources().getColor(R.color.grey_1));
             rus.setTextColor(getResources().getColor(R.color.grey));
             eng.setBackgroundColor(getResources().getColor(R.color.grey));
@@ -98,6 +106,7 @@ public class GameRulesActivity extends AppCompatActivity {
         });
 
         arm.setOnClickListener(v -> {
+            buttonClickSound.start();
             rus.setBackgroundColor(getResources().getColor(R.color.grey_1));
             rus.setTextColor(getResources().getColor(R.color.grey));
             eng.setBackgroundColor(getResources().getColor(R.color.grey_1));
@@ -120,44 +129,46 @@ public class GameRulesActivity extends AppCompatActivity {
             a_points.setText("Առաջին բոտ – a միավոր");
             b_points.setText("Երկրորդ բոտ – b միավոր");
             c_points.setText("Երրորդ բոտ – c միավոր");
-            step_1.setText("Քայլ 1։ Հաշվվում է 3 բոտերի հավաքած միավորների միջինը․ (a + b + c) / 3 = BAP");
-            bap.setText("BAP – Bots Average Point");
-            step_2.setText("Քայլ 2։ Հաշվվում է օգտատիրոջ և բոտերի հավաքած միավորների միջինի միավորների միջինը․ (x + BAP) / 2 = R");
-            result.setText("R - Result");
+            step_1.setText("Քայլ 1։ Հաշվվում է 3 բոտերի հավաքած միավորների միջինը․");
+            bap.setText("(a + b + c) / 3 = BAP (Bots Average Point)");
+            step_2.setText("Քայլ 2։ Հաշվվում է օգտատիրոջ և բոտերի հավաքած միավորների միջինի միավորների միջինը․");
+            result.setText("(x + BAP) / 2 = R (Result)");
             the_last_one.setText("Ստացված R թիվը գումարվում է օգտատիրոջ ընթացիկ վարկանիշին (R-ը կարող է լինել և դրական, և բացասական, և 0)։");
         });
 
         rus.setOnClickListener(task -> {
+            buttonClickSound.start();
             rus.setBackgroundColor(getResources().getColor(R.color.grey));
             rus.setTextColor(getResources().getColor(R.color.grey_1));
             eng.setBackgroundColor(getResources().getColor(R.color.grey_1));
             eng.setTextColor(getResources().getColor(R.color.grey));
             arm.setBackgroundColor(getResources().getColor(R.color.grey_1));
             arm.setTextColor(getResources().getColor(R.color.grey));
-            /*intro.setText("Ներածություն");
-            intro_in_rules.setText("Այս խաղում խաղաքարտերի քանակը 32 է, իսկ խաղացողների քանակը՝ 4։ Պետք է նշել, որ խաղացողներից մեկը օգտատերն է (դու), իսկ մյուս երեքը՝ ռոբոտներ (բոտեր)։ Խաղի սկզբում բոլոր խաղացողներին տրվում է ութական խաղաքարտ։ Տվյալ պահին Quick Game, Classic Game և Big Game ռեժիմներից ակտիվ է միայն առաջինը։");
-            quick_game_in_rules.setText("Այստեղ խաղը բաղկացած է 4 խաղափուլից, և խաղը միշտ սկսելու է օգտատերը (ոչ թե ամեն խաղափուլի առաջին քայլը, այլ առաջին խաղաքարտը միշտ գցում ես դու)։ Հաղթելու համար անհրաժեշտ է հավաքել ամենաշատ միավորները։  Այդտեղ հաղթաթուղթը (կոզիրը) ամեն հերթին կախված է օգտատիրոջ գցած առաջին խաղաքարտից։ Օրինակ՝");
-            case_1.setText("Հաղթում է առաջին խաղացողը");
-            case_2.setText("Հաղթում է երրորդ խաղացողը");
-            points_in_rules.setText("Տվյալ հերթին հաղթողին տրվում է 10 միավոր, բայց եթե այդ հերթի 4 խաղաքարերից մեկը սրտի թագավորն է, հաղթողից հանվում է 70 միավոր։ Պետք է նաև նշել, որ ամեն խաղափուլում բոլոր խաղացողների հավաքած միավորների գումարը 0 է։ ");
-            coins_in_rules.setText("Որպեսզի օգտատերը կարողանա խաղալ ռեժիմներից մեկը, որը տվյալ դեպքում միակ հասանելի՝ Quick Game ռեժիմն է, նա պետք է իր սկզբնական 2000 ոսկիներից 100-ը զոհաբերի․ հաղթանակի դեպքում օգտատերը շահում է 300 ոսկի, իսկ պարտության դեպքում ՝ ոչինչ չի շահում։");
-            rating_system.setText("Վարկանշային Համակարգը և Կոչումները");
-            rating_system_in_rules.setText("Բոլոր օգտատերերը ունեն սկզբնական վարկանիշ ՝ 200 և կոչումներ, որոնք փոխվում են ՝ կախված վարկանշից (վարկանիշը կարող է լինել նաև բացասական)․");
-            less_than_250.setText("խիստ փոքր 250-ից - Newbie");
-            greater_than_1500.setText("1500-ից մեծ կամ հավասար - KING");
-            rating_scheme_in_rules.setText("Վարկանշի աճը կամ անկումը որոշվում է հետևյալ սխեմայով․ ենթադրենք ՝ 4 խաղափուլերի ավարտից հետո վերջնական արդյունքներն են․");
-            x_points.setText("Օգտատեր – x միավոր");
-            a_points.setText("Առաջին բոտ – a միավոր");
-            b_points.setText("Երկրորդ բոտ – b միավոր");
-            c_points.setText("Երրորդ բոտ – c միավոր");
-            step_1.setText("Քայլ 1։ Հաշվվում է 3 բոտերի հավաքած միավորների միջինը․ (a + b + c) / 3 = BAP");
-            bap.setText("BAP – Bots Average Point");
-            step_2.setText("Քայլ 2։ Հաշվվում է օգտատիրոջ և բոտերի հավաքած միավորների միջինի միավորների միջինը․ (x + BAP) / 2 = R");
-            result.setText("R - Result");
-            the_last_one.setText("Ստացված R թիվը գումարվում է օգտատիրոջ ընթացիկ վարկանիշին (R-ը կարող է լինել և դրական, և բացասական, և 0)։");*/
+            intro.setText("Введение");
+            intro_in_rules.setText("В данной игре количество игральных карт 32, а количество игроков – 4. Необходимо отметить, что одним из игроков является пользователь (ты), а остальные три игрока роботами (ботами). В начале игры всем игрокам раздается по восемь карт. В данный момент только один из режимов Quick Game, Classic Game и Big Game активен.");
+            quick_game_in_rules.setText("Здесь игра состоит из 4 раундов, и игру всегда начинает пользователь (не первый шаг каждого раунда) и всегда ты первым ставишь карту. Для выигрыша необходимо набрать максимальное количество очков. Здесь козырь в каждой очереди зависит от поставленной пользователем первой карты. К примеру:");
+            case_1.setText("Здесь выигрывает первый игрок");
+            case_2.setText("Здесь выигрывает третий игрок");
+            points_in_rules.setText("В данной очереди победитель получает 10 очков, но если один из 4 игральных карт данной очереди червовый король, то у победителя вычитается 70 очков. Необходимо также отметить, что набранная всеми игроками во всех раундах сумма очков равна нулю.");
+            coins_in_rules.setText("Для того чтобы пользователь смог сыграть один из режимов, который в данном случае единственно доступный Quick Game режим, он должен пожертвовать 100 из своих начальных 2000 золотых фишек; в случае выигрыша пользователь получает 300 золотых фишек, а в случае проигрыша пользователь ничего не выигрывает.");
+            rating_system.setText("Рейтинговая Система и Звания");
+            rating_system_in_rules.setText("У всех пользователей имеется начальный рейтинг – 200 и звания, которые меняются в зависимости от рейтинга (рейтинг может быть также отрицательным).");
+            less_than_250.setText("меньше чем 250 - Newbie");
+            greater_than_1500.setText("больше чем или ровно 1500 - KING");
+            rating_scheme_in_rules.setText("Рост или падение рейтинга определяется по следующей схеме: предположим к концу 4 раундов имеются следуюшие результаты:");
+            x_points.setText("Пользователь– x очков");
+            a_points.setText("Первый бот – a очков");
+            b_points.setText("Второй бот – b очков");
+            c_points.setText("Третий бот – c очков");
+            step_1.setText("Шаг 1։ Подсчитывается среднее набранных 3 ботами очков:");
+            bap.setText("(a + b + c) / 3 = BAP (Bots Average Point)");
+            step_2.setText("Шаг 2։ Подсчитывается среднее очков среднего набранных пользователем и ботами очков:");
+            result.setText("(x + BAP) / 2 = R (Result)");
+            the_last_one.setText("Полученное R число прибавляется к текущему рейтингу пользователя (R может быть положительным, отрицательным и равным нулю).");
         });
 
         back_to_main.setOnClickListener(task -> {
+            buttonClickSound.start();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
