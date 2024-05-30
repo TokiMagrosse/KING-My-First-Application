@@ -75,7 +75,6 @@
     <string name="no_king">NO KING</string>
     <string name="new_username">Enter your new username</string>
 
-
     <string name="intro_in_game_rules">In this game the number of cards is 32, and the number of players is 4. It should be mentioned that one of the players shall be the user (you), whereas the other three shall be bots. At the beginning of the game eight cards shall be handed to each player at a time. At that moment only the first of Quick Game, Classic Game and Big Game modes is active.</string>
     <string name="quick_game_in_rules">This game consists of 4 rounds, and the game shall be started by the user (not the first step of each round, but it is you who always puts the first playing card). For winning it is necessary to score the maximum points. Here the trump first of all depends on the first playing card the user has put. For example:</string>
     <string name="points_in_rules">In this turn a winner is given 10 points, but if one of 4 playing cards is the king of hearts, 70 points shall be deducted from the winner’s points. It should also be mentioned, that at each play round the sum of points gained by all players equals to zero.</string>
@@ -83,6 +82,10 @@
     <string name="rating_system_in_rules">All the users shall have an initial rating – 200 and titles which shall change depending on rating (a rating may also be negative):</string>
     <string name="rating_calculation_in_rules">The increase or decrease of a rating shall be established by the following scheme: let us suppose that upon 4 game rounds the final results will be:</string>
     <string name="greater_then_1500">greater than or equal to 1500 – KING</string>
+    <string name="intro">Introduction</string>
+    <string name="case_1">In this case it is the first player who wins</string>
+    <string name="case_2">In this case it is the third player who wins</string>
+    <string name="rating_title">The Rating System And Titles</string>
 
     <string-array name="titles">
         <item>Newbie</item>

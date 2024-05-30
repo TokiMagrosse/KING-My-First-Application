@@ -39,16 +39,18 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/intro"
                         android:textStyle="bold"
                         android:textSize="50sp"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/white"
-                        android:text="Introduction"
+                        android:text="@string/intro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/intro_in_rules"
                         android:layout_marginTop="7.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -58,6 +60,7 @@
                         android:text="@string/intro_in_game_rules"/>
 
                     <TextView
+                        android:id="@+id/quick_game"
                         android:textStyle="bold"
                         android:textSize="50sp"
                         android:layout_marginTop="25sp"
@@ -69,6 +72,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/quick_game_in_rules"
                         android:layout_marginTop="7.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -109,11 +113,12 @@
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/case_1"
                             android:textSize="22sp"
                             android:fontFamily="@font/alata"
                             android:textColor="@color/grey"
                             android:layout_gravity="center_vertical"
-                            android:text="In this case it is the first player who wins"
+                            android:text="@string/case_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -155,11 +160,12 @@
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/case_2"
                             android:textSize="22sp"
                             android:fontFamily="@font/alata"
                             android:textColor="@color/grey"
                             android:layout_gravity="center_vertical"
-                            android:text="In this case it is the third player who wins"
+                            android:text="@string/case_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
@@ -170,6 +176,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/points_in_rules"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -190,6 +197,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/coins_in_rules"
                         android:layout_marginTop="7.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -199,17 +207,19 @@
                         android:text="@string/coins_in_rules"/>
 
                     <TextView
+                        android:id="@+id/rating_system"
                         android:textStyle="bold"
                         android:layout_marginTop="25sp"
                         android:textSize="50sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
-                        android:text="The Rating System And Titles"
+                        android:text="@string/rating_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/rating_system_in_rules"
                         android:layout_marginTop="7.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -219,6 +229,7 @@
                         android:text="@string/rating_system_in_rules"/>
 
                     <TextView
+                        android:id="@+id/less_than_250"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -291,6 +302,7 @@
                         android:layout_height="match_parent"
                         android:text="[1200; 1500) – Lord"/>
                     <TextView
+                        android:id="@+id/greater_than_1500"
                         android:layout_marginTop="3.5sp"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
@@ -300,6 +312,7 @@
                         android:text="greater then or equal to 1500 – KING"/>
 
                     <TextView
+                        android:id="@+id/rating_scheme_in_rules"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -309,6 +322,7 @@
                         android:text="@string/rating_calculation_in_rules"/>
 
                     <TextView
+                        android:id="@+id/x_points"
                         android:layout_marginTop="4sp"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
@@ -317,6 +331,7 @@
                         android:layout_height="match_parent"
                         android:text="User – x points"/>
                     <TextView
+                        android:id="@+id/a_points"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -324,6 +339,7 @@
                         android:layout_height="match_parent"
                         android:text="First bot – a points"/>
                     <TextView
+                        android:id="@+id/b_points"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -331,6 +347,7 @@
                         android:layout_height="match_parent"
                         android:text="Second bot – b points"/>
                     <TextView
+                        android:id="@+id/c_points"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -339,6 +356,7 @@
                         android:text="Third bot – c points"/>
 
                     <TextView
+                        android:id="@+id/step_1"
                         android:layout_marginTop="7.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -348,6 +366,7 @@
                         android:text="Step 1. The average of points gained by 3 bots shall be calculated as:"/>
 
                     <TextView
+                        android:id="@+id/bap"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -356,6 +375,7 @@
                         android:text="(a + b + c) / 3 = BAP (Bots Average Point)"/>
 
                     <TextView
+                        android:id="@+id/step_2"
                         android:layout_marginTop="15sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -365,6 +385,7 @@
                         android:text="Step 2. The average of the average points gained by a user and bots shall be calculated as:"/>
 
                     <TextView
+                        android:id="@+id/result"
                         android:textSize="23sp"
                         android:fontFamily="@font/alata"
                         android:textColor="@color/grey"
@@ -373,6 +394,7 @@
                         android:text="(x + BAP) / 2 = R (Result)"/>
 
                     <TextView
+                        android:id="@+id/the_last_one"
                         android:layout_marginTop="12.5sp"
                         android:textSize="24sp"
                         android:fontFamily="@font/alata"
@@ -400,28 +422,62 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
-            <Button
-                android:visibility="gone"
-                android:id="@+id/language"
-                android:fontFamily="@font/alata"
-                android:text="LANGUAGE"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:backgroundTint="@color/grey_1"
-                android:layout_width="300sp"
-                android:layout_height="85sp"
-                app:cornerRadius="20sp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="85sp">
 
-            <Button
-                android:id="@+id/back_to_main"
-                android:fontFamily="@font/alata"
-                android:text="BACK TO MAIN"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:backgroundTint="@color/grey_1"
-                android:layout_width="300sp"
-                android:layout_height="85sp"
-                app:cornerRadius="20sp" />
+                <Button
+                    android:id="@+id/rus"
+                    android:fontFamily="@font/alata"
+                    android:text="РУС"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:backgroundTint="@color/grey_1"
+                    android:layout_width="125sp"
+                    android:layout_height="85sp"
+                    app:cornerRadius="15sp" />
+
+                <Button
+                    android:id="@+id/arm"
+                    android:fontFamily="@font/alata"
+                    android:text="ՀԱՅ"
+                    android:layout_marginStart="25sp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:backgroundTint="@color/grey_1"
+                    android:layout_width="125sp"
+                    android:layout_height="85sp"
+                    app:cornerRadius="15sp" />
+
+                <Button
+                    android:id="@+id/eng"
+                    android:fontFamily="@font/alata"
+                    android:text="ENG"
+                    android:layout_marginStart="25sp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:backgroundTint="@color/grey_1"
+                    android:layout_width="125sp"
+                    android:layout_height="85sp"
+                    app:cornerRadius="15sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/back_to_main"
+                    android:fontFamily="@font/alata"
+                    android:text="BACK TO MAIN"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:backgroundTint="@color/grey_1"
+                    android:layout_width="300sp"
+                    android:layout_height="85sp"
+                    app:cornerRadius="20sp" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="0dp"
