@@ -25,13 +25,13 @@
         <androidx.cardview.widget.CardView
             android:backgroundTint="@color/grey_1"
             android:layout_width="900sp"
-            android:layout_height="475sp"
+            android:layout_height="430sp"
             app:cardCornerRadius="15sp">
 
             <ScrollView
                 android:layout_gravity="center"
                 android:layout_width="850sp"
-                android:layout_height="450sp">
+                android:layout_height="400sp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -435,7 +435,7 @@
                     android:textSize="18sp"
                     android:backgroundTint="@color/grey_1"
                     android:layout_width="125sp"
-                    android:layout_height="85sp"
+                    android:layout_height="70sp"
                     app:cornerRadius="15sp" />
 
                 <Button
@@ -447,7 +447,7 @@
                     android:textSize="18sp"
                     android:backgroundTint="@color/grey_1"
                     android:layout_width="125sp"
-                    android:layout_height="85sp"
+                    android:layout_height="70sp"
                     app:cornerRadius="15sp" />
 
                 <Button
@@ -459,7 +459,7 @@
                     android:textSize="18sp"
                     android:backgroundTint="@color/grey_1"
                     android:layout_width="125sp"
-                    android:layout_height="85sp"
+                    android:layout_height="70sp"
                     app:cornerRadius="15sp" />
 
                 <Space
@@ -474,8 +474,8 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:backgroundTint="@color/grey_1"
-                    android:layout_width="300sp"
-                    android:layout_height="85sp"
+                    android:layout_width="285sp"
+                    android:layout_height="70sp"
                     app:cornerRadius="20sp" />
             </LinearLayout>
 
