@@ -28,8 +28,6 @@ import com.bumptech.glide.Glide;
 import com.example.poisonousking.R;
 import com.example.poisonousking.helper_classes.Deck;
 import com.example.poisonousking.helper_classes.HideTheBars;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -293,14 +291,14 @@ public class QuickGameFieldActivity extends AppCompatActivity {
     private void enableUserCardClicks() {
         for (int i = 0; i < userCards.size(); i++) {
             int cardIndex = i;
-            userCardViews[i].setOnClickListener(v -> userTurn(cardIndex, 0));
+            userCardViews[i].setOnClickListener(v -> userTurn(cardIndex));
         }
     }
 
-    private void userTurn(int cardIndex, int centerCellIndex) {
-        fourCenterCellViews[centerCellIndex].setImageResource(userCards.get(cardIndex));
+    private void userTurn(int cardIndex) {
+        fourCenterCellViews[0].setImageResource(userCards.get(cardIndex));
         cardClickSound.start();
-        fourCenterCellViews[centerCellIndex].setVisibility(View.VISIBLE);
+        fourCenterCellViews[0].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
@@ -308,10 +306,10 @@ public class QuickGameFieldActivity extends AppCompatActivity {
         new Handler().postDelayed(this::botsTurn, 1000);
     }
 
-    private void userTurnButNotFirst(int cardIndex, int centerCellIndex) {
-        fourCenterCellViews[centerCellIndex].setImageResource(userCards.get(cardIndex));
+    private void userTurnButNotFirst(int cardIndex) {
+        fourCenterCellViews[3].setImageResource(userCards.get(cardIndex));
         cardClickSound.start();
-        fourCenterCellViews[centerCellIndex].setVisibility(View.VISIBLE);
+        fourCenterCellViews[3].setVisibility(View.VISIBLE);
         userCardViews[cardIndex].setVisibility(View.GONE);
         userCardDoorViews[cardIndex].setVisibility(View.GONE);
         fourCycle.add(userCards.get(cardIndex));
@@ -556,7 +554,7 @@ public class QuickGameFieldActivity extends AppCompatActivity {
             turners[2].setVisibility(View.INVISIBLE);
             for (int i = 0; i < userCards.size(); i++) {
                 int cardIndex = i;
-                userCardViews[i].setOnClickListener(v -> userTurnButNotFirst(cardIndex, 3));
+                userCardViews[i].setOnClickListener(v -> userTurnButNotFirst(cardIndex));
             }
             if (fourCycle.size() == 4) {
                 winnerOfCorrespondingTrick = determineTheWinnerOfTrick(fourCycle);
